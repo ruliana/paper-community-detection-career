@@ -107,41 +107,68 @@ Resumo vai aqui
 \section{Introdução}
 %===================================
 
-Dá para identificar carreiras utilizando detecção de comunidades.
+Carreira profissional e trajetória pessoal
+
+O objetivo desse trabalho é identificar carreiras profissionais a partir de uma rede que representa a movimentação de profissionais entre ocupações.
+
+Essa rede foi gerada pela empresa VAGAS Tecnologia e é explicada em detalhes na Seção~\ref{sec:mapa}. Nela, cada nó representa uma ocupação profissional, as conexões são direcionadas e representam o número de profissionais que passou de uma ocupação para outra em sua trajetória pessoal.
+
+
+
+Foram utilizados algoritmos de detecção de comunidades para identificação das carreiras
 
 O modelo ideal de detecção de comunidade permite que um nó faça parte de mais de uma comunidade, desse jeito uma ocupação pode fazer parte de mais de uma carreira. Isso acontece em dois casos: \enquote{Gerente de Projeto} que é uma ocupação homônima para várias carreiras (vide imagem) e \enquote{a-definir} que faz a \enquote{ponte} entre carreiras distintas.
 
 NOTA: Rodei o algoritmo de detecção de comunidade com e sem peso. Os resultados não foram tão bons eu esperava =/. Existem coisas boas ali, mas existe uma certa confusão com os nós mais operacionais. =/
 
+%===================================
+\section{Carreira, Fronteira e Permeabilidade} \label{sec:carreira}
+%===================================
+
+Segundo~\citeonline{Arthur1989-rn}, carreira é \foreignquote{english}{uma sequência evolutiva da experiência de trabalho de uma pessoa no tempo}\footnote{No original: \enquote{an evolving sequence of person's work experience over time}.}.
+
+Apesar das discussões sobre as mudanças nos modelos de carreira, passando de um modelo linear e centrado na organização para um modelo centrado do indivíduo, as definições de carreira são frequentemente associadas à progressão ou sequência profissional do indivíduo~\cite{Baruch2004-oy,Sullivan2009-xb,Bendassolli2009-bg}.
+
+Para os fins desse trabalho, define-se carreira como \textit{a sequência de ocupações pela qual um indivíduo passa em sua vida profissional}. Essa definição não entra em desacordo com os autores citados, porém, limita a abrangência da definição e a torna mais concreta. Isso permite uma análise menos subjetiva, uma vez que ocupações profissionais podem ser extraídas objetivamente de currículos e analisadas quantitativamente. No entanto, ela se torna mais limitada, já que essa definição exclui aspectos psicológicos ou sociais.
+
+Esse trabalho empresta o conceito de \enquote{barreira} ou \enquote{fronteira} entre ocupações de \citeonline{Gunz2007-hr} e de \enquote{permeabilidade} para dar significado aos resultados do trabalho.
+
+Uma barreira entre ocupações significa que a mudança entre elas não pode ser realizada livremente. Por exemplo, um profissional precisa de graduação especializada antes de poder se mover da ocupação de \enquote{Auxiliar de Jardinagem} para \enquote{Médico}, por outro lado, a barreira para mesmo profissional exercer a ocupação de \enquote{Jardineiro} se restringe à quantidade de experiência. É possível perceber que as barreiras não são simétricas, em um momento de crise é mais simples para uma \enquote{Engenheiro} tornar-se um \enquote{Corretor de Imóveis} do que o contrário.
+
+Barreiras não se limitam ao conhecimento, quaisquer dificuldades na movimentação podem criar fronteiras entre ocupações. Por exemplo, alguém morando em um grande centro urbano dificilmente exerceria a ocupação de \enquote{Agricultor} sem mover-se para o campo. Um \enquote{Diretor Financeiro} precisaria adequar seu padrão de vida antes de se mover para uma ocupação com ganhos mais modestos. Uma profissão que está desaparecendo, como \enquote{Contínuo} possui barreiras mais altas do que uma nascendo, como \enquote{Analista de Experiência do Usuário}.
+
+A permeabilidade entre ocupações está diretamente relacionada à dificuldade em se ultrapassar suas barreiras. Fronteiras permeáveis facilitam a movimentação entre ocupações.
+
+Observando-se a movimentação profissional é possível inferir permeabilidade entre ocupações. Quanto mais profissionais se movem entre elas, mais permeáveis são suas fronteiras. Esse tipo de observação não permite analisar a natureza da barreira, ou seja, o que torna a movimentação fácil ou difícil, mas permite dizer seu grau de permeabilidade.
+
+É esperado, intuitivamente, que carreiras com permeabilidade mais alta entre as ocupações sejam mais frequentes do que carreiras em que ultrapassem barreiras mais altas.
+
+Partindo desse princípio, é possível distinguir conjuntos de ocupações que possuem barreira internas mais baixas entre si do que outras de fora do conjunto. Essa ocupações formam seu próprio domínio, um profissional dentro dele terá mais facilidade de circular entre ocupações do próprio domínio do que sair dele.
 
 %===================================
-\section{O Mapa de Carreiras}
+\section{O Mapa de Carreiras} \label{sec:mapa}
 %===================================
 
-O Mapa VAGAS de Carreiras (MCar) é um trabalho da empresa  \citeonline{VAGAS_Tecnologia2015-yv}. Apesar de gratuito, seus dados não são públicos, mas empresa gentilmente cedeu os dados ao pesquisador para esse trabalho.
-
-O MCar é uma rede que resume as movimentações dos profissionais no mercado de trabalho. Nele, cada nó representa uma ocupação e as conexões representam o número de profissionais que se movimentou entre elas, ou seja, nas suas carreiras, deixaram a ocupação anterior e passaram a trabalhar em uma nova.
+O Mapa VAGAS de Carreiras~\cite{VAGAS_Tecnologia2015-yv} é uma rede que resume as movimentações dos profissionais no mercado de trabalho. Nele, cada nó representa uma ocupação e as conexões representam o número de profissionais que se movimentou entre elas, ou seja, nas suas carreiras, deixaram a ocupação anterior e passaram a trabalhar em uma nova.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[scale=0.6]{cluster_23.pdf}
-  \caption{Parte do MCar}
+  \caption{Parte do Mapa de Carreiras}
   \label{fig:ex-mapa-midia}
 \end{figure}
 
-É possível observar parte do Mapa VAGAS de Carreiras na Figura~\ref{fig:ex-mapa-midia} com as ocupações relacionadas à profissão de \enquote{mídia}. Nela, por exemplo, 16 pessoas passaram de \enquote{supervisor-de-midia} para a ocupação \enquote{gerente-de-midia}.
+É possível observar parte do Mapa VAGAS de Carreiras (MCar) na Figura~\ref{fig:ex-mapa-midia} com as ocupações relacionadas à profissão de \enquote{mídia}. Nela, por exemplo, 16 pessoas passaram de \enquote{supervisor-de-midia} para a ocupação \enquote{gerente-de-midia}.
 
-O MCar foi gerado a partir dos currículos anonimizados de 10 milhões de usuários registrados no site VAGAS.com.br. A seleção de dados, bem como o processamento das informações, seguiu um procedimento conservador. Isso significa que, em caso de dúvidas, a abordagem menos suscetível a erro foi tomada.
+O MCar foi gerado a partir dos currículos anonimizados de 10 milhões de usuários registrados no site VAGAS.com.br. A seleção de dados, bem como o processamento das informações, seguiu um procedimento conservador. Isso significa que as decisões tomadas em sua construção procuram minimizar os erros decorrentes da qualidade dos dados.
 
 Da massa de currículos, apenas os atualizados no período entre 2011 e 2016 foram usados. Currículos em duplicação foram removidos usando o CPF como identificador, em caso de duplicação, apenas o currículo mais recente foi considerado. Na impossibilidade de se verificar a duplicação, como por exemplo, na ausência de um identificador, o currículo também foi descartado.
-
-Como o MCar resume as movimentações profissionais, currículos com uma ou menos ocupações não fornecem informações suficiente para se identificá-las. Esse currículos foram descartados.
 
 Finalmente, algumas informações gerais foram extraídas dos currículos que sobreviveram ao processo acima e o restante das informações, incluindo possíveis identificadores, foi descartado.
 
 A informações extraídas são o sexo, último salário, graduação (se existente) ou escolaridade, e a sequência de ocupações pelo qual o profissional passou com o título, descrição e período em que exerceu a ocupação.
 
-O título da ocupação é um dos principais artefatos do MCar, ele é quem fornece a identidade para o nó. Nos currículos, o título da ocupação é um campo de texto livre, ou seja, o usuário pode digitar o título sem restrições. Se por um lado isso permite a inserção de ocupações de nicho, novas ou que usem jargão de área; também significa que os títulos possuem erros de grafia, variações de gênero (como em \enquote{advogado} e \enquote{advogada} ou \enquote{moto boy} e \enquote{moto girl}), composição de múltiplas ocupações em um mesmo título (como \enquote{caixa / balconista}), abreviações e toda sorte de erros de interpretação possíveis.
+O título da ocupação é um dos principais artefatos do MCar, é ele quem fornece a identidade para o nó. Nos currículos, o título da ocupação é um campo de texto livre, ou seja, o usuário pode digitar o título sem restrições. Se por um lado isso permite a inserção de ocupações de nicho, novas ou que usem jargão de área; também significa que os títulos possuem erros de grafia, variações de gênero (como em \enquote{advogado} e \enquote{advogada} ou \enquote{moto boy} e \enquote{moto girl}), composição de múltiplas ocupações em um mesmo título (como \enquote{caixa / balconista}), abreviações e toda sorte de erros de interpretação possíveis.
 
 As ocupações passam por um corretor ortográfico criado especificamente para esse trabalho, uma vez que um corretor tradicional não é capaz de identificar jargões de área como \enquote{enfermeiranda}, \enquote{rigger} ou \enquote{IRLA}.
 
@@ -156,6 +183,8 @@ Os pares foram agrupados para formar o peso de cada conexão na rede final. O pe
 Nesse ponto do processo, cerca de 23 milhões de ocupações dos currículos foram agrupadas em pouco mais de 8 mil ocupações distintas.
 
 Finalmente, os pares de ocupações foram conectado entre si a rede final foi construída e armazenada em um banco de dados de grafo. Um sistema online (disponível em http://www.vagas.com.br/mapa-de-carreiras) disponibiliza as informações publicamente.
+
+Apesar de gratuito, os dados do Mapa VAGAS da Carreira não são públicos. A empresa gentilmente cedeu os dados ao pesquisador para esse trabalho.
 
 %===================================
 \section{Detecção de Comunidades}
