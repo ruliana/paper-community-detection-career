@@ -1,0 +1,20 @@
+graph G {
+  #node [label="", shape="circle"];
+  node [shape="circle"];
+
+  A -- B -- C -- D -- A;
+#  A -- C;
+  B -- D;
+
+  E -- F -- G -- H -- E;
+#  E -- G;
+  F -- H;
+
+  I -- J -- K -- L -- I;
+#  I -- K;
+  J -- L;
+
+  A -- G;
+  E -- K;
+  I -- C;
+}
