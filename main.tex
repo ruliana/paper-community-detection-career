@@ -50,6 +50,10 @@
 % Diretório padrão para figuras
 \graphicspath{ {images/} }
 
+% Permite colocar figuras lado a lado ou
+% fazer posicionamentos arbitrários
+\usepackage[lofdepth,lotdepth]{subfig}
+
 \hypersetup{
   %hidelinks,   % Comente aqui para exibir os links
   colorlinks, % Descomente esse se comentar o de cima
@@ -85,7 +89,7 @@
 \SingleSpacing
 
 % Titulo e coisas para cabeçalho
-\title{Identificação de Carreiras utilizando Detecção de Comunidades}
+\title{Identificação de Fronteiras de Carreiras utilizando Detecção de Comunidades}
 \author{Ronie Uliana}
 
 \begin{document}
@@ -202,7 +206,7 @@ Essa frequência é relativa ao fluxo entre os nós próximos, dez transições 
 
 O algoritmo Infomap (detalhado na Seção~\ref{sec:infomap}) utiliza \textit{random walkers} para identificar comunidades. Os caminhos em que eles circulam mais frequentemente são considerados como fazendo parta da mesma comunidade, por outro lado, caminhos raramente utilizados definem as fronteiras entre uma comunidade e outra, de maneira análoga à concepção de fronteiras de carreira de~\citeonline{Gunz2007-hr}.
 
-Portanto, por concepção, a identificação de comunidades do algoritmo Infomap identifica fronteiras de carreiras em uma rede em que as conexões representam o fluxo de profissionais entre ocupações\footnote{Ronie: acho que dá para explicar melhor, mas a linha de raciocínio é essa.}.
+Portanto, a identificação de comunidades do algoritmo Infomap identifica fronteiras de carreiras em uma rede em que as conexões representam o fluxo de profissionais entre ocupações\footnote{Ronie: acho que dá para explicar melhor, mas a linha de raciocínio é essa.}.
 
 %===================================
 \subsection{O Algoritmo Infomap} \label{sec:infomap}
@@ -212,27 +216,59 @@ Segundo \citeonline{Grunwald2007-bt}, quaisquer regularidades em um conjunto de 
 
 O algoritmo Infomap aproveita essa dualidade entre detecção de padrões e compressão de dados para identificar padrões de fluxo em redes~\cite{Rosvall2009-sd}.
 
-Para compreender o algoritmo, é preciso entender como um percurso aleatório em uma rede pode ser representado e como a Descrição de Comprimento Mínimo pode ser usada para identificar caminhos mais frequentes.
+Para compreender o algoritmo, é preciso entender como um trajeto aleatório em uma rede pode ser representado e como a Descrição de Comprimento Mínimo pode ser usada na detecção de comunidades.
 
 Descreve-se o caminho que um \textit{random walker} faz em uma rede através da sequência de nós pelo qual ele passa. Por exemplo, assumindo uma rede com os nós $A$, $B$ e $C$, um caminho possível poderia ser descrito por $ABACBA$.
 
-Esse nós podem ser recodificados usando uma sequência binária, por exemplo, $A = 00$, $B = 01$ e $C = 10$. O caminho acima descrito seria representado, sem ambiguidades, pelos 12 bits: $000100100100$.
+A Figura~\ref{fig:graph01} mostra um grafo regular, onde todos os nós possuem três vizinhos. Nesse tipo de rede, um \textit{random walker} ergódico (de caminho infinito) percorre todas as conexões o mesmo número de vezes\footnote{Ronie: não sei se isso parece tão intuitivo. Não foi para mim, cheguei a rodar um experimento no grafo para ver acontecendo. De fato, a frequência do walker nas arestas é igual, independente do número de passos.}. A Figura~\ref{fig:walk01} mostra um caminho aleatório passando por 800 nós.
 
-É possível representar esse mesmo caminho de maneira reduzida observando-se seus padrões~\cite{Huffman1952-ak}. O nó $A$ aparece mais frequentemente no caminho que os nós $B$ e $C$, se a codificação usada para representar $A$ for menor do que a dos outros, a descrição do caminho também será menor. Nesse exemplo, usando-se a seguinte codificação $A = 0$, $B = 10$ e $C = 11$, o mesmo caminho pode ser representado, sem ambiguidades, pelos 9 bits: $010011100$.
+\begin{figure}[ht]
+  \centering
+  \subfloat[][Rede regular] {
+    \includegraphics[scale=0.4]{graph01.pdf}
+    \label{fig:graph01}
+  }
+  \subfloat[][Caminho na rede] {
+    \includegraphics[scale=0.4]{graph01_path.pdf}
+    \label{fig:walk01}
+  }    
+  \caption{Caminho de um \textit{random walker}}
+\end{figure}
 
-Imaginando-se um \textit{random walker} ergódico (de caminho infinito), o processo de identificar a codificação mais compacta irá identificar também as maiores regularidades no caminho, nesse caso, os nós mais frequentes.
+Apesar de ser uma rede regular, sua topologia faz com que o \textit{random walker} fique \enquote{preso} nos grupos formados pelos nós $ABCD$, $EFGH$ e $IJKL$; escapando esporadicamente de um para outro, onde circula até escapar novamente. Esses grupos são destacados na Figura~\ref{fig:graph02}. O caminho percorrido pelo \textit{walker} é exibido na Figura~\ref{fig:walk02}, dessa vez destacando os grupos por onde ele passa.
+
+\begin{figure}[ht]
+  \centering
+  \subfloat[][Rede regular] {
+    \includegraphics[width=0.4\linewidth]{graph02.pdf}
+    \label{fig:graph02}
+  }
+  \subfloat[][Caminho no rede] {
+    \includegraphics[width=0.4\linewidth]{graph02_path.pdf}
+    \label{fig:walk02}
+  }    
+  \caption{Rede e caminho destacados}
+\end{figure}
+
+Na rede da Figura~\ref{fig:graph01}, se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de \cite{Huffman1952-ak}, a mesma rede é representada pela Figura~\ref{fig:graph03} e o caminho da Figura~\ref{fig:walk01} usa 2880 bits.
+
+Se a rede for dividida em grupos, como anteriormente, e usarmos uma sequência única de bits para marcar quando o \textit{walker} entra ou sai de um grupo, podemos reaproveitar a nomenclatura entre os nós dos grupos, compactando a informação necessária para representar o caminho. A Figura~\ref{fig:graph04} mostra os códigos para a entrada de cada grupo (\enquote{0}, \enquote{10} e \enquote{11}) e os códigos de saída de cada grupo (\enquote{111}), bem com os códigos reaproveitados em cada um deles. Com essa codificação, o caminho da Figura~\ref{fig:walk01} usa 1776 bits.
+
+\begin{figure}[ht]
+  \centering
+  \subfloat[][Um nível] {
+    \includegraphics[width=0.4\linewidth]{graph03.pdf}
+    \label{fig:graph03}
+  }
+  \subfloat[][Dois níveis] {
+    \includegraphics[width=0.4\linewidth]{graph04.pdf}
+    \label{fig:graph04}
+  }    
+  \caption{Codificação dos nós}
+\end{figure}
 
 Para transformar essa ideia em algo que possa ser usado para identificar comunidades é preciso introduzir o conceito de \textit{codebooks}.
 
-No exemplo do caminho $ABACBA$, temos o a seguinte tradução entre símbolos e nós:
-
-\begin{description}
-  \item[0] = A
-  \item[10] = B
-  \item[11] = C
-\end{description}
-
-Essa representação é chamada \textit{codebook}.
 
 Na rede da Figura X, um possível caminho para um \textit{random walker} pode ser observado na Figura Y. Assumindo uma codificação de maior compressão, como apresentado anteriormente, uma possível nomenclatura para os nós seria a apresentada na Figura Z.
 

@@ -1,0 +1,35 @@
+graph G {
+  node [fontcolor="white",style="filled", shape="circle"];
+  edge [penwidth=2];
+  overlap=false;
+
+  node [color="/dark23/1"];
+  A [label="00"];
+  B [label="01"];
+  C [label="10"];
+  D [label="110"];
+  node [color="/dark23/2"];
+  E [label="00"];
+  F [label="01"];
+  G [label="10"];
+  H [label="110"];
+  node [color="/dark23/3"];
+  I [label="00"];
+  J [label="01"];
+  K [label="10"];
+  L [label="110"];
+
+  A -- B -- D -- C -- A;
+  B -- C;
+
+  E -- F -- H -- G -- E;
+  F -- G;
+
+  I -- J -- L -- K -- I;
+  J -- K;
+
+  # Link between groups
+  D -- E;
+  H -- I;
+  L -- A;
+}

@@ -1,0 +1,32 @@
+graph G {
+  node [shape="circle"];
+  edge [penwidth=2];
+  overlap=false;
+
+  A [label="1011"];
+  B [label="1111"];
+  C [label="1101"];
+  D [label="1000"];
+  E [label="1001"];
+  F [label="1010"];
+  G [label="1100"];
+  H [label="010"];
+  I [label="011"];
+  J [label="000"];
+  K [label="001"];
+  L [label="1110"];
+
+  A -- B -- D -- C -- A;
+  B -- C;
+
+  E -- F -- H -- G -- E;
+  F -- G;
+
+  I -- J -- L -- K -- I;
+  J -- K;
+
+  # Link between groups
+  D -- E;
+  H -- I;
+  L -- A;
+}
