@@ -290,18 +290,54 @@ Existem variações da Equação de Mapa para detecção de comunidades sobrepos
 
 
 %===================================
-\section{Resultados} \label{sec:resultados}
+\section{Resultados e Conclusões} \label{sec:resultados}
 %===================================
 
+A versão do MCar usada para esse trabalho possui 7.452 ocupações distintas e 90.832 conexões com ao menos 10 transições em cada uma delas.
 
+A aplicação do algoritmo Infomap resultou em 138 comunidades \textit{não-triviais}. Uma comunidade \enquote{trivial}, nesse contexto, significa uma com apenas duas conexões, ou seja, três nós ou menos.
+
+Em um agrupamento hierárquico, o primeiro nível possui apenas 3 grupos, um gigante composto por 6.722 nós, um segundo com 10 nós e o terceiro com 7 nós.
+
+A existência de um grupo gigante indica de que as carreiras são bastante diversificadas, fornecendo suporte que o conceito de \textit{Carreira sem Fronteiras}.
+
+Subdividindo o grupo gigante, encontram-se 132 grupos com tamanhos crescendo exponencialmente.
+
+FIGURA - Grafo com a distribuição de tamanho.
+
+O maior desses subgrupos possui em sua maioria descrições de ocupações \textit{operacionais}, indicando que não existem fronteiras claras para esses profissionais. Esse resultado aponta para a capacitação técnica como uma das maiores barreiras na movimentação profissional.
+
+FIGURA - Exemplo de 20 ocupações do maior grupo (ilustrativo)
+
+Cerca de X ocupações aparecem em mais de um grupo. Em sua maioria, conectam grupos com ocupações bastante distintas, indicando que são meros homônimos e não ocupações de ligação entre grupos.
+
+FIGURA - Ocupações homônimas e outros grupos.
+
+Muitos dos grupos menores resultam em Grafos Direcionados Acíclicos, revelando uma clara progressão de carreira. Outro são quase completamente acíclicos, com poucas conexões de pouco peso conectando nós em um aparente \enquote{retrocesso} na carreira. O significado dessas conexões é especulativo, mas uma pesquisa focada pode revelar se realmente seriam movimentos de retrocesso e suas motivações.
+
+FIGURA - Exemplo de carreira \enquote{só pra frente}
+
+FIGURA - Exemplo de carreira \enquote{pequena reversão}
+
+Finalmente, o maior dos subgrupos, bem como alguns outros poucos, apresentam ciclos sem uma clara preferência. A Figura X mostra três das ocupações centrais do maior subgrupo, esse ciclo indica que algumas carreiras não são de fato uma sequência \textit{evolutiva} (em qualquer sentido possível, já que é um ciclo) como descrita por \citeonline{Arthur1989-rn}.
+
+FIGURA X - Ciclo operacional
+
+O aparecimento de grupos com progressão clara em oposição a grupos com a presença de ciclos fortes fornece combustível para discussões sobre modelos de carreira, em especial a noção de que \enquote{carreiras sem evolução} são comuns.
+
+Finalmente, os próprios grupos resultantes possuem outras utilizações por si, já que representam os movimentos mais comuns nas ocupações brasileiras. Entre as possíveis aplicações eles podem ser usados como critério de classificação de ocupações; como plano de carreira baseado na progressão de menor barreira; ou como plano de treinamento de bases, já que as carreiras com progressão possuem claramente um ponto de partida; entre outros usos.
 
 %===================================
-\section{Conclusões e Perspectivas Futuras}
+\section{Perspectivas Futuras}
 %===================================
 
-O fato de ocupações \enquote{ponte} ser encontrada predominantemente no início da carreira pode significar que depois de definido um caminho profissional a movimentação para outra carreira não é feita por movimentações pré-definidas, mas que cada movimentação dessas ocorre de maneira particular. Ao mesmo tempo, indica uma certa mobilidade de escolhas no princípio da carreira.
+Os resultados desse trabalho fornecem indícios que suportam modelos de carreira, como o de \textit{Carreira sem Fronteiras}, ao mesmo tempo que indicam que eles não são abrangentes para todos os segmentos profissionais. Carreiras sem Fronteiras, por exemplo, parecem ser mais apropriadas em ocupações operacionais do que para ocupações com maior exigência técnica. Análises localizadas podem comprovar ou refutar esse indício, bem como indicar quais modelos são mais adequados para quais segmentos.
 
-Os exemplos encontrados de ocupações homônimas indicam uma certa similaridade nas atribuições, mas em especialidades diferentes. TK
+Essa pesquisa contribui com suporte para um questionamento importante sobre a própria definição de carreira: que ela é um movimento \textit{evolutivo} na vida profissional de um indivíduo. A presença de ciclos fortes entre algumas ocupações sugere que existem carreiras onde não há progressão, mas sim uma movimentação lateral contante. Pesquisas orientadas podem refutar esse indício, uma vez que essa análise desconsidera os aspectos sociais e psicológicos da transição entre ocupações.
+
+Algumas movimentações também sugerem que há retrocesso em alguns momentos da carreira. Entender se de fato são retrocessos e o que os motiva são linhas de pesquisa possíveis.
+
+O MCar é uma fonte considerável de informação sobre o mercado de trabalho brasileiro. Outras pesquisas sobre profissões e carreira, em especial utilizando técnicas de Ciência de Redes, como \textit{motifs}, podem contribuir para uma melhor compreensão da dinâmica da movimentação profissional.
 
 \newpage
 
