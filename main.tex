@@ -47,6 +47,9 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 
+% Para setas usadas em fórmulas dos grafos
+\usepackage{MnSymbol}
+
 % Diretório padrão para figuras
 \graphicspath{ {images/} }
 
@@ -111,17 +114,17 @@ Resumo vai aqui
 \section{Introdução}
 %===================================
 
-Carreira profissional e trajetória pessoal
+A trajetória profissional de cada pessoa é bastante particular. Enquanto alguns seguem caminhos estabelecidos, como inúmeros presidentes de empresa que começaram como estagiários, outros trilham por sequências improváveis de ocupações, como o reconhecido chef Alex Atala.
 
-O objetivo desse trabalho é identificar carreiras profissionais a partir de uma rede que representa a movimentação de profissionais entre ocupações.
+Também os modelos carreiras têm se modificado, e teorias como as das \textit{Carreiras Proteanas} e \textit{Carreiras sem Fronteiras} advogam um distanciamento das carreiras comuns em favor de trajetórias com foco maior no indivíduo~\cite{Bendassolli2009-bg}.
 
-Essa rede foi gerada pela empresa VAGAS Tecnologia e é explicada em detalhes na Seção~\ref{sec:mapa}. Nela, cada nó representa uma ocupação profissional, as conexões são direcionadas e representam o número de profissionais que passou de uma ocupação para outra em sua trajetória pessoal.
+No entanto, o movimento de uma pessoa entre ocupações profissionais não é simples. A capacitação do indivíduo, a atratividade da nova ocupação e o próprio conhecimento que uma transição é possível a tornam mais fácil ou difícil para os profissionais. Quando essa transição é percebida como uma barreira por um número suficiente de pessoas, surge uma \enquote{fronteira de carreira}. Essas fronteiras delimitam um grupo de ocupações onde um indivíduo tem maiores chances de permanecer em sua carreira~\cite{Gunz2007-hr}.
 
+Essa trabalho utiliza os conceitos de fronteiras de carreira, um banco de dados com milhões de experiências profissionais e técnicas de detecção de comunidades em redes para encontrar esses grupos profissionais no mercado de trabalho brasileiro.
 
+A Seção~\ref{sec:carreira} descreve o conceito de fronteira da carreira, a Seção~\ref{sec:mapa} descreve o banco de dados que serve como base para esse pesquisa, a Seção~\ref{sec:comunidades} descreve o algoritmo utilizado para detecção de comunidades. Finalmente, na Seção~\ref{sec:resultados}, os grupos profissionais resultantes são caracterizados e exemplificados. Nessa mesma seção são levantadas questões sobre os resultados que escapam do escopo desse trabalho.
 
-Foram utilizados algoritmos de detecção de comunidades para identificação das carreiras
-
-O modelo ideal de detecção de comunidade permite que um nó faça parte de mais de uma comunidade, desse jeito uma ocupação pode fazer parte de mais de uma carreira. Isso acontece em dois casos: \enquote{Gerente de Projeto} que é uma ocupação homônima para várias carreiras (vide imagem) e \enquote{a-definir} que faz a \enquote{ponte} entre carreiras distintas.
+As conexões entre fronteiras de carreira e o algoritmo utilizado para detecção de comunidades são feitas ao final das Seções~\ref{sec:carreira} e~\ref{sec:comunidades}.
 
 %===================================
 \section{Carreira e Fronteira} \label{sec:carreira}
@@ -129,9 +132,9 @@ O modelo ideal de detecção de comunidade permite que um nó faça parte de mai
 
 Segundo~\citeonline{Arthur1989-rn}, carreira é \foreignquote{english}{uma sequência evolutiva da experiência profissional de uma pessoa no tempo}\footnote{No original: \enquote{an evolving sequence of person's work experience over time}.}.
 
-Apesar das discussões sobre as mudanças nos modelos de carreira, passando de um modelo linear e centrado na organização para um modelo centrado do indivíduo, as definições de carreira são frequentemente associadas à progressão ou sequência profissional do indivíduo~\cite{Baruch2004-oy,Sullivan2009-xb,Bendassolli2009-bg}.
+Apesar das discussões sobre as mudanças nos modelos de carreira, passando de um modelo linear e centrado na organização para um modelo centrado no indivíduo, as definições de carreira são frequentemente associadas à progressão ou sequência profissional do indivíduo~\cite{Baruch2004-oy,Sullivan2009-xb,Bendassolli2009-bg}.
 
-Para os fins desse trabalho, define-se carreira como \textit{a sequência de ocupações pela qual um indivíduo passa em sua vida profissional}. Essa definição é similar à de \citeonline{Arthur1989-rn}, porém, limita a abrangência da definição e a torna mais concreta. Isso permite uma análise menos subjetiva, uma vez que ocupações profissionais podem ser extraídas objetivamente de currículos e analisadas quantitativamente. No entanto, ela se torna mais limitada, já que essa definição exclui aspectos psicológicos ou sociais.
+Para os fins desse trabalho, define-se carreira como \textit{a sequência de ocupações pela qual um indivíduo passa em sua vida profissional}. Essa definição é similar à de \citeonline{Arthur1989-rn}, porém, limita a abrangência da definição e a torna mais concreta. Isso permite uma análise menos subjetiva, uma vez que ocupações profissionais podem ser extraídas de currículos e analisadas quantitativamente. No entanto, ela se torna mais limitada, já que essa definição exclui aspectos psicológicos ou sociais.
 
 \begin{comment} Ronie, isso é o início de outra argumentação
 Em resumo, a argumentação é que uma \enquote{coisa} social é um construto pessoal e subjetivo, mas se torna objetivo quando há um consenso por um número suficiente de pessoas. Essa mesma linha de raciocínio é explorada por \citeonline{Abbott1995-ft} para explicar o surgimento de \enquote{entidades} sociais, como profissões, a partir do reconhecimento das diferenças entre elas por um número crescente de pessoas.
@@ -147,7 +150,7 @@ Para os autores, as fronteiras de carreira são subjetivas e pessoais; cada um t
 
 Dessa maneira, o consenso define as fronteiras de carreira objetivamente quando existe uma quantidade suficiente de pessoas entra em consenso sobre quais são transições incomuns. A fronteira define o grupo, e não o contrário~\cite{Gunz2007-hr}.
 
-Partindo desse pressuposto, a identificação de trajetórias comuns e incomuns é condição suficiente e necessária para a detecção de fronteiras entre carreiras. Suficiente, pois a própria definição de fronteira é dependente da identificação do que são transições \enquote{incomuns}. Necessária, pois não existem fronteiras objetivamente definidas sem o consenso\footnote{Ronie: preciso trabalhar um pouco mais nisso, mas para mim parece bastante óbvio (nesse momento)}.
+Partindo desse pressuposto, a identificação de trajetórias comuns e incomuns é condição suficiente e necessária para a detecção de fronteiras entre carreiras. Suficiente, pois a própria definição de fronteira é dependente da identificação do que são transições \enquote{incomuns}. Necessária, pois não existem fronteiras objetivamente definidas sem o consenso.
 
 %===================================
 \section{O Mapa de Carreiras} \label{sec:mapa}
@@ -164,7 +167,7 @@ O Mapa VAGAS de Carreiras~\cite{VAGAS_Tecnologia2015-yv} é uma rede que resume 
 
 É possível observar parte do Mapa VAGAS de Carreiras (MCar) na Figura~\ref{fig:ex-mapa-midia} com as ocupações relacionadas à profissão de \enquote{mídia}. Nela, por exemplo, 16 pessoas passaram de \enquote{supervisor-de-midia} para a ocupação \enquote{gerente-de-midia} em sua trajetória profissional.
 
-As ocupações no MCar foram definidas a partir de \textit{consenso} nos currículos. Como o título da ocupação é um campo em que o usuário digita livremente, assumiu-se que, se um grupo \enquote{suficientemente grande} de pessoas entra em acordo sobre uma certa nomenclatura, ela representa objetivamente uma ocupação~\cite{Abbott1995-ft,Gunz2007-hr}.
+As ocupações no MCar foram definidas a partir de \textit{consenso} nos currículos. Como o título da ocupação é um campo em que o usuário digita livremente, assumiu-se que, se um grupo \enquote{suficientemente grande} de pessoas entra em acordo sobre uma certa nomenclatura, ela representa objetivamente uma ocupação. Essa abordagem é colocada de maneira implícita em ~\citeonline{Abbott1995-ft}, já \citeonline{Gunz2007-hr} a exploram para definir fronteiras de carreiras.
 
 Uma das maiores dificuldades está em se definir o quanto um consenso precisa ser \enquote{suficientemente grande} para de fato existir uma ocupação. Para os fins desse trabalho, esse número foi obtido de forma experimental e empírica. Para isso, procurou-se o número mínimo de repetições exatas na grafia das ocupações de maneira não fossem encontrados erros de digitação recorrentes, ou seja, que das ocupações criadas por consenso, nenhuma fosse resultado de erros frequentes de digitação. Esse número é atualmente 30 repetições, ou 10 transições com exatamente a mesma grafia em ambos os lados da transição.
 
@@ -191,7 +194,7 @@ Os pares foram agrupados e sua contagem se torna o peso de cada conexão na rede
 Finalmente, os pares de ocupações foram conectado entre si a rede final foi construída e armazenada em um banco de dados de grafo. Um sistema online\footnote{Disponível em \url{http://www.vagas.com.br/mapa-de-carreiras}} disponibiliza as informações publicamente. Apesar de gratuito e de consulta pública, os dados do Mapa VAGAS da Carreira não são de uso livre. A empresa gentilmente cedeu os dados ao pesquisador para esse trabalho.
 
 %===================================
-\section{Detecção de Comunidades}
+\section{Detecção de Comunidades} \label{sec:comunidades}
 %===================================
 
 Uma comunidade é um subgrafo com conexões mais \textit{coesas} entre seus nós do que com nós do restante do grafo. A palavra \enquote{coesão} aqui pode ser interpretada de várias maneiras. Para \citeonline{Ahn2010-uh,Evans2009-lq}, uma comunidade é definida quando o número de conexões internas do subgrafo é maior que o número de conexões que o conecta ao resto do grafo. Para \citeonline{Barabasi2016-rn,Newman2004-jg} a comunidade deve possuir uma densidade de conexões mais alta do que o esperado em uma rede aleatória equivalente. De qualquer forma, para esses autores, o número de conexões é o fator determinante para a identificação da comunidade.
@@ -200,13 +203,13 @@ Uma comunidade é um subgrafo com conexões mais \textit{coesas} entre seus nós
 
 Essas abordagens distintas são aplicáveis a cenários diferentes. A densidade de conexões é mais adequada em redes onde a estrutura é importante, como por exemplo, em uma rede social. Já em redes que representam fluxos, com circuitos ou redes de transporte, a segunda abordagem é mais atraente~\cite{Rosvall2009-sd}.
 
-Para esse trabalho, a identificação de comunidades por fluxo é adequada por concepção. Como explicado na Seção~\ref{sec:carreira}, as fronteiras de carreira são definidas pelo consenso das movimentações profissionais: transições menos frequentes definem essas fronteiras.
+Para esse trabalho, a identificação de comunidades por fluxo é adequada por concepção. Como exposto na Seção~\ref{sec:carreira}, as fronteiras de carreira são definidas pelo consenso das movimentações profissionais: transições menos frequentes definem essas fronteiras.
 
-Essa frequência é relativa ao fluxo entre os nós próximos, dez transições para uma ocupação como \enquote{Auxiliar Administrativo}, que possui dezenas de milhares de profissionais entrando e saindo, não tem a mesma importância que \enquote{Assistente de Mídia} (Figura~\ref{fig:ex-mapa-midia}), em que essa dezena representa mais de 10\% das transições registradas.
+Essa frequência é relativa ao fluxo entre os nós próximos: dez transições para uma ocupação como \enquote{Auxiliar Administrativo}, que possui dezenas de milhares de profissionais entrando e saindo, não tem a mesma importância que \enquote{Assistente de Mídia} (Figura~\ref{fig:ex-mapa-midia}), em que essa dezena representa mais de 10\% das transições registradas.
 
-O algoritmo Infomap (detalhado na Seção~\ref{sec:infomap}) utiliza \textit{random walkers} para identificar comunidades. Os caminhos em que eles circulam mais frequentemente são considerados como fazendo parta da mesma comunidade, por outro lado, caminhos raramente utilizados definem as fronteiras entre uma comunidade e outra, de maneira análoga à concepção de fronteiras de carreira de~\citeonline{Gunz2007-hr}.
+O algoritmo Infomap (detalhado na Seção~\ref{sec:infomap}) utiliza \textit{random walkers} para identificar comunidades. Os caminhos em que eles circulam mais frequentemente são considerados como fazendo parte da mesma comunidade, por outro lado, caminhos raramente utilizados definem as fronteiras entre uma comunidade e outra, de maneira análoga à concepção de fronteiras de carreira de~\citeonline{Gunz2007-hr}.
 
-Portanto, a identificação de comunidades do algoritmo Infomap identifica fronteiras de carreiras em uma rede em que as conexões representam o fluxo de profissionais entre ocupações\footnote{Ronie: acho que dá para explicar melhor, mas a linha de raciocínio é essa.}.
+Portanto, a identificação de comunidades do algoritmo Infomap identifica fronteiras de carreiras em uma rede em que as conexões representam o fluxo de profissionais entre ocupações.
 
 %===================================
 \subsection{O Algoritmo Infomap} \label{sec:infomap}
@@ -216,7 +219,7 @@ Segundo \citeonline{Grunwald2007-bt}, quaisquer regularidades em um conjunto de 
 
 O algoritmo Infomap aproveita essa dualidade entre detecção de padrões e compressão de dados para identificar padrões de fluxo em redes~\cite{Rosvall2009-sd}.
 
-Para compreender o algoritmo, é preciso entender como um trajeto aleatório em uma rede pode ser representado e como a Descrição de Comprimento Mínimo pode ser usada na detecção de comunidades.
+Para compreender o algoritmo, é preciso entender como um trajeto aleatório em uma rede é representado e como a Descrição de Comprimento Mínimo usa essa representação na detecção de comunidades.
 
 Descreve-se o caminho que um \textit{random walker} faz em uma rede através da sequência de nós pelo qual ele passa. Por exemplo, assumindo uma rede com os nós $A$, $B$ e $C$, um caminho possível poderia ser descrito por $ABACBA$.
 
@@ -250,42 +253,47 @@ Apesar de ser uma rede regular, sua topologia faz com que o \textit{random walke
   \caption{Rede e caminho destacados}
 \end{figure}
 
-Na rede da Figura~\ref{fig:graph01}, se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de \cite{Huffman1952-ak}, a mesma rede é representada pela Figura~\ref{fig:graph03} e o caminho da Figura~\ref{fig:walk01} usa 2880 bits.
+Se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de \citeonline{Huffman1952-ak} para nomear os nós de acordo com a Figura~\ref{fig:graph03}, o caminho da Figura~\ref{fig:walk01} é representado pro 2880 bits.
 
-Se a rede for dividida em grupos, como anteriormente, e usarmos uma sequência única de bits para marcar quando o \textit{walker} entra ou sai de um grupo, podemos reaproveitar a nomenclatura entre os nós dos grupos, compactando a informação necessária para representar o caminho. A Figura~\ref{fig:graph04} mostra os códigos para a entrada de cada grupo (\enquote{0}, \enquote{10} e \enquote{11}) e os códigos de saída de cada grupo (\enquote{111}), bem com os códigos reaproveitados em cada um deles. Com essa codificação, o caminho da Figura~\ref{fig:walk01} usa 1776 bits.
+Se a rede for dividida em grupos como anteriormente, e usarmos uma sequência única de bits para marcar quando o \textit{walker} entra ou sai de um grupo, podemos reaproveitar os códigos usados para descrever cada nó, compactando a informação necessária para representar o caminho. A Figura~\ref{fig:graph04} mostra os códigos para a entrada de cada grupo (\enquote{0}, \enquote{10} e \enquote{11}) e os códigos de saída de cada grupo (\enquote{111}), bem como os códigos dos nós. Com essa codificação, o caminho da Figura~\ref{fig:walk01} usa 1776 bits.
 
 \begin{figure}[ht]
   \centering
-  \subfloat[][Um nível] {
+  \subfloat[][Nós usando codificação de Huffman] {
     \includegraphics[width=0.4\linewidth]{graph03.pdf}
     \label{fig:graph03}
   }
-  \subfloat[][Dois níveis] {
+  \subfloat[][Reaproveitamento de códigos] {
     \includegraphics[width=0.4\linewidth]{graph04.pdf}
     \label{fig:graph04}
   }    
   \caption{Codificação dos nós}
 \end{figure}
 
-Para transformar essa ideia em algo que possa ser usado para identificar comunidades é preciso introduzir o conceito de \textit{codebooks}.
+Portanto, o particionamento da rede em grupos onde os caminhos aleatórios podem ser representados da maneira mais compacta possível deve representar o melhor particionamento em relação ao fluxo.
 
+A Equação de Mapa (Map Equation, \cite{Rosvall2009-sd}) permite que se identifiquem as menores codificações possíveis para uma determinado particionamento da rede sem a necessidade de se empregar \textit{random walkers} de fato. Com ela, a detecção de comunidades usando o fluxo como critério de coesão se reduz a um problema de otimização.
 
-Na rede da Figura X, um possível caminho para um \textit{random walker} pode ser observado na Figura Y. Assumindo uma codificação de maior compressão, como apresentado anteriormente, uma possível nomenclatura para os nós seria a apresentada na Figura Z.
+A Equação de Mapa é
 
-É possível observar que o \textit{walker} fica \enquote{preso} em algumas partes da rede, ocasionalmente se movendo para outro grupo onde passa boa parte do tempo antes de voltar ao primeiro.
+\begin{equation*}
+  L(\mathsf{M}) = q_\curvearrowright H(\mathcal{Q}) + \sum_{i=1}^{m}p^i_\circlearrowright H(\mathcal{P}^i)
+\end{equation*}
 
-Se cada um desses grupos de nós puder ser representado por um \textit{codebook diferente}, as codificações podem ser reaproveitadas. A passagem infrequente de um grupo para outro é então representada por códigos que representam mudança de \textit{codebook}.
+Onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento. $\mathsf{M}$ é o particionamento de $n$ nós $\alpha = 1, 2, \ldots, n$ em $m$ comunidades $i = 1, 2, \ldots, m$. O valor $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de uma comunidade e entrar em outra. $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é a média ponderada pela frequência do comprimento dos códigos usados para entrar nas comunidades e $H(\mathcal{P}^i)$ também é a média do comprimento dos códigos ponderada pela frequência, mas dessa vez, daqueles usados na comunidade $i$. Finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
 
-Por exemplo, enquanto o caminho do \textit{random walker} na Figura Z com um único \textit{codebook} pode se representada pelo mínimo de XXX bits, sua versão com três codebooks (Figura W), possui XXX bits.
+$H(X)$ é a equação que descreve a entropia da informação segundo uma certa distribuição de probabilidade $X$~\cite{Shannon1948-ic}. Ela se refere ao número mínimo de informação, usualmente na forma de bits, necessária para se representar uma mensagem.
 
-Dessa maneira, os \textit{codebooks} usados na representação com maior compressão para o caminho de um \textit{randow walker} ergódico detecta as comunidades da rede.
+A grosso modo, a Equação de Mapa pode ser descrita como: \textit{o tamanho médio dos códigos para mudança de comunidade multiplicado pela probabilidade de troca de uma por outra, somado ao tamanho médio do código de cada comunidade multiplicado pela fração de tempo que o \textit{random walker} passa em cada uma}.
 
-A Equação de Mapa (Map Equation, \cite{Rosvall2009-sd}) permite que se identifique as menores codificações possíveis para uma determinado particionamento da rede em comunidades sem a necessidade de se empregar \textit{random walkers} de fato. Com ela, a detecção de comunidades usando o fluxo como critério de coesão se reduz a um problema de otimização.
+Existem variações da Equação de Mapa para detecção de comunidades sobrepostas~\cite{Viamontes_Esquivel2011-it} e hierárquicas~\cite{Rosvall2011-yi}, o trabalho presente usa a variação de comunidades sobrepostas pois algumas ocupações, como \enquote{gerente de projeto} aparecem em grupos diferentes, por exemplo, relacionados a desenvolvimento de software ou a engenharia civil.
 
 
 %===================================
-\section{Identificação de Carreiras no Mapa de Carreiras}
+\section{Resultados} \label{sec:resultados}
 %===================================
+
+
 
 %===================================
 \section{Conclusões e Perspectivas Futuras}
