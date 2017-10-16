@@ -301,13 +301,31 @@ Em um agrupamento hierárquico, o primeiro nível possui apenas 3 grupos, um gig
 
 A existência de um grupo gigante indica de que as carreiras são bastante diversificadas, fornecendo suporte que o conceito de \textit{Carreira sem Fronteiras}.
 
-Subdividindo o grupo gigante, encontram-se 132 grupos com tamanhos crescendo exponencialmente.
+Subdividindo o grupo gigante, encontram-se 132 grupos com tamanhos crescendo exponencialmente. A Figura~\ref{fig:chart01} mostra os subgrupos por ordem decrescente de tamanho com o número de ocupações em escala logarítmica.
 
-FIGURA - Grafo com a distribuição de tamanho.
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.7\linewidth]{chart01.png}
+  \caption{Número de ocupações por subgrupo do grupo gigante}
+  \label{fig:chart01}
+\end{figure}
 
-O maior desses subgrupos possui em sua maioria descrições de ocupações \textit{operacionais}, indicando que não existem fronteiras claras para esses profissionais. Esse resultado aponta para a capacitação técnica como uma das maiores barreiras na movimentação profissional.
+O maior desses subgrupos possui em sua maioria descrições de ocupações \textit{operacionais}, indicando que não existem fronteiras claras para esses profissionais. Esse resultado aponta para a capacitação técnica como uma das maiores barreiras na movimentação profissional. Como exemplo, as ocupações com maior grau de centralidade são exibidas na Tabela~\ref{tab:operacionais}.
 
-FIGURA - Exemplo de 20 ocupações do maior grupo (ilustrativo)
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{c c}
+    assistente-administrativo & auxiliar-administrativo \\
+    atendimento & operador-de-caixa \\
+    vendedor & recepcionista \\
+    secretaria & jovem-aprendiz \\
+    operador-de-telemarketing & caixa \\
+    promotor-de-vendas & balconista \\
+    consultor-de-vendas & auxiliar-de-producao  \\
+  \end{tabular}
+  \caption{Ocupações com maior centralidade de grau no maior subgrupo}
+  \label{tab:operacionais}
+\end{table}
 
 Cerca de X ocupações aparecem em mais de um grupo. Em sua maioria, conectam grupos com ocupações bastante distintas, indicando que são meros homônimos e não ocupações de ligação entre grupos.
 
