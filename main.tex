@@ -120,6 +120,7 @@ A trajetória profissional de cada pessoa é bastante particular. Enquanto algun
 Também os modelos de carreiras têm se modificado, e teorias como as das \textit{Carreiras Proteanas} e \textit{Carreiras sem Fronteiras} advogam um distanciamento das carreiras comuns em favor de trajetórias com foco maior no indivíduo~\cite{Bendassolli2009-bg}. A carreira proteana coloca o indivíduo, e não as organizações, como protagonista da trajetória profissional, onde valores pessoais são usados na decisão dos próximos passos e o sucesso é subjetivo e medido pela satisfação pessoal~\cite{Hall2004-ke}. A carreira sem fronteiras, por sua vez, acontece quando a trajetória se faz independente das organizações ou hierarquias. Essas carreiras são caracterizadas por passagens por múltiplas empresas ou mudanças na especialidade do indivíduo, como um eletricista industrial que passa a atuar como web designer\footnote{Exemplo real de um ex-colega de trabalho de um dos autores.}~\cite{Arthur1994-qq}.
 
 %% EXPLIQUE AQUI BREVEMENTE NA SEQUÊNCIA COMO É CADA UMA DESSAS TEORIAS DE CARREIRAS
+% Ronie: Feito
 
 No entanto, o movimento de uma pessoa entre ocupações profissionais não é simples. A capacitação do indivíduo, a atratividade da nova ocupação e o próprio conhecimento de que uma transição é possível a tornam mais fácil ou difícil para os profissionais. Quando essa transição é percebida como uma barreira por um número suficiente de pessoas, surge uma \textit{fronteira de carreira}~\cite{Gunz2007-hr}. Essas fronteiras delimitam um grupo de ocupações onde um indivíduo tem maiores chances de permanecer durante sua trajetória profissional.
 
@@ -294,62 +295,107 @@ Existem variações da Equação de Mapa para detecção de comunidades sobrepos
 
 %% ESSA SEÇÃO DEVE COMEÇAR COM UMA DESCRIÇÃO DA METODOLOGIA EXPERIMENTAL, OU SEJA, DESCRIÇÃO DA BASE DE DADOS, QUAIS EXPERIMENTOS SERÃO REALIZADOS, QUAIS PARÂMETROS, O QUE SERÁ MEDIDO, ETC.
 
+% Descrição dos dados:
+
 A versão do MCar usada para esse trabalho é de fevereiro de 2017. Ela possui exatamente 7450 ocupações distintas e 90800 conexões.
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=0.9\linewidth]{pareto.png}
-  \caption{Gráfico de Pareto com a distribuição de grau. Os nós estão ordenados pelo grau de maneira decrescente. O eixo esquerdo, em escala logarítmica, possui o grau do nó, enquanto o eixo direito possui a porcentagem acumulada. As marcações separam o quartil dos nós de maior grau (1º quartil), a mediana e o quartil de menor grau (3º quartil).}
-  \label{fig:pareto}
+  \includegraphics[width=0.9\linewidth]{pareto-ocupacoes.png}
+  \caption{Gráfico de Pareto com a distribuição de grau. Os nós estão ordenados pelo grau de maneira decrescente no eixo horizontal, ocupações de grau maior estão à esquerda e ocupações de menor grau estão à direita. O eixo direito, em escala logarítmica, está associado à linha vermelha e representa o grau do nó. O eixo esquerdo está associado à linha azul e representa a somatória de todos os graus em porcentagem e qual a contribuição das ocupações à esquerda para essa totalização.}
+  \label{fig:pareto-ocupacoes}
 \end{figure}
 
-A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 89\% das conexões da rede. O nó de maior grau possui conexão com 6308 dos 7450 nós da rede, ou seja, ele conecta cerca de 85\% das ocupações.
+A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-ocupacoes}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 89\% das conexões da rede. O nó de maior grau possui conexão com 6308 dos 7450 nós da rede, ou seja, ele conecta cerca de 85\% das ocupações.
 
-Observando a Figura~\ref{fig:pareto} é possível notar que quase $1/4$ das ocupações possui apenas uma conexão (1689 delas, $\approx$ 23\%). Independente do algoritmo de detecção de comunidades, esses nós serão levados a participar da mesma comunidade que seu parceiro. Essa configuração força o tamanho das comunidades para cima se elas contiverem um \textit{hub}. Por exemplo, mesmo que o nó de maior grau tenha preferência de conexão por outros nós de alto grau, ainda assim ele estaria conectado a pelo menos 8\% dos nós de grau 1. Ou seja, a menor comunidade possível que inclua o nó de maior grau possuirá $\approx$ 600 nós.
+Observando a Figura~\ref{fig:pareto-ocupacoes} é possível notar que quase $1/4$ das ocupações possui apenas uma conexão (1689 delas, $\approx$ 23\%). Independente do algoritmo de detecção de comunidades, esses nós serão levados a participar da mesma comunidade que seu parceiro. Essa configuração força o tamanho das comunidades para cima se elas contiverem um \textit{hub}. Por exemplo, mesmo que o nó de maior grau tenha preferência de conexão por outros nós de alto grau, ainda assim ele estaria conectado a pelo menos 8\% dos nós de grau 1. Ou seja, a menor comunidade possível que inclua o nó de maior grau possuirá $\approx$ 600 nós.
 
-Essa topologia, por si só, fornece indícios que a \enquote{Carreira sem Fronteiras} de fato acontece, mas que ela não significa um movimento livre entre ocupações. A transição mais comum acontece primeiramente para uma ocupação \enquote{coringa} (\textit{hub}) antes de uma segunda transição mais específica.
+A presença de \textit{hubs} faz esperar que os grupos formados possuam um nó central altamente conectado, por onde passa o maior fluxo de profissionais.
 
-A topologia de \textit{hubs} faz esperar que os grupos formados possuam um nó central altamente conectado, por onde passa o maior fluxo de profissionais.
+% Procedimento:
 
+Nesse experimento, o algoritmo Infomap foi utilizado para encontrar o particionamento mais coeso do MCar em relação ao fluxo. Como exposto nas Seções~\ref{sec:carreira} e~\ref{sec:infomap}, esse particionamento é a própria definição de fronteiras de carreira.
+
+O Infomap é bastante robusto quanto aos parâmetros utilizados, ou seja, mesmo grandes variações em seus parâmetros devem produzir resultados similares~\cite{Kawamoto2015-ha,Lambiotte2012-fp}. Por essa razão e para comparação com o trabalho de \citeonline{Viamontes_Esquivel2011-it}, os parâmetros padrões foram utilizados.
+
+Para esse algoritmo, quanto maior a compressão da informação necessária para caracterizar o caminho do \textit{random walker}, melhor é o particionamento da rede~\cite{Rosvall2009-sd}.
+
+O MCar foi testado em três variações. A variação simples consiste na detecção de comunidades únicas, em que cada nó pertence a apenas uma comunidade. Na variação hierárquica, procura-se detectar comunidades dentro de outras. Já na variação com sobreposição, permite-se que nós participem de mais de uma comunidade.
+
+A variação com maior compressão revela o melhor caracterização de particionamento para aquela rede~\cite{Viamontes_Esquivel2011-it,Rosvall2011-yi}.
+
+Os resultados de compressão para cada variação estão na Tabela~\ref{tab:metodos}. É possível observar que as variações simples e hierárquica possuem quase a mesma compressão (os valores na tabela são aproximados), isso significa que o MCar não possui uma organização inerentemente hierárquica. Por outro lado, há um ganho expressivo de compressão quando se permite a sobreposição de comunidades, revelando que existem ocupações compartilhadas entre grupos profissionais diferentes.
 
 \begin{table}
   \centering
   \begin{tabular}{@{} l r r @{}}
     \toprule
-    Método           & Compressão & Partições  \\
+    Variação         & Compressão & Comunidades  \\
     \midrule
     Simples          & 14\%       & 123     \\
-    Hierárquico      & 14\%       & 123     \\
-    Com sobreposição & 44\%       & 930     \\
+    Hierárquica      & 14\%       & 123     \\
+    Com sobreposição & 44\%       & 926     \\
     \bottomrule
   \end{tabular}
   \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo de particionamento. \textit{Compressão} significa qual a compressão obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Partições} é o número de partições resultantes. \textit{Simples} significa sem níveis hierárquicos ou sobreposição entre as partições.}
-  \label{tab:métodos}
+  \label{tab:metodos}
 \end{table}
+
+\citeonline{Viamontes_Esquivel2011-it} apresentam um exemplo intuitivo do significado dessa sobreposição. Transposto para a realidade do MCar, uma ocupação que pertence a mais de uma comunidade significa que os profissionais que transitam por ela, em sua maioria, voltam aos seus grupos de origem ao invés de migrarem para outros. Não fosse dessa forma, esses grupos conectados seriam considerados como um conjunto único de ocupações pelo algoritmo.
+
+Existem duas explicações possíveis. A primeira é que essas ocupações são \textit{homônimas} e portanto distintas, o que significa que há uma fronteira entre elas. A segunda é que essas ocupações são similares, mas fatores não especificados dificultam a transição de um grupo para outro. Novamente, isso indica uma fronteira de carreira, ainda que mais fraca.
+
+Em qualquer uma dessas interpretações, as ocupações que participam de mais da uma comunidade revelam mais uma fronteira.
+
+Os resultados obtidos foram comparados com o trabalho de \citeonline{Viamontes_Esquivel2011-it} para obter uma perspectiva mais ampla sobre o significado da compressão (Tabela~\ref{tab:comparativo}). É possível observar que o MCar é a rede que mais se beneficia de uma estrutura que permite sobreposição de comunidades, apesar de, comparativamente, ter uma estrutura modular comparável às outras redes do trabalho. Essa observação reforça a conclusão de que o particionamento com sobreposição melhor representa a estrutura do MCar.
 
 \begin{table}
   \centering
-  \begin{tabular}{@{} l r r r r @{}}
+  \begin{tabular}{@{} l r r r r r @{}}
     \toprule
-                                           &      &          & \multicolumn{2}{c}{Compressão}  \\
+                                           &      &          & \multicolumn{2}{c}{Compressão} & \\
     \cmidrule(r){4-5}
-    Rede                                   & Nós  & Conexões & Simples & $\Delta$ Sobreposição \\
+    Rede                                   & Nós  & Conexões & Simples & $\Delta$ Sobr.       & $N_{\text{sobr}}/N$ \\
     \midrule
-    \rowcolor{yellow!25} Mapa de Carreiras & 7450 & 90800    & 14\%    & 30\%                  \\
-    Estradas Europeias                     & 1018 & 1274     & 46\%    & 10\%                  \\
-    Grade de Energia Leste dos EUA         & 4941 & 6994     & 53\%    & 8\%                   \\
-    Doenças Humanas                        & 516  & 1188     & 46\%    & 3\%                   \\
-    Coautoria de Artigos                   & 552  & 1317     & 49\%    & 2\%                   \\
-    Rotas Aéreas                           & 3618 & 14142    & 31\%    & 1\%                   \\
-    Blogs Políticos (EUA)                  & 1222 & 16714    & 4\%     & < 1\%                 \\
-    Blogs Políticos (Suécia)               & 855  & 10315    & < 1\%   & < 1\%                 \\
-    Rede Neural \textit{C. elegans}        & 297  & 2345     & 1\%     & < 1\%                 \\
+    \rowcolor{yellow!25} Mapa de Carreiras & 7450 & 90800    & 14\%    & 30\%                 & 11\% \\
+    Estradas Europeias                     & 1018 & 1274     & 46\%    & 10\%                 & 36\% \\
+    Grade de Energia Leste dos EUA         & 4941 & 6994     & 53\%    & 8\%                  & 28\% \\
+    Doenças Humanas                        & 516  & 1188     & 46\%    & 3\%                  & 15\% \\
+    Coautoria de Artigos                   & 552  & 1317     & 49\%    & 2\%                  & 15\% \\
+    Rotas Aéreas                           & 3618 & 14142    & 31\%    & 1\%                  & 14\% \\
+    Blogs Políticos (EUA)                  & 1222 & 16714    & 4\%     & < 1\%                & 6\% \\
+    Blogs Políticos (Suécia)               & 855  & 10315    & < 1\%   & < 1\%                & 5\% \\
+    Rede Neural \textit{C. elegans}        & 297  & 2345     & 1\%     & < 1\%                & 3\% \\
     \bottomrule
   \end{tabular}
-  \caption{Comparativo da estrutura do Mapa de Carreiras (em destaque) com outras redes~\cite{Viamontes_Esquivel2011-it}. \textit{Compressão Simples} se refere à compressão que o Infomap obteve no melhor particionamento simples da rede (sem sobreposição ou hierarquia de partições). \textit{Compressão $\Delta$ Sobreposição} se refere ao ganho na compressão obtido pela sobreposição de partições em relação à compressão simples.}
+  \caption{Comparativo da estrutura do Mapa de Carreiras (em destaque) com outras redes~\cite{Viamontes_Esquivel2011-it}. \textit{Compressão Simples} se refere à compressão que o Infomap obteve no melhor particionamento simples da rede (sem sobreposição ou hierarquia de partições). \textit{Compressão $\Delta$ Sobr.} se refere ao ganho na compressão obtido pela sobreposição de partições em relação à compressão simples. $N_{\text{sobr}}/N$ é a proporção de nós que participam em mais de uma comunidade em relação ao total de nós.}
   \label{tab:comparativo}
 \end{table}
 
+A distribuição de tamanho das comunidades resultantes da partição com sobreposição está na Figura~\ref{fig:pareto-comunidades}. A maior parte das comunidades (mais de 75\% delas) possui apenas uma ocupação, representando cerca de 8\% das ocupações totais.
+
+O tamanho das comunidades decresce rapidamente, 15\% das maiores comunidades (cerca de 135) englobam 90\% das ocupações, enquanto que a maior comunidade é possui sozinha 26\% das ocupações. Essa observação condiz com a expectativa de grandes comunidades impulsionada pela presença de \textit{hubs}.
+
+As comunidades com apenas uma ocupação possuem duas explicações. A primeira são nós que interconectam comunidades maiores, mas com pouco fluxo entre elas, de maneira insuficiente para pertencer a uma das comunidades ou para conectá-las entre si. A segunda explicação se dá pelo limite de resolução, como citado na Seção~\ref{sec:comunidades}.
+
+No primeiro caso, esse nós solitários devem possuir ao menos grau dois e seus parceiros devem pertencer à comunidades distintas. Essa situação só acontece em cerca de 10\% dos casos (73 em 718), o que aponta que o limite de resolução afeta a detecção de comunidades nesse caso. \citeonline{Kawamoto2015-ha}, recomendam o uso de agrupamento hierárquico para diminuir os efeitos do limite de resolução. Entretanto, sua aplicação nesse caso resulta em um comportamento similar, cerca de 10\% dos nós solitários (74 de 726) conectam comunidades distintas.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=0.9\linewidth]{pareto-comunidades.png}
+  \caption{Gráfico de Pareto com a distribuição de tamanho das comunidades. As comunidades estão ordenadas pelo número de ocupações que contém, comunidades maiores estão à esquerda e comunidades menores à direita. O eixo direito, em escala logarítmica, está associado à linha vermelha e representa o tamanho da comunidade. O eixo esquerdo está associado à linha azul e representa o total de ocupações e qual a contribuição das comunidades à esquerda do ponto para ela.}
+  \label{fig:pareto-comunidades}
+\end{figure}
+
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.9\linewidth]{ex-sobreposicao.pdf}
+  \caption{20 maiores comunidades com as conexões de maior fluxo. A rede possui uma topologia entre \enquote{estrela} e \enquote{eixo e raios} (\textit{hub and spokes}). A adição conexões de menor fluxo aproxima a topologia à de uma rede completa.  O tamanho do nó e das conexões se refere ao volume de fluxo que passa por eles.}
+  \label{fig:ex-sobreposicao}
+\end{figure}
+
+\begin{comment}
 A avaliação da qualidade possui sua cota da dificuldades. Por concepção, as fronteiras agrupam um conjunto de ocupações onde o indivíduo possui maiores chances de permanecer durante sua carreira. Uma análise possível seria o uso de \textit{random walkers} simulando pessoas se movimentando entre as ocupações. Entretanto, esse é o próprio conceito do algoritmo Infomap e essa \enquote{validação} apenas reproduziria o resultado do algoritmo. Portanto, o Infomap detecta as fronteiras de carreira pela própria \textit{definição} do conceito.
 
 É importante observar que, apesar do algoritmo detectar as fronteiras de carreiras por definição, ele não fornece a dificuldade em se cruzar essa fronteira. O procedimento acima informa justamente essa dificuldade como uma forma de uma relação: pessoas que permanecem entre as fronteiras vs pessoas que as ultrapassam. A variação de parâmetros do algoritmo na verdade define o quão alta ou baixa é essa barreira entre os grupos de ocupações.
@@ -365,7 +411,7 @@ Por concepção, os grupos resultantes sempre definem fronteiras de carreira. No
 Para isso, é preciso analisar o significado de cada ocupação. Essa é uma tarefa que um computador (ainda) não é capaz
 
 %% QUAL FOI O CRITÉRIO DE ESCOLHA DESSAS OCUPAÇÕES?
-% Na verdade, são todas as ocupações extraídas nessa versão. Mudei o texto, acha que ficou mais claro?
+% Ronie: Na verdade, são todas as ocupações extraídas nessa versão. Mudei o texto, acha que ficou mais claro?
 
 Como foi avaliado?
 
@@ -379,7 +425,7 @@ A aplicação do algoritmo Infomap resultou em 138 comunidades \textit{não-triv
 Permitindo que o algoritmo executasse agrupamento hierárquico, o primeiro nível possui apenas 3 grupos, um gigante composto por 6.722 nós, um segundo com 10 nós e o terceiro com 7 nós.
 
 %% NÃO ENTENDI DE ONDE VEIO ESSE AGRUPAMENTO HIERÁRQUICO. POR QUE USÁ-LO, PARA QUE USÁ-LO?
-% Justifiquei no final do capítulo anterior, veja se faz sentido.
+% Ronie: essa pergunta me fez mudar o foco dos resultados, espero que para melhor :)
 
 A existência de um grupo gigante indica que as carreiras são bastante diversificadas, fornecendo suporte ao conceito de \textit{Carreira sem Fronteiras}.
 
@@ -454,6 +500,7 @@ FIGURA X - Ciclo operacional
 O aparecimento de grupos com progressão clara em oposição a grupos com a presença de ciclos fortes fornece combustível para discussões sobre modelos de carreira, em especial a noção de que \enquote{carreiras sem evolução} são comuns.
 
 Finalmente, os próprios grupos resultantes possuem outras utilizações por si, já que representam os movimentos mais comuns nas ocupações brasileiras. Entre as possíveis aplicações eles podem ser usados como critério de classificação de ocupações; como plano de carreira baseado na progressão de menor barreira; ou como plano de treinamento de bases, já que as carreiras com progressão possuem claramente um ponto de partida; entre outros usos.
+\end{comment}
 
 %===================================
 \section{Perspectivas Futuras}
@@ -466,6 +513,35 @@ Essa pesquisa contribui com suporte para um questionamento importante sobre a pr
 Algumas movimentações também sugerem que há retrocesso em alguns momentos da carreira. Entender se de fato são retrocessos e o que os motiva são linhas de pesquisa possíveis.
 
 O MCar é uma fonte considerável de informação sobre o mercado de trabalho brasileiro. Outras pesquisas sobre profissões e carreira, em especial utilizando técnicas de Ciência de Redes, como \textit{motifs}, podem contribuir para uma melhor compreensão da dinâmica da movimentação profissional.
+
+\newpage
+
+\appendix
+
+%===================================
+\section{Exemplos de Grupos de Ocupações}
+%===================================
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{ex-sobreposicao-consultor-de-vendas.pdf}
+  \caption{20 maiores comunidades com as conexões de maior fluxo. A rede possui uma topologia entre \enquote{estrela} e \enquote{eixo e raios} (\textit{hub and spokes}). A adição conexões de menor fluxo aproxima a topologia à de uma rede completa.}
+  \label{fig:ex-sobreposicao-vendas}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{ex-sobreposicao-analista-de-sistemas.pdf}
+  \caption{20 maiores comunidades com as conexões de maior fluxo. A rede possui uma topologia entre \enquote{estrela} e \enquote{eixo e raios} (\textit{hub and spokes}). A adição conexões de menor fluxo aproxima a topologia à de uma rede completa.}
+  \label{fig:ex-sobreposicao-ti}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{ex-sobreposicao-aluno-iniciacao.pdf}
+  \caption{20 maiores comunidades com as conexões de maior fluxo. A rede possui uma topologia entre \enquote{estrela} e \enquote{eixo e raios} (\textit{hub and spokes}). A adição conexões de menor fluxo aproxima a topologia à de uma rede completa.}
+  \label{fig:ex-sobreposicao-ciencia}
+\end{figure}
 
 \newpage
 
