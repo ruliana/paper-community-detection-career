@@ -293,13 +293,17 @@ Existem variações da Equação de Mapa para detecção de comunidades sobrepos
 \subsection{Assortatividade} \label{sec:assortatividade}
 %===================================
 
-A assortatividade é uma medida de quão nós similares estão conectados entre si~\cite{Barabasi2016-rn}. A assortatividade de grau é significa o quanto nós de grau similar são conectados entre si. A assortatividade $k_\textit{nn}(i)$ do nó $i$ é medida como a média do grau dos seus nós vizinhos:
+A assortatividade é uma medida de quão nós similares estão conectados entre si~\cite{Newman2003-jn}. A assortatividade de grau significa o quanto nós de grau similar são conectados entre si.
 
-\begin{equation}
-k_\textit{nn}(i) = \frac{1}{k_i} \sum_{j \in N(i)} k_j
-\end{equation}
+Em um grafo, a assortatividade pode ser caracterizada pelo coeficiente de correlação de grau $r$.
 
-Onde $k_i$ é o grau do nó $i$, $N(i)$ são seus vizinhos e $k_j$ é o grau de cada vizinho de $i$.
+\begin{equation*}
+r = \sum_{j,k}
+\end{equation*}
+
+Onde ...
+
+Em uma rede desassortativa, $r < 0$, o que significa que nós de maior grau tendem a se conectar com nós de menor grau. Esse tipo de rede é possui uma topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde os \textit{hubs} se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:ex-sobreposicao-ti} mostra um exemplo de uma rede em que predomina essa topologia.
 
 %===================================
 \subsection{Coeficiente de Agrupamento} \label{sec:coef-agrupamento}
