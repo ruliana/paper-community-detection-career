@@ -11,3 +11,4 @@ import networkx as nx
 graph = nx.read_pajek("./data/edge-list-ocupacoes3.net")
 
 print(nx.degree_assortativity_coefficient(graph))
+print(nx.degree_pearson_correlation_coefficient(graph))

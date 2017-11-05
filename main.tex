@@ -288,6 +288,7 @@ A grosso modo, a Equação de Mapa pode ser descrita como \textit{o tamanho méd
 Existem variações da Equação de Mapa para detecção de comunidades sobrepostas~\cite{Viamontes_Esquivel2011-it} e hierárquicas~\cite{Rosvall2011-yi}. Este trabalho usa ambas as variações.
 
 %% SE USAMOS AS VARIAÇÕES DA EQUAÇÃO DE MAPA, ENTÃO PRECISAMOS APRESENTÁ-LAS AQUI
+% Ronie: vou tentar colocar de maneira bem resumida, pq cada uma é um trabalho bastante completo. Me avisa se ficar insuficiente, por favor.
 
 %===================================
 \subsection{Assortatividade} \label{sec:assortatividade}
@@ -295,13 +296,40 @@ Existem variações da Equação de Mapa para detecção de comunidades sobrepos
 
 A assortatividade é uma medida de quão nós similares estão conectados entre si~\cite{Newman2003-jn}. A assortatividade de grau significa o quanto nós de grau similar são conectados entre si.
 
-Em um grafo, a assortatividade pode ser caracterizada pelo coeficiente de correlação de grau $r$.
+% Ronie: Preciso MUITO de uma ajuda com o matematiquês aqui :( A 'conta' tá certa, mas preciso de um jeito que fique compreensível. Ajuda, por favor!
 
-\begin{equation*}
-r = \sum_{j,k}
-\end{equation*}
+Essa assortatividade em uma rede direcionada pode ser caracterizada pelo coeficiente de correlação de Pearson dos graus~\cite{Barabasi2016-rn}. Sendo $k_i^\leftarrow$ e $k_i^\rightarrow$  respectivamente os graus de entrada e saída do nó $i$, sendo $E$ o conjunto de conexões da rede, $e = (m, n) \mid e \in E$ as conexões de $E$, $m$ o vértice de onde $e$ sai e $n$ o vértice para onde $e$ aponta, definem-se os \textit{graus remanescentes} da conexão $e$ como
 
-Onde ...
+\begin{align*}
+\delta_e^\leftarrow &= k_n^\leftarrow - 1
+\\
+\delta_e^\rightarrow &= k_m^\rightarrow - 1
+\end{align*}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[scale=0.4]{remaining-degree.pdf}
+    \caption{Graus remanescentes de entrada e saída da conexão $e$}
+    \label{fig:remaining-degree}
+\end{figure}
+
+O \textit{grau remanescente} é o grau do nó, excetuando-se a conexão atual (Figura~\ref{fig:remaining-degree}). A correlação de Pearson $r$ dos graus é então definida por:
+
+\begin{align*}
+p &= \sum_{e \in E} \delta_e^\leftarrow \delta_e^\rightarrow
+\\
+q &= \frac{1}{|E|} \sum_{e \in E} \delta_e^\leftarrow
+                                  \sum_{e \in E }\delta_e^\rightarrow
+\\
+\sigma^2_\leftarrow &= \sum_{e \in E} \left( \delta_e^\leftarrow \right)^2
+            - \frac{1}{|E|} \left( \sum_{e \in E} \delta_e^\leftarrow \right)^2
+\\
+\sigma^2_\rightarrow &= \sum_{e \in E} \left( \delta_e^\rightarrow \right)^2
+           - \frac{1}{|E|} \left( \sum_{e \in E} \delta_e^\rightarrow \right)^2
+\\
+r &= \frac{p - q}
+                {\sqrt{ \sigma^2_\leftarrow } \sqrt{ \sigma^2_\rightarrow }}
+\end{align*}
 
 Em uma rede desassortativa, $r < 0$, o que significa que nós de maior grau tendem a se conectar com nós de menor grau. Esse tipo de rede é possui uma topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde os \textit{hubs} se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:ex-sobreposicao-ti} mostra um exemplo de uma rede em que predomina essa topologia.
 
@@ -310,6 +338,7 @@ Em uma rede desassortativa, $r < 0$, o que significa que nós de maior grau tend
 %===================================
 
 %% DEPOIS DE EXPLICAR O COEFICIENTE DE AGRUPAMENTO AINDA SERÁ PRECISO DIZER COMO O INFOMAP + A ASSORTATIVIDADE E O COEFICIENTE DE AGRUPAMENTO SÃO USADOS PARA DETECTAR COMUNIDADES
+% Ronie: Na verdade, minha pretensão é usar essas duas medições para caracterizar a topologia das comunidades resultantes e talvez esse tópico e o anterior ficassem melhor em uma outra seção. O que estou observando (e quero números para comprovar) é que as comunidades tem uma topologia 'eixo e raios' (hub and spokes), ou seja, quase sempre algumas ocupações centrais conectam todas as outras da mesma comunidade, mas existem poucas conexões entre elas além da ocupação central. Confirmando isso, teríamos várias implicações interessantes que fogem ao escopo desse artigo. Por exemplo: essas são as ocupações mais críticas do mercado brasileiro, ou são as que possuem maior consenso, ou podemos criar um panorama geral criando um grafo só com elas e colapsando os 'raios'... e por aí vai. De qualquer forma, me parece uma boa maneira de caracterizar as comunidades.
 
 %===================================
 \section{Resultados e Conclusões} \label{sec:resultados}
@@ -354,6 +383,7 @@ A variação com maior compressão revela a melhor caracterização de particion
 Os resultados de compressão para cada variação são apresentados na Tabela~\ref{tab:metodos}. É possível observar que as variações simples e hierárquica possuem quase a mesma compressão (os valores na tabela são aproximados), isso significa que o MCar não possui uma organização inerentemente hierárquica. Por outro lado, há um ganho expressivo de compressão quando se permite a sobreposição de comunidades, revelando que existem ocupações compartilhadas entre grupos profissionais diferentes.
 
 % INTUITIVAMENTE UMA COMPRESSÃO MAIOR IMPLICA EM MENOS COMUNIDADES, PORÉM SUA TABELA MOSTRA O CONTRÁRIO, ASSIM COMO O TEXTO. DE ACORDO COM SUA EXPLICAÇÃO UMA MAIOR COMPRESSÃO IMPLICA EM MELHOR PARTICIONAMENTO E, PORTANTO, MAIS COMUNIDADES.
+% Ronie: Aqui acho que preciso melhorar a explicação. Como tb não expliquei as variações hierárquicas e com sobreposição do Infomap estão também falta uma peça do quebra cabeças. A compressão dessa 'descrição do caminho do random walker' acaba criando um balanço entre quantidade de nós e de comunidades. Se não houverem 'gargalos' de fluxo, o random walker não fica 'preso' em um subgrafo e a melhor compressão acontece simplesmente por códigos mais curtos nos nós mais frequentes, sem divisão em comunidades. Por outro lado, quando existe um gargalo o random walker fica preso por um longo tempo de um lado ou de outro dele, nesse formato a melhor compressão acontece se cada 'prisão' reutilizar os códigos mais curtos e criarmos um outro código para passar de um lado para o outro do gargalo. O que está acontecendo na variação com sobreposição é que existem nós, ao invés de conexãos, que são fronteira entre as comunidades. Uma boa ilustração disso é o grafo 'gravata borboleta' com 5 nós e 6 conexões, nesse formato: ▷◁. Sem permitir sobreposição de comunidades, o nós central força os dois triângulos a pertencer em uma única comunidade. Permitindo a sobreposição, o nó central consegue participar de duas comunidades: ▷ e ◁. Se fosse uma rede com uma conexão entre os triângulos, desse jeito: ▷—◁, então o gargalo seria a conexão (não o nó) e o algoritmo que não permite sobreposição teria a melhor compressão.
 
 \begin{table}
   \centering
