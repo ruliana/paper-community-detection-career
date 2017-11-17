@@ -112,26 +112,26 @@ Resumo vai aqui
 \section{Introdução}
 %===================================
 
-Cada trajetória profissional é bastante particular. Enquanto alguns seguem caminhos bem definidos, como inúmeros presidentes de empresa que começaram como estagiários, outros trilham por sequências improváveis de ocupações, como o início da carreira de Sílvio Santos, que foi Camelô e Paraquedista Militar antes de começar a carreira como Apresentador de TV.
+Cada trajetória profissional é bastante particular. Enquanto alguns seguem caminhos bem definidos, como inúmeros presidentes de empresas que começaram como estagiários, outros trilham por sequências improváveis de ocupações, como o início da carreira de Sílvio Santos, que foi Camelô e Paraquedista Militar antes de começar a carreira como Apresentador de TV.
 
 Também os modelos de carreiras têm se modificado e teorias como as das \textit{Carreiras Proteanas} e \textit{Carreiras sem Fronteiras} advogam um distanciamento das carreiras comuns em favor de trajetórias com foco maior no indivíduo~\cite{Bendassolli2009-bg}. A carreira proteana coloca o indivíduo, e não as organizações, como protagonista da trajetória profissional, onde seus valores são usados na decisão dos próximos passos e o sucesso é subjetivo e medido pela satisfação pessoal~\cite{Hall2004-ke}. A carreira sem fronteiras, por sua vez, acontece quando a trajetória se faz independente das organizações ou hierarquias. Essas carreiras são caracterizadas por passagens por múltiplas empresas ou mudanças na especialidade do indivíduo, como um eletricista industrial que passa a atuar como web designer~\cite{Arthur1994-qq}.
 
-No entanto, o movimento de uma pessoa entre ocupações profissionais não é simples. A capacitação do indivíduo, a atratividade da nova ocupação e o próprio conhecimento de que uma transição é possível a tornam mais fácil ou difícil para os profissionais. Quando essa transição é percebida como uma barreira por um número suficiente de pessoas, surge uma \textit{fronteira de carreira}~\cite{Gunz2007-hr}. Essas fronteiras delimitam um grupo de ocupações nas quais um indivíduo tem maiores chances de permanecer durante sua trajetória profissional, denominado aqui de \textit{Ilha Ocupacional}.
+No entanto, o movimento de uma pessoa entre ocupações profissionais não é simples. A capacitação do indivíduo, a atratividade da nova ocupação e o próprio conhecimento de que uma transição é possível a tornam mais fácil ou difícil para os profissionais. Quando essa transição é percebida como uma barreira por um número suficiente de pessoas, surge uma \textit{fronteira de carreira}~\cite{Gunz2007-hr}. Essas fronteiras delimitam um grupo de ocupações nas quais um indivíduo tem maiores chances de permanecer durante sua trajetória profissional, denominado aqui de \textit{ilha ocupacional}.
 
 Esse trabalho utiliza o conceito de fronteira de carreira~\cite{Gunz2007-hr}, um banco de dados real com milhões de experiências profissionais ~\cite{VAGAS_Tecnologia2015-yv} e técnicas de detecção de comunidades em redes~\cite{Rosvall2009-sd} para encontrar esses grupos profissionais no mercado de trabalho brasileiro, discutir e entender sua estrutura.
 
-O estudo revela onde estão as fronteiras desses grupos, qual sua composição e apresenta \textit{insights} sobre sua estrutura. O resultado obtido pode ser usado para o refinamento de teorias sobre carreira, como uma classificação natural para as ocupações baseada na movimentação profissional, ou como subsídio para o planejamento de carreiras.
+O estudo revela onde estão as fronteiras das ilhas ocupacionais, quais suas composições e apresenta \textit{insights} sobre suas estruturas. O resultado obtido pode ser usado para o refinamento de teorias sobre carreira, como uma classificação natural para as ocupações baseada na movimentação profissional, ou como subsídio para o planejamento de carreiras.
 
-A principal contribuição desse trabalho está em tornar concreto o conceito de \textit{fronteiras de carreira}, aplicando técnicas de Ciência de Redes para revelar a estrutura da rede de movimentação profissional no Brasil. O trabalho se estende nesse processo, derivando o conceito de \textit{ilha ocupacional} a partir das fronteiras de carreiras como grupos de ocupação que se isolam de outros, onde a movimentação entre ilhas é rara em comparação à movimentação interna.
+A principal contribuição desse trabalho está em tornar concreto o conceito de \textit{fronteiras de carreira}, aplicando técnicas de Ciência de Redes para revelar a estrutura da rede de movimentação profissional no Brasil. Além disso, o trabalho se estende nesse processo, derivando o conceito de \textit{ilha ocupacional} a partir das fronteiras de carreiras como grupos de ocupação que se isolam de outros, onde a movimentação inter-ilhas é rara em comparação à movimentação intra-ilhas.
 
-Explorando esse conceito, o trabalho caracteriza a topologia das ilhas ocupacionais e propõe a identificação de \textit{polos ocupacionais} como ocupações que possuem papel crucial na estrutura. A topologia encontrada na maior parte das ilhas tende um formato estrelado, dessa forma, espera-se que a atuação nos polos de cada ilha a afetem como um todo.
+Explorando esse conceito, o trabalho caracteriza a topologia das ilhas ocupacionais e propõe a identificação de \textit{polos ocupacionais} como ocupações que possuem papel crucial na estrutura. A topologia encontrada na maior parte das ilhas tende a um formato estrelado, dessa forma, espera-se que a atuação nos polos de cada ilha a afetem como um todo.
 
-A presença de uma ilha gigante nos resultados fornece indícios que suportam modelos de carreira, como o de \textit{Carreira sem Fronteiras}, ao mesmo tempo que indicam que eles não abrangem todos os segmentos profissionais.
+A presença de uma ilha gigante nos resultados fornece indícios que suportam modelos de carreira, como o de \textit{Carreira sem Fronteiras}, ao mesmo tempo em que indicam que eles não abrangem todos os segmentos profissionais.
 
 Esse artigo está organizado da seguinte forma. A Seção~\ref{sec:carreira} descreve o conceito de fronteira da carreira, enquanto a Seção~\ref{sec:mapa} descreve o banco de dados utilizado na pesquisa, e a Seção~\ref{sec:comunidades} descreve o algoritmo empregado para detecção de comunidades. Finalmente, na Seção~\ref{sec:resultados}, as ilhas ocupacionais resultantes são caracterizadas e são levantadas questões sobre os resultados obtidos. As conexões entre fronteiras de carreira e o algoritmo utilizado para detecção de comunidades são feitas ao final das Seções~\ref{sec:carreira} e~\ref{sec:comunidades}.
 
 %===================================
-\section{Carreira e Fronteira de Carreira} \label{sec:carreira}
+\section{Sobre Carreira e seus Conceitos Associados} \label{sec:carreira}
 %===================================
 
 Segundo~\citeonline{Arthur1989-rn}, carreira é \foreignquote{english}{uma sequência evolutiva da experiência profissional de uma pessoa no tempo}\footnote{No original: \enquote{an evolving sequence of person's work experience over time}.}.
@@ -154,7 +154,9 @@ Dessa maneira, as fronteiras de carreira são definidas objetivamente quando uma
 
 Partindo desse pressuposto, a identificação de trajetórias comuns e incomuns é condição suficiente e necessária para a detecção de fronteiras entre carreiras. Suficiente, pois a própria definição de fronteira é dependente da identificação do que são transições \enquote{incomuns}. Necessária, pois não existem fronteiras objetivamente definidas sem o consenso.
 
-No trabalho presente os aglomerados de ocupações são demarcados pelas fronteiras de carreira são chamados \textbf{ilhas de ocupações}, refletindo a facilidade de movimentação dentro de suas fronteiras e o distanciamento de outros grupos. O termo é usado somente para descrever ocupações, enquanto os termos \textit{partição} ou \textit{comunidade} se referem a subgrafos em uma rede genérica.
+No presente trabalho os aglomerados de ocupações demarcados pelas fronteiras de carreira são chamados \textit{ilhas de ocupações} ou \textit{ilhas ocupacionais}, refletindo a facilidade de movimentação dentro de suas fronteiras e o distanciamento de outros grupos. O termo é usado somente para descrever ocupações, enquanto os termos \textit{partição} ou \textit{comunidade} se referem a subgrafos em uma rede genérica.
+
+Como será visto a seguir, as ocupações serão representadas por nós em um grafo, enquanto as conexões trarão informações sobre as transições entre ocupações. Neste tipo de representação, outro conceito central introduzido para o desenvolvimento da pesquisa é o de \textit{pólos ocupacionais}, ou seja, carreiras que ...%% COMPLETAR
 
 %===================================
 \section{O Mapa de Carreiras} \label{sec:mapa}
@@ -195,13 +197,15 @@ Finalmente, pares de ocupações foram gerados. Por exemplo, um currículo com a
 
 Os pares foram agrupados e sua contagem se torna o peso de cada conexão na rede final. Nesse ponto do processo, cerca de 23 milhões de experiências profissionais são agrupadas em aproximadamente 7,5 mil ocupações distintas.
 
+%% PARA UM TRABALHO CIENTÍFICO É IMPORTANTE APRESENTARMOS OS NÚMEROS EXATOS
+
 Finalmente, os pares de ocupações foram conectados entre si e a rede final foi construída e armazenada em um banco de dados de grafo. Um sistema online\footnote{Disponível em \url{http://www.vagas.com.br/mapa-de-carreiras}} disponibiliza as informações publicamente. Apesar de gratuito e de consulta pública, os dados do Mapa VAGAS da Carreira não são de uso livre. A empresa gentilmente cedeu os dados ao pesquisador para esse trabalho.
 
 %===================================
 \section{Grafos e Detecção de Comunidades} \label{sec:comunidades}
 %===================================
 
-Uma comunidade é um subgrafo com conexões mais \textit{coesas} entre seus nós do que com nós do restante do grafo. A palavra \enquote{coesão} aqui pode ser interpretada de várias maneiras. Para \citeonline{Ahn2010-uh,Evans2009-lq}, uma comunidade é definida quando o número de conexões internas do subgrafo é maior que o número de conexões que o conecta ao resto do grafo. Para \citeonline{Barabasi2016-rn,Newman2004-jg} a comunidade deve possuir uma densidade de conexões mais alta do que o esperado em uma rede aleatória equivalente. Para esses autores, o número de conexões é o fator determinante para a identificação da comunidade.
+Uma \textit{comunidade} é um subgrafo com conexões mais \textit{coesas} entre seus nós do que com nós do restante do grafo. A palavra \enquote{coesão} aqui pode ser interpretada de várias maneiras. Para \citeonline{Ahn2010-uh,Evans2009-lq}, uma comunidade é definida quando o número de conexões internas do subgrafo é maior que o número de conexões que o conecta ao resto do grafo. Para \citeonline{Barabasi2016-rn,Newman2004-jg} a comunidade deve possuir uma densidade de conexões mais alta do que o esperado em uma rede aleatória equivalente. Para esses autores, o número de conexões é o fator determinante para a identificação da comunidade.
 
 \citeonline{Rosvall2009-sd,Van_Dongen2000-qm}, por sua vez, trabalham a detecção de comunidades como a identificação de fluxos mais frequentes na rede. Assumindo que uma conexão representa um fluxo, comunidades possuem fluxo maior entre seus nós do que com nós fora da comunidade.
 
@@ -213,7 +217,7 @@ Essa frequência é relativa ao fluxo entre os nós próximos: dez transições 
 
 O algoritmo Infomap (detalhado na Seção~\ref{sec:infomap}) utiliza \textit{random walkers} para identificar comunidades. Os caminhos em que eles circulam mais frequentemente são considerados como fazendo parte da mesma comunidade; por outro lado, caminhos raramente utilizados definem as fronteiras entre uma comunidade e outra, de maneira análoga à concepção de fronteiras de carreira de~\citeonline{Gunz2007-hr}.
 
-Portanto, por analogia, a identificação de comunidades do algoritmo Infomap identifica fronteiras de carreiras em uma rede em que as conexões representam o fluxo de profissionais entre ocupações.
+Portanto, por analogia, a identificação de comunidades do algoritmo Infomap identifica fronteiras de carreiras em uma rede em que as conexões representam o fluxo de profissionais entre ocupações, como é o caso do MCar.
 
 Nesse trabalho, as comunidades são chamadas \textit{ilhas ocupacionais}.
 
@@ -221,13 +225,13 @@ Nesse trabalho, as comunidades são chamadas \textit{ilhas ocupacionais}.
 \subsection{O Algoritmo Infomap} \label{sec:infomap}
 %===================================
 
-Segundo \citeonline{Grunwald2007-bt}, quaisquer regularidades em um conjunto de dados podem ser usadas para comprimi-los, ou seja, descrevê-los usando uma quantidade menor de símbolos. Quanto maior a regularidade, maior a compressão, dessa forma, dentre várias representações possíveis dos dados, a que apresentar maior compressão é também aquela que melhor identifica padrões nos dados. A Descrição de Comprimento Mínimo (\textit{Minimum Description Length}) é a disciplina que estuda essa relação.
+Segundo \citeonline{Grunwald2007-bt}, quaisquer regularidades em um conjunto de dados podem ser usadas para comprimi-los, ou seja, descrevê-los usando uma quantidade menor de símbolos. Quanto maior a regularidade, maior a compressão, dessa forma, dentre várias representações possíveis dos dados, a que apresentar maior compressão é também aquela que melhor identifica padrões nos dados. A Descrição de Comprimento Mínimo (\textit{Minimum Description Length}) é a disciplina que estuda essa relação (REF).
 
 O algoritmo Infomap aproveita essa dualidade entre detecção de padrões e compressão de dados para identificar padrões de fluxo em redes~\cite{Rosvall2009-sd}.
 
 Para compreender o algoritmo, é preciso entender como um trajeto aleatório em uma rede é representado e como a Descrição de Comprimento Mínimo usa essa representação na detecção de comunidades.
 
-Para isso, descreve-se o caminho que um \textit{random walker} faz em uma rede através da sequência de nós pelo qual ele passa. Por exemplo, assumindo uma rede com os nós $A$, $B$ e $C$, um caminho possível poderia ser descrito por $ABACBA$.
+Para isso, descreve-se o caminho que um \textit{random walker} faz em uma rede através da sequência de nós pela qual ele passa. Por exemplo, assumindo uma rede com os nós $A$, $B$ e $C$, um caminho possível poderia ser descrito por $ABACBA$.
 
 A Figura~\ref{fig:graph01} mostra um grafo regular, onde todos os nós possuem três vizinhos. Nesse tipo de rede, um \textit{random walker} ergódico (de caminho infinito) percorre todas as conexões o mesmo número de vezes. A Figura~\ref{fig:walk01} mostra um caminho aleatório passando por 800 nós.
 
