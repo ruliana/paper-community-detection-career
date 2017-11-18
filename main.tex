@@ -364,14 +364,14 @@ r &= \frac{p - q}
 
 
 %===================================
-\section{Resultados e Conclusões} \label{sec:resultados}
+\section{Resultados e Análises} \label{sec:resultados}
 %===================================
 
 % Descrição dos dados:
 
 A versão do MCar usada nesse trabalho é de fevereiro de 2017. Ela possui exatamente 7.450 ocupações distintas e 90.800 conexões.
 
-A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-ocupacoes}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 89\% das conexões da rede. O nó de maior grau possui conexão com 6.308 dos 7.450 nós da rede, ou seja, ele conecta cerca de 84,67\% das ocupações.
+A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-ocupacoes}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 89\% das conexões da rede. O nó de maior grau possui conexão com 6.308 dos 7.450 nós da rede, ou seja, ele conecta 84,67\% das ocupações.
 
 %% AH, VOCÊ NÃO VAI DEIXAR O LEITOR CURIOSO PARA SABER QUAL É ESSA OCUPAÇÃO QUE SE CONECTA COM QUASE TODAS AS OUTRAS, VAI? DIZ AÍ! E ESCREVA TAMBÉM. INCLUSIVE, VALEM ALGUNS COMENTÁRIOS SOBRE TAL OCUPAÇÃO.
 
@@ -384,15 +384,17 @@ A rede de ocupações possui a distribuição de grau exibida no gráfico de Par
 
 %% AO INVÉS DE USAR CORES, UTILIZE LINHA CHEIA E TRACEJADA, POIS A IMPRESSÃO FINAL DEVE SER PRETO E BRANCO.
 
-Observando a Figura~\ref{fig:pareto-ocupacoes} é possível notar que quase $1/4$ das ocupações possui apenas uma conexão (1.689 delas, $\approx$ 22,67\%). Independentemente do algoritmo de detecção de comunidades, esses nós serão levados a participar da mesma comunidade que seu parceiro. Essa configuração força o tamanho das comunidades para cima se elas contiverem um \textit{hub}. Por exemplo, mesmo que o nó de maior grau tenha preferência de conexão por outros nós de alto grau, ainda assim ele estaria conectado a pelo menos 8\% dos nós de grau 1. Ou seja, a menor comunidade possível que inclua o nó de maior grau possui ao menos aproximadamente 600 nós.
+Observando a Figura~\ref{fig:pareto-ocupacoes} é possível notar que quase $1/4$ das ocupações possui apenas uma conexão (1.689 delas, 22,67\%). Independentemente do algoritmo de detecção de comunidades, esses nós serão levados a participar da mesma comunidade que seu parceiro. Essa configuração força o tamanho das comunidades para cima se elas contiverem um \textit{hubs}. Por exemplo, mesmo que o nó de maior grau tenha preferência de conexão por outros nós de alto grau, ainda assim ele estaria conectado a pelo menos 8\% dos nós de grau 1. Ou seja, a menor comunidade possível que inclua o nó de maior grau possui ao menos aproximadamente 600 nós.
 
-A presença de \textit{hubs} faz esperar que as ilhas ocupacionais possuam um ou mais nós centrais altamente conectados, por onde passa o maior fluxo de profissionais. Uma vez que a eliminação dessas ocupações causaria o esfacelamento da ilha, ou seja, são as principais responsáveis por manter a ilha \textit{coesa}, elas recebem nome de \textit{polos ocupacionais} nesse trabalho.
+%% NA CIÊNCIA PRECISAMOS SER EXATOS. NÃO PODEMOS FICAR USANDO APROXIMADAMENTE O TEMPO TODO, OK? PADRONIZE DUAS CASAS DECIMAIS PARA PERCENTUAIS E ARREDONDE OS INTEIROS SE NECESSÁRIO.
+
+A presença de \textit{hubs} faz esperar que as ilhas ocupacionais possuam um ou mais nós centrais altamente conectados, por onde passa o maior fluxo de profissionais. Uma vez que a eliminação dessas ocupações causaria o esfacelamento da ilha, ou seja, são as principais responsáveis por manter a ilha \textit{coesa}, elas recebem nome de \textit{polos ocupacionais} nesse trabalho. %% ESSA EXPLICAÇÃO DEVERIA ESTAR NA SEÇÃO CONCEITUAL ACIMA
 
 % Procedimento:
 
 Nos experimentos realizados, o algoritmo Infomap foi utilizado para encontrar o particionamento mais coeso do MCar em relação ao fluxo. Como exposto nas Seções~\ref{sec:carreira} e~\ref{sec:infomap}, esse particionamento é a própria definição de fronteiras de carreira.
 
-O Infomap é bastante robusto quanto aos parâmetros utilizados, ou seja, mesmo grandes variações em seus parâmetros devem produzir resultados similares~\cite{Kawamoto2015-ha,Lambiotte2012-fp}. Por essa razão e para comparação com o trabalho de \citeonline{Viamontes_Esquivel2011-it}, os parâmetros padrões foram utilizados.
+O Infomap é bastante robusto quanto aos parâmetros utilizados, ou seja, mesmo grandes variações em seus parâmetros devem produzir resultados similares~\cite{Kawamoto2015-ha,Lambiotte2012-fp}. Por essa razão e para comparação com o trabalho de \citeonline{Viamontes_Esquivel2011-it}, os parâmetros padrões foram utilizados. %% E QUAIS PARÂMETROS SÃO ESSES? LISTE AQUI.
 
 Para esse algoritmo, quanto maior a compressão da informação do caminho do \textit{random walker}, melhor é o particionamento da rede~\cite{Rosvall2009-sd}.
 
@@ -414,22 +416,22 @@ Os resultados de compressão para cada variação são apresentados na Tabela~\r
   \centering
   \begin{tabular}{@{} l r r @{}}
     \toprule
-    Variação         & Compressão & Ilhas  \\
+    Variação         & Compressão & Ilhas Ocupacionais  \\
     \midrule
     Simples          & 14\%       & 123     \\
     Hierárquica      & 14\%       & 123     \\
     Com sobreposição & 44\%       & 926     \\
     \bottomrule
   \end{tabular}
-  \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo (variação) de particionamento. \textit{Compressão} significa qual a compressão de informação obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Ihas} é o número de partições resultantes.}
+  \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo (variação) de particionamento. \textit{Compressão} significa qual a compressão de informação obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Ihas Ocupacionais} é o número de partições resultantes.}
   \label{tab:metodos}
 \end{table}
 
 \citeonline{Viamontes_Esquivel2011-it} apresentam um exemplo intuitivo do significado dessa sobreposição usando aeroportos europeus e norte-americanos. Transposto para a realidade do MCar, uma ocupação que pertence a mais de uma comunidade significa que os profissionais que transitam por ela, em sua maioria, voltam aos seus grupos de origem ao invés de migrarem para outros. Não fosse dessa forma, esses grupos conectados seriam considerados como um conjunto único de ocupações pelo algoritmo.
 
-Existem duas explicações possíveis. A primeira é que essas ocupações são \textit{homônimas} e portanto distintas, o que significa que há uma fronteira entre elas. A segunda é que essas ocupações são similares, mas fatores não especificados dificultam a transição de um grupo para outro, o que também indica uma fronteira de carreira, ainda que de mais fraca.
+Existem duas explicações possíveis. A primeira é que essas ocupações são \textit{homônimas} e, portanto, distintas, o que significa que há uma fronteira entre elas. A segunda é que essas ocupações são similares, mas fatores não especificados dificultam a transição de um grupo para outro, o que também indica uma fronteira de carreira, ainda que mais fraca.
 
-Em qualquer uma dessas interpretações, as ocupações que participam de mais de uma ilha ocupacional revelam uma fronteira, e não uma ponte.
+Em qualquer uma dessas interpretações, as ocupações que participam de mais de uma ilha ocupacional revelam uma fronteira e não uma ponte.
 
 Os resultados obtidos foram comparados com o trabalho de \citeonline{Viamontes_Esquivel2011-it} para obter uma perspectiva mais ampla sobre o significado da compressão (Tabela~\ref{tab:comparativo}). É possível observar que o MCar é a rede que mais se beneficia de uma estrutura que permite sobreposição de comunidades.
 
@@ -452,18 +454,18 @@ Os resultados obtidos foram comparados com o trabalho de \citeonline{Viamontes_E
     Rede Neural \textit{C. elegans}        & 297  & 2345     & 1\%     & < 1\%                & 3\% \\
     \bottomrule
   \end{tabular}
-  \caption{Comparativo da estrutura do Mapa de Carreiras (em destaque) com outras redes~\cite{Viamontes_Esquivel2011-it}. \textit{Compressão Simples} se refere à compressão de informação onde o Infomap obteve no melhor particionamento simples da rede (sem sobreposição ou hierarquia de partições). \textit{Compressão $\Delta$ Sobr.} se refere ao ganho na compressão obtido pela sobreposição de partições em relação à compressão simples. $N_{\text{sobr}}/N$ é a proporção de nós que participam em mais de uma comunidade em relação ao total de nós.}
+  \caption{Comparativo da estrutura do Mapa de Carreiras (em destaque) com outras redes~\cite{Viamontes_Esquivel2011-it}. \textit{Compressão Simples} se refere à compressão de informação onde o Infomap obteve o melhor particionamento simples da rede (sem sobreposição ou hierarquia de partições). \textit{Compressão $\Delta$ Sobr.} se refere ao ganho na compressão obtido pela sobreposição de partições em relação à compressão simples. $N_{\text{sobr}}/N$ é a proporção de nós que participam em mais de uma comunidade em relação ao total de nós.}
   \label{tab:comparativo}
 \end{table}
 
-A distribuição de tamanho das ilhas resultantes da partição com sobreposição está na Figura~\ref{fig:pareto-comunidades}. Mais de 75\% delas possui uma única ocupação, representando apenas 8\% de todas as ocupações.
+A distribuição de tamanho das ilhas resultantes da partição com sobreposição está na Figura~\ref{fig:pareto-comunidades}. Mais de 75\% delas possui uma única ocupação, representando apenas 8\% de todas as ocupações. %% ESSA TABELA MERECE UMA DISCUSSÃO UM POUCO MAIS AMPLA. INVISTA AQUI UM BOM PARÁGRAFO DISCUTINDO OS DADOS E RESULTADOS DA TABELA, OK? LEMBRE-SE DE USAR DUAS CASAS DECIMAIS NOS PERCENTUAIS.
 
 O tamanho das ilhas decresce rapidamente, 15\% das maiores ilhas (cerca de 135) englobam 90\% das ocupações, enquanto a maior ilha possui sozinha cerca de $1/4$ das ocupações. Essa ilha gigante indica que o conceito de Carreira sem Fronteiras é uma realidade, já que não é possível identificar fronteiras claras para uma imensa quantidade de ocupações. Por outro lado, a identificação de ilhas ocupacionais sugere que a Carreira sem Fronteiras não é aplicável irrestritamente. Adicionalmente, a análise pontual das maiores ilhas pode fornecer mais insumos na compreensão do que faz a Carreira sem Fronteiras ser possível.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width=0.9\linewidth]{pareto-comunidades.png}
-    \caption{Gráfico de Pareto com a distribuição de tamanho das ilhas ocupacionais. As comunidades estão ordenadas pelo número de ocupações que contém, ilhas maiores estão à esquerda e menores à direita. O eixo direito, em escala logarítmica, está associado à linha vermelha e representa o número de ocupações da ilha. O eixo esquerdo está associado à linha azul e representa o total de ocupações e qual a contribuição acumulativa das ilhas à esquerda do ponto para ela.}
+    \caption{Gráfico de Pareto com a distribuição de tamanho das ilhas ocupacionais. As comunidades estão ordenadas pelo número de ocupações que contêm, ilhas maiores estão à esquerda e menores à direita. O eixo direito, em escala logarítmica, está associado à linha vermelha e representa o número de ocupações da ilha. O eixo esquerdo está associado à linha azul e representa o total de ocupações e qual a contribuição acumulativa das ilhas à esquerda do ponto para ela.}
     \label{fig:pareto-comunidades}
 \end{figure}
 
@@ -477,11 +479,13 @@ As comunidades com apenas uma ocupação possuem duas explicações. A primeira 
 No primeiro caso, esses nós solitários devem possuir ao menos grau dois e seus parceiros devem pertencer à comunidades distintas. Essa situação só acontece em cerca de 10\% dos casos (73 em 718), o que aponta que o limite de resolução afeta a detecção de comunidades nesse caso. \citeonline{Kawamoto2015-ha}, recomendam o uso de agrupamento hierárquico para diminuir os efeitos do limite de resolução. Entretanto, sua aplicação nesse caso resulta em um comportamento similar com cerca de 10\% dos nós solitários (74 de 726) conectando comunidades distintas.
 \end{comment}
 
-As comunidades, em sua maioria, possuem topologia em que predomina a forma de estrela ou estrelas com múltiplos centros. Isso significa poucos \textit{hubs} conectando quase todos os outros nós. Esse formato é caracterizado por uma assortatividade negativa, ou seja, nós de alto grau conectados a nós de baixo grau~\cite{Barabasi2016-rn}.
+As comunidades, em sua maioria, possuem uma topologia em que predomina a forma de estrela ou estrelas com múltiplos centros. Isso significa poucos \textit{hubs} conectando quase todos os outros nós. Esse formato é caracterizado por uma assortatividade negativa, ou seja, nós de alto grau conectados a nós de baixo grau~\cite{Barabasi2016-rn}.
 
 A assortatividade das 162 ilhas com ao menos três ocupações é exibida na Figura~\ref{fig:assortatividade}. Quase todas elas possuem assortatividade negativa, embora essa característica seja suavizada em ilhas ocupacionais maiores.
 
-Essa topologia, associada a um grande fluxo de profissionais que passam pelos \textit{hubs}, caracteriza o que é chamado nesse trabalho de \textit{polo ocupacional}. Esses polos são ocupações que funcionam como atratores e dispersores de profissionais e ações sobre eles afetam a ilha como um todo. Esse conceito fica mais claro como os exemplos explicados mais abaixo.
+Essa topologia, associada a um grande fluxo de profissionais que passam pelos \textit{hubs}, caracteriza o que é chamado nesse trabalho de \textit{polo ocupacional}. Esses polos são ocupações que funcionam como atratores e dispersores de profissionais e ações sobre eles afetam a ilha como um todo. Esse conceito fica mais claro com os exemplos explicados mais abaixo.
+
+%% OPA, ESSA EXPLICAÇÃO DEVERIA ESTAR LÁ ATRÁS E AQUI A GENTE APENAS CONFIRMA O APARECIMENTO DOS PÓLOS OCUPACIONAIS, OK?
 
 \begin{figure}[htb]
     \centering
@@ -493,17 +497,19 @@ Essa topologia, associada a um grande fluxo de profissionais que passam pelos \t
 %% PRECISAMOS MOSTRAR E DISCUTIR ALGUNS EXEMPLOS DE COMUNIDADES AQUI. VAMOS DEBATER SEUS COMENTÁRIOS ABAIXO E DEFINIR ALGUNS CAMINHOS PARA FECHARMOS O TRABALHO
 % Ronie: Acredito que resolvemos isso na vez que conversamos no LCoN, certo? Incorporei o que entendi da conversa nessa versão :)
 
-Três exemplos de ilhas ocupacionais são exibidos na Figura~\ref{fig:ex-ilhas-ocupacionais} ilustram os conceitos aqui apresentados.
+Três exemplos de ilhas ocupacionais são exibidos na Figura~\ref{fig:ex-ilhas-ocupacionais}, ilustrando os conceitos aqui apresentados.
 
 A ilha que se inicia com \enquote{aluno de iniciação científica} é exibida na Figura~\ref{fig:ex-sobreposicao-ciencia}. A topologia estrelada é claramente observável, irradiando-se a partir do \textit{polo ocupacional}. O fluxo predominante parte de \textit{aluno de iniciação científica}, passa por \textit{aluno de mestrado} e termina em \textit{aluno de doutorado} sem que haja fluxo na direção contrária, reforçando o conhecimento tácito sobre a área.
 
 O polo ocupacional é claramente \textit{aluno de iniciação científica}. O reforço dessa ocupação deve distribuir o fluxo de pessoas para as outras ocupações, em especial o fluxo mais forte \textit{aluno de mestrado} $\rightarrow$ \textit{aluno de doutorado}. Por outro lado, seu enfraquecimento tende a minar o fluxo de pessoa para outras ocupações, provocando o enfraquecimento da ilha como um todo.
 
-Essa análise pontual dá dimensão à contribuição desse trabalho. Nesse caso, identificada a ilha, o polo e o fluxo predominante,  ações para reforçar uma ocupação, como \textit{aluno de doutorado} por exemplo, passam a ser óbvias. Essa análise superficial sugere que aumentar o número de alunos de iniciação científica, desestimular sua movimentação para outras ocupações ou incentivar o fluxo para o mestrado provocaria o efeito desejado. A proporção de pessoas em cada fluxo fornece um \enquote{funil} para se estimar quantas pessoas seriam necessárias em cada ocupação para atingir um certo resultado.
+Essa análise pontual dá dimensão à contribuição desse trabalho. Nesse caso, identificada a ilha, o polo e o fluxo predominante,  ações para reforçar uma ocupação, como \textit{aluno de doutorado}, por exemplo, passam a ser óbvias. Essa análise superficial sugere que aumentar o número de alunos de iniciação científica, desestimular sua movimentação para outras ocupações ou incentivar o fluxo para o mestrado provocaria o efeito desejado. A proporção de pessoas em cada fluxo fornece um \enquote{funil} para se estimar quantas pessoas seriam necessárias em cada ocupação para atingir um certo resultado.
 
 As proporções entre as ocupações, por exemplo, entre \textit{aluno de iniciação científica}, \textit{aluno de mestrado} e \textit{aluno de doutorado} também podem servir como comparativo entre uma instituição de ensino e o \enquote{mercado}.
 
-O ilha ocupacional relacionada a \textit{tecnologia da informação} exibida na Figura~\ref{fig:ex-sobreposicao-ti} possui uma topologia de estrela com três polos claros: \textit{gerente de projetos}, \textit{analista de sistemas} e \textit{analista de suporte}. Cada um funcionando como centro de seu próprio conjunto de ocupações, mas com grande movimentação de profissionais entre si.
+A ilha ocupacional relacionada à \textit{tecnologia da informação}, exibida na Figura~\ref{fig:ex-sobreposicao-ti}, possui uma topologia de estrela com três polos claros: \textit{gerente de projetos}, \textit{analista de sistemas} e \textit{analista de suporte}. Cada um deles funciona como centro de seu próprio conjunto de ocupações, mas com grande movimentação de profissionais entre si. 
+
+%% EXISTE UM DESEQUILÍBRIO NA PROFUNDIDADE DA EXPLICAÇÃO DO CASO 1 PARA ESTE CASO 2 E O PRÓXIMO, FAVOR BALANCEAR.
 
 No último exemplo da Figura~\ref{fig:ex-sobreposicao-vendas}, exibindo a ilha relacionada a \textit{comercial e vendas}, os polos não são tão claros. \textit{Gerente comercial} e \textit{consultor de vendas} se destacam, mas quatro outros nós possuem grande fluxo e alta conectividade.
 
@@ -536,10 +542,12 @@ A topologia é mais similar a de \textit{centro e raios}, em que as ocupações 
 %\end{figure}
 
 %===================================
-\section{Perspectivas Futuras}
+\section{Conclusões e Perspectivas Futuras}
 %===================================
 
-Em essência, esse trabalho abre mais questionamentos do que responde a eles.
+Em essência, esse trabalho abre mais questionamentos do que responde a eles. %% OPS, SIM, É VERDADE, MAS NÃO PODEMOS USAR ESSA REDAÇÃO EM UM ARTIGO CIENTÍFICO. PODEMOS DIZER, POR EXEMPLO, "ESSE TRABALHO TRAZ UMA IMPORTANTE CONTRIBUIÇÃO PARA O ENTENDIMENTO DAS MOVIMENTAÇÕES DE CARREIRA USANDO UMA BASE DE DADOS REAL E CONCEITOS DE CIÊNCIA DE REDES, E ABRE DIVERSAS PERSPECTIVAS RELEVANTES DE PESQUISA..."
+
+%% NORMALMENTE AS CONCLUSÕES INICIAM FAZENDO UMA BREVE REVISÃO DE TUDO QUE FOI APRESENTADO, PARTINDO DAS HIPÓTESES DE PESQUISA, ATÉ AS CONCLUSÕES OBTIDAS. A PARTIR DISSO QUE INSERIMOS AS PERSPECTIVAS FUTURAS.
 
 Os aspectos sociais e psicológicos das fronteiras de carreira não foram abordados e são eles quem podem responder a perguntas como \enquote{por que as fronteiras estão onde estão?} e \enquote{por que as ilhas possuem essa topologia?}. Espera-se que o conteúdo apresentado contribua de maneira quantitativa em discussões sociais e psicológicas sobre movimentação profissional.
 
