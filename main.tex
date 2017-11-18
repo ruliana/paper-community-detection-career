@@ -308,9 +308,9 @@ Existem variações da Equação de Mapa para detecção de comunidades sobrepos
 \section{Assortatividade} \label{sec:assortatividade}
 %===================================
 
-A assortatividade é uma medida de quão nós similares estão conectados entre si~\cite{Newman2003-jn}. Quaisquer atributos dos nós podem ser usados como medida de assortatividade, por exemplo, se nós representarem pessoas a as conexões representarem amizades, medir a assortatividade de idade diria se as pessoas preferem amizades com outras de idade similar (assortatividade positiva) ou preferem amizades com pessoas muito mais velhas ou novas (assortatividade negativa ou desassortatividade).
+A assortatividade é uma medida de quão nós similares estão conectados entre si~\cite{Newman2003-jn}. Quaisquer atributos dos nós podem ser usados como medida de assortatividade, por exemplo, se nós representarem pessoas e as conexões representarem amizades, medir a assortatividade de idade diria se as pessoas preferem amizades com outras de idade similar (assortatividade positiva) ou preferem amizades com pessoas muito mais velhas ou novas (assortatividade negativa ou desassortatividade).
 
-A assortatividade de grau possui especial interesse na análise de redes, pois permite caracterizar sua topologia. Redes com assortatividade negativas (desassortativas), remetem à topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde nós de grau muito alto (\textit{hubs}) se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:ex-sobreposicao-ti} mostra um exemplo de uma rede em que predomina essa topologia.
+A assortatividade de grau é de especial interesse na análise de redes, pois permite caracterizar sua topologia. Redes com assortatividade negativa (desassortativas), remetem à topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde nós de grau muito alto (\textit{hubs}) se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:ex-sobreposicao-ti} mostra um exemplo de uma rede em que predomina essa topologia.
 
 Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote{estrela}, em que todos os nós de alto grau só se conectam a nós de grau muito baixo. Como exemplos, a ilha ocupacional relacionada a \enquote{fisioterapia} na Figura~\ref{fig:ex-fisioterapeutas}, com assortatividade $-0,27$, possui todos os nós conectados a um \textit{hub} central, com poucas conexões entre ocupações periféricas. Já a ilha relacionada a \enquote{bolsistas} na Figura~\ref{fig:ex-bolsistas}, com assortatividade $-0,07$, não possui um \textit{hub} tão claramente definido; ainda que existam alguns nós folhas conectados a nós de maior grau, boa parte dos nós possui grau similar.
 
@@ -329,7 +329,7 @@ Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote
 
 % Ronie: Preciso de uma ajuda com o matematiquês aqui :( A 'conta' tá certa, mas preciso de um jeito que fique compreensível. Ajuda, por favor.
 
-A assortatividade de grau em uma rede direcionada pode ser caracterizada pelo coeficiente de correlação de Pearson dos graus~\cite{Barabasi2016-rn}. Sendo $k_i^\leftarrow$ e $k_i^\rightarrow$  respectivamente os graus de entrada e saída do nó $i$, sendo $E$ o conjunto de conexões da rede, $e = (m, n) \mid e \in E$ as conexões de $E$, $m$ o vértice de onde $e$ sai e $n$ o vértice para onde $e$ aponta, definem-se os \textit{graus remanescentes} $\delta_e^\leftarrow$ e $\delta_e^\rightarrow$ da conexão $e$ como
+A assortatividade de grau em uma rede direcionada pode ser caracterizada pelo coeficiente de correlação de Pearson dos graus~\cite{Barabasi2016-rn}. Seja $k_i^\leftarrow$ e $k_i^\rightarrow$,  respectivamente, os graus de entrada e saída do nó $i$, $E$ o conjunto de conexões da rede, $e = (m, n) \mid e \in E$ as conexões de $E$, $m$ o vértice de onde $e$ sai e $n$ o vértice para onde $e$ aponta, definem-se os \textit{graus remanescentes} $\delta_e^\leftarrow$ e $\delta_e^\rightarrow$ da conexão $e$ como
 
 \begin{align*}
 \delta_e^\leftarrow &= k_n^\leftarrow - 1
@@ -369,18 +369,22 @@ r &= \frac{p - q}
 
 % Descrição dos dados:
 
-A versão do MCar usada nesse trabalho é de fevereiro de 2017. Ela possui exatamente 7450 ocupações distintas e 90800 conexões.
+A versão do MCar usada nesse trabalho é de fevereiro de 2017. Ela possui exatamente 7.450 ocupações distintas e 90.800 conexões.
 
-A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-ocupacoes}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 89\% das conexões da rede. O nó de maior grau possui conexão com 6308 dos 7450 nós da rede, ou seja, ele conecta cerca de 85\% das ocupações.
+A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-ocupacoes}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 89\% das conexões da rede. O nó de maior grau possui conexão com 6.308 dos 7.450 nós da rede, ou seja, ele conecta cerca de 84,67\% das ocupações.
+
+%% AH, VOCÊ NÃO VAI DEIXAR O LEITOR CURIOSO PARA SABER QUAL É ESSA OCUPAÇÃO QUE SE CONECTA COM QUASE TODAS AS OUTRAS, VAI? DIZ AÍ! E ESCREVA TAMBÉM. INCLUSIVE, VALEM ALGUNS COMENTÁRIOS SOBRE TAL OCUPAÇÃO.
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=0.9\linewidth]{pareto-ocupacoes.png}
-  \caption{Gráfico de Pareto com a distribuição de grau. Os nós estão ordenados pelo grau de maneira decrescente no eixo horizontal, ocupações de grau maior estão à esquerda e ocupações de menor grau estão à direita. O eixo direito, em escala logarítmica, está associado à linha vermelha e representa o grau do nó. O eixo esquerdo está associado à linha azul e representa a somatória de todos os graus em porcentagem e qual a contribuição das ocupações à esquerda para essa totalização.}
+  \caption{Gráfico de Pareto com a distribuição de grau do MCar. Os nós estão ordenados pelo grau de maneira decrescente no eixo horizontal; ocupações de grau maior estão à esquerda e ocupações de menor grau estão à direita. O eixo direito, em escala logarítmica, está associado à linha vermelha e representa o grau do nó. O eixo esquerdo está associado à linha azul e representa a somatória de todos os graus em porcentagem e qual a contribuição das ocupações à esquerda para essa totalização.}
   \label{fig:pareto-ocupacoes}
 \end{figure}
 
-Observando a Figura~\ref{fig:pareto-ocupacoes} é possível notar que quase $1/4$ das ocupações possui apenas uma conexão (1689 delas, $\approx$ 23\%). Independentemente do algoritmo de detecção de comunidades, esses nós serão levados a participar da mesma comunidade que seu parceiro. Essa configuração força o tamanho das comunidades para cima se elas contiverem um \textit{hub}. Por exemplo, mesmo que o nó de maior grau tenha preferência de conexão por outros nós de alto grau, ainda assim ele estaria conectado a pelo menos 8\% dos nós de grau 1. Ou seja, a menor comunidade possível que inclua o nó de maior grau possui ao menos aproximadamente 600 nós.
+%% AO INVÉS DE USAR CORES, UTILIZE LINHA CHEIA E TRACEJADA, POIS A IMPRESSÃO FINAL DEVE SER PRETO E BRANCO.
+
+Observando a Figura~\ref{fig:pareto-ocupacoes} é possível notar que quase $1/4$ das ocupações possui apenas uma conexão (1.689 delas, $\approx$ 22,67\%). Independentemente do algoritmo de detecção de comunidades, esses nós serão levados a participar da mesma comunidade que seu parceiro. Essa configuração força o tamanho das comunidades para cima se elas contiverem um \textit{hub}. Por exemplo, mesmo que o nó de maior grau tenha preferência de conexão por outros nós de alto grau, ainda assim ele estaria conectado a pelo menos 8\% dos nós de grau 1. Ou seja, a menor comunidade possível que inclua o nó de maior grau possui ao menos aproximadamente 600 nós.
 
 A presença de \textit{hubs} faz esperar que as ilhas ocupacionais possuam um ou mais nós centrais altamente conectados, por onde passa o maior fluxo de profissionais. Uma vez que a eliminação dessas ocupações causaria o esfacelamento da ilha, ou seja, são as principais responsáveis por manter a ilha \textit{coesa}, elas recebem nome de \textit{polos ocupacionais} nesse trabalho.
 
