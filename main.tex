@@ -250,7 +250,7 @@ A Figura~\ref{fig:graph01} mostra um grafo regular, onde todos os nós possuem t
   \caption{Caminho de um \textit{random walker}}
 \end{figure}
 
-Apesar de ser uma rede regular, onde cada nó possui três conexões, sua topologia faz com que o \textit{random walker} fique \enquote{preso} nos grupos formados pelos nós $ABCD$, $EFGH$ e $IJKL$; escapando esporadicamente de um para outro, onde circula até escapar novamente. Esses grupos são destacados na Figura~\ref{fig:graph02}. O caminho percorrido pelo \textit{walker} é exibido na Figura~\ref{fig:walk02}, dessa vez destacando os grupos por onde ele passa. As cores em ambas as figuras torna fácil perceber o comportamento do \textit{random walker}.
+Apesar de ser uma rede regular, onde cada nó possui três conexões, sua topologia faz com que o \textit{random walker} fique \enquote{preso} nos grupos formados pelos nós $ABCD$, $EFGH$ e $IJKL$; escapando esporadicamente de um para outro, onde circula até escapar novamente. Esses grupos são destacados na Figura~\ref{fig:graph02}. O caminho percorrido pelo \textit{walker} é exibido na Figura~\ref{fig:walk02}, dessa vez destacando os grupos por onde ele passa. As cores em ambas as figuras torna fácil perceber seu comportamento.
 
 \begin{figure}[ht]
   \centering
@@ -265,11 +265,13 @@ Apesar de ser uma rede regular, onde cada nó possui três conexões, sua topolo
   \caption{Rede e caminho destacados}
 \end{figure}
 
-Se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de \citeonline{Huffman1952-ak} para nomear os nós de acordo com a Figura~\ref{fig:graph03}, o caminho da Figura~\ref{fig:walk01} é representado por 2880 bits.
+Se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de tamanho variável de  \citeonline{Huffman1952-ak} os nós mais frequentes são representados por códigos menores, resultando em uma codificação menor para representar um caminho do que uma que use códigos de tamanho fixo.
 
-Se a rede for dividida em grupos como anteriormente, e usarmos uma sequência única de bits para marcar quando o \textit{walker} entra ou sai de um grupo, podemos reaproveitar os códigos usados para descrever cada nó, compactando a informação necessária para representar o caminho. A Figura~\ref{fig:graph04} mostra os códigos para a entrada de cada grupo (\enquote{00}, \enquote{10} e \enquote{11}) e os códigos de saída de cada grupo (\enquote{111}), bem como os códigos dos nós. Com essa codificação, o caminho da Figura~\ref{fig:walk01} usa 1776 bits.
+Os códigos usados por cada grupo são chamados \textit{codebooks}, os códigos que indicam qual \textit{codebook} será usado também é um \textit{codebook}, funcionando como um índice. Na Figura~\ref{fig:graph04}, existem três deles, um para cada grupo, contendo os nós \enquote{00}, \enquote{01}, \enquote{10}, \enquote{110} e o código de saída \enquote{111}. O \textit{codebook} índice possui os códigos: \enquote{0}, \enquote{10} e \enquote{11}.
 
-Os códigos usados por cada grupo são chamados \textit{codebooks}, os códigos que indicam qual \textit{codebook} será usado também é um \textit{codebook}, funcionando como um índice.
+Dessa forma o caminho que começa no nó mais abaixo do grafo da Figura~\ref{fig:graph03} e termina no nó do canto superior esquerdo é descrito pela sequência binária \enquote{000 1110 1011 1111 1101}, usando 19 bits. O mesmo caminho, usando a codificação da Figura~\ref{fig:graph04} é \enquote{\textbf{0} 01 110 \textit{111} \textbf{11} 00 01 10} possui 17 bits, onde os números em negrito indicam entrada em um grupo e o número em itálico indica saída do grupo.
+
+Nesse caminho curto, ambas as codificações têm tamanhos similares, Porém, em um caminho infinitamente longo (ergódico), o uso de múltiplos \textit{codebooks} pode produzir um código mais compacto do que o uso de um único \textit{codebook}. Como exemplo, o caminho da Figura~\ref{fig:walk01} usando a codificação da Figura~\ref{fig:graph03} possui 2880 bits, enquanto possui 1776 bits usando a codificação da Figura~\ref{fig:graph04}.
 
 \begin{figure}[ht]
   \centering
@@ -290,10 +292,10 @@ A \enquote{Equação de Mapa}\footnote{No original: \textit{Map Equation}}~\cite
 
 A Equação de Mapa é
 
-\begin{equation*}
+\begin{equation} \label{eq:map-equation}
   L(\mathsf{M}) = q_\curvearrowright H(\mathcal{Q}) + \sum_{i=1}^{m}p^i_\circlearrowright H(\mathcal{P}^i)\,,
-\end{equation*}
-onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento; $\mathsf{M}$ é o particionamento dos nós em $m$ comunidades; $i = 1, 2, \ldots, m$; $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de uma comunidade e passar para o \textit{codebook} índice; $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é número médio de bits usado para representar o \textit{codebook} índice segundo a distribuição de probabilidade $\mathcal{Q}$; e $H(\mathcal{P}^i)$ também é o número médio de bits, mas dessa vez, daqueles usados na comunidade $i$ segundo a distribuição $\mathcal{P}^i$; e finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
+\end{equation}
+onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento; $\mathsf{M}$ é o particionamento dos nós em $m$ comunidades; $i = 1, 2, \ldots, m$; $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de qualquer comunidade e passar para o \textit{codebook} índice; $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é número médio de bits usado para representar o \textit{codebook} índice segundo a distribuição de probabilidade $\mathcal{Q}$; e $H(\mathcal{P}^i)$ também é o número médio de bits, mas dessa vez daqueles usados na comunidade $i$ segundo a distribuição $\mathcal{P}^i$; finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
 
 $H(\textbf{p})$ é a equação que descreve a entropia da informação segundo uma certa distribuição de probabilidade $\textbf{p}$~\cite{Shannon1948-ic}. Ela se refere a média de bits necessária, por símbolo, para se representar uma mensagem e é expressa como
 
@@ -301,9 +303,60 @@ $H(\textbf{p})$ é a equação que descreve a entropia da informação segundo u
 H(\textbf{p}) = - \sum_i p_i \log_2 p_i\,.
 \end{equation*}
 
+Sendo $q_{i\curvearrowright}$, a probabilidade de saída da comunidade $i$, expande-se a Equação~\ref{eq:map-equation} em
+
+\begin{align}
+q_\curvearrowright    &= \sum_{i = 1}^m q_{i\curvearrowright}\\
+p^i_\circlearrowright &= q_{i \curvearrowright} + \sum_{\alpha \in i} p_\alpha  \\
+H(\mathcal{Q})         &= - \sum_{i = 1}^m \frac{q_{i \curvearrowright}}{q_\curvearrowright} \log_2 \frac{q_{i \curvearrowright}}{q_\curvearrowright} \\
+H(\mathcal{P}^i)      &= - \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} \log_2 \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} 
+-  \sum_{\alpha \in i} \frac{p_\alpha}{p^i_\circlearrowright} \log_2  \frac{p_\alpha}{p^i_\circlearrowright}\\
+L(\mathsf{M})           &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \sum_{i = 1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright} - \sum_{\alpha = 1}^n p_\alpha \log_2 p_\alpha + \sum_{i = 1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.
+\end{align}
+
 Existem variações da Equação de Mapa para detecção de comunidades sobrepostas~\cite{Viamontes_Esquivel2011-it} e hierárquicas~\cite{Rosvall2011-yi}. Este trabalho usa ambas as variações.
 
-Para o algoritmo que permite que os nós pertençam a mais de uma comunidade, \citeonline{Viamontes_Esquivel2011-it} usam \textit{conexões com memória} para lembrar de onde veio o \textit{random walker}, caso ele tenha vindo de uma comunidade e voltado para ela, isso significa que aquele nó faz parte dessa comunidade. Se ele muda de comunidade, esse nó pode fazer parte de múltiplas comunidades. Se \textit{sempre} muda de comunidade, então possivelmente as comunidades devam ser unidas.
+Para o algoritmo que permite que os nós pertençam a mais de uma comunidade, \citeonline{Viamontes_Esquivel2011-it} usam \textit{conexões com memória} para lembrar o passo anterior do \textit{random walker}. No caso de se mover para um nó que pertence à múltiplas comunidades, ele se manterá na comunidade de onde veio, se possível.
+
+Para isso, duas alterações são feitas na Equação de Mapa: ajuste de probabilidade para considerar nós em múltiplas comunidades, probabilidades diferentes para entrada e saída do \textit{codebook} índice.
+
+Para calculá-las, transforma-se a matriz de adjacência de um grafo ponderado e direcionado $\mathcal{W}$ na matriz estocástica colunar $w$, onde a soma dos pesos de entrada do nó (coluna) é normalizado para que some 1.
+
+Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker} chegar em $\beta$ a partir do nó $\alpha$ e são definidos como:
+
+\begin{align*}
+w_{\alpha \beta} = 
+    \begin{cases*}
+        0, & \text{se não há conexão entre $\alpha$ e $\beta$,}\\
+        \frac{\mathcal{W}_{\alpha \beta}}
+               {\sum_\beta \mathcal{W}_{\alpha \beta}},
+                & \text{caso contrário.}
+    \end{cases*}
+\end{align*}
+
+Na equação original, a probabilidade estacionária $p_\alpha$ de um \textit{random walker} estar em um nó $\alpha$ é dada pelo equação PageRank resolvida pelo Método das Potências:
+
+\begin{equation*}
+p_\alpha = \sum_{\beta \to \alpha} (1 - \tau)  \frac{p_\beta}{d_\beta} + \frac{1}{n} \tau
+\end{equation*}
+
+TODO: passar essa equação para mesma notação que a equação de múltiplas comunidades (usando a matrix estocástica $W$).
+
+Na variação da Equação de Mapa com sobreposição, a probabilidade estacionária $p_{\alpha_i}$ para todo nó $\alpha$ pertencente à comunidade $i$ é resolvida pelo sistema de equações
+
+\begin{align*}
+p_{\alpha_i} = \sum_\beta \sum_{j \in M_\beta} p_{\beta_j} \delta_{\alpha_i \beta_j} \left[ (1 - \tau)  w_{\beta \alpha} + \frac{1}{n} \tau \right],
+\end{align*}
+onde $\delta_{\alpha_i \beta_j}$ é a função de transição entre comunidades, definida como
+
+\begin{equation*}
+\delta_{\alpha_i \beta_j} =
+    \begin{cases*}
+    1,                              & \text{se $i = j$},\\
+    \frac{1}{|M_\beta|} & \text{se $i \neq j$ e $i \notin M_\beta$},\\
+    0,                              & \text{se $i \neq j$ e $i \in M_\beta$}.
+    \end{cases*}
+\end{equation*}
 
 A Equação de Mapa adaptada é
 
