@@ -291,64 +291,66 @@ O particionamento da rede em grupos onde os caminhos aleatórios podem ser repre
 A \enquote{Equação de Mapa}\footnote{No original: \textit{Map Equation}}~\cite{Rosvall2009-sd} permite que se identifiquem as menores codificações possíveis para um determinado particionamento da rede sem a necessidade de se empregar \textit{random walkers} de fato. Com ela, a detecção de comunidades usando o fluxo como critério de coesão se reduz a um problema de otimização.
 
 A Equação de Mapa é
-
 \begin{equation} \label{eq:map-equation}
   L(\mathsf{M}) = q_\curvearrowright H(\mathcal{Q}) + \sum_{i=1}^{m}p^i_\circlearrowright H(\mathcal{P}^i)\,,
 \end{equation}
 onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento; $\mathsf{M}$ é o particionamento dos nós em $m$ comunidades; $i = 1, 2, \ldots, m$; $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de qualquer comunidade e passar para o \textit{codebook} índice; $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é número médio de bits usado para representar o \textit{codebook} índice segundo a distribuição de probabilidade $\mathcal{Q}$; e $H(\mathcal{P}^i)$ também é o número médio de bits, mas dessa vez daqueles usados na comunidade $i$ segundo a distribuição $\mathcal{P}^i$; finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
 
-$H(\textbf{p})$ é a equação que descreve a entropia da informação segundo uma certa distribuição de probabilidade $\textbf{p}$~\cite{Shannon1948-ic}. Ela se refere a média de bits necessária, por símbolo, para se representar uma mensagem e é expressa como
-
+$H(\textbf{p})$ é a equação que descreve a entropia da informação segundo uma certa distribuição de probabilidade $\textbf{p}$~\cite{Shannon1948-ic}. Ela se refere a média de bits necessária, por símbolo, para se representar a informação gerada por um processo estocástico e é expressa como:
 \begin{equation*}
-H(\textbf{p}) = - \sum_i p_i \log_2 p_i\,.
+H(\textbf{p}) = - \sum_\alpha p_\alpha \log_2 p_\alpha\,.
 \end{equation*}
 
-Sendo $q_{i\curvearrowright}$, a probabilidade de saída da comunidade $i$, expande-se a Equação~\ref{eq:map-equation} em
+Nessa equação, $p_\alpha$ é a probabilidade estacionária do \textit{walker} passar pelo nó$\alpha$, ou seja, em um caminho infinito, qual fração de tempo o \textit{walker} teria passado por $\alpha$~\cite{Rosvall2009-sd}.
 
+Para calcular $p_\alpha$ inicia-se com a matriz estocástica linear $W$, gerada a partir da matriz de adjacência $A$ direcionada e ponderada. Em uma matriz estocástica linear, a soma dos pesos de entrada do nó (linha) é normalizado para que resulte em 1. Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker}  em $\alpha$ chegar ao nó $\beta$.  Transportada para a realidade do MCar, essa é a probabilidade de alguém na ocupação $\alpha$ fazer a transição para a ocupação $\beta$.
+
+Sendo $n$ o número de nós da rede, define-se $w_{\alpha \beta}$ como:
+\begin{align} \label{eq:matriz-estocastica}
+w_{\alpha \beta} = 
+    \begin{cases*}
+        \frac{1}{n}, & \text{se $\alpha$ não possui conexões de saída, ou seja, $\sum_\beta A_{\alpha \beta} = 0$,} \\
+        0, & \text{se não há conexão entre $\alpha$ e $\beta$,} \\
+        \frac{A_{\alpha \beta}}{\sum_\beta A_{\alpha \beta}}, & \text{caso contrário.}
+    \end{cases*}
+\end{align}
+
+A primeira cláusula da Equação~\ref{eq:matriz-estocastica} garante que a matriz estocástica possua linhas totalizando 1 quando o nó não possui conexões de saída. Para efeitos do \textit{random walker}, isso significa que ele se teleporta para um nó qualquer da rede quando se encontra em um nó sem saída. Caso contrário, os nós sem conexões de saída acumulariam a probabilidade total da rede~\cite{Franceschet2011-ef}.
+
+A probabilidade estacionária $p_\alpha$ é calculada pelo sistema de equações
+\begin{equation} \label{eq:page-rank}
+p_\alpha = \sum_\beta (1 - \tau) p_\beta w_{\beta \alpha} + \frac{1}{n} \tau\,,
+\end{equation}
+onde $\tau$ é a probabilidade do \textit{walker} ser teleportado para um nó aleatório. A primeira cláusula da Equação~\ref{eq:matriz-estocastica} e a presença de $\tau$ transformam o \textit{random walker} em um \textit{random surfer}. Esse artifício foi usado por~\citeonline{Page1999-ag} na criação do algoritmo de PageRank e fornece a base para a Equação de Mapa.
+
+O recurso de teleporte garante a ergodicidade do caminho e, segundo o teorema de Perron-Frobenius, faz com que a probabilidade estacionária seja definida~\cite{Rosvall2009-sd}.
+
+A partir de $p_\alpha$, é possível expandir a Equação de Mapa.
+
+Sendo $q_{i \curvearrowright}$ a probabilidade de saída da comunidade $i$, $q_{\curvearrowright}$ é a probabilidade de saída de qualquer comunidade. O valor de $q_{\curvearrowright}$ equivale à taxa de uso do \textit{codebook} índice, uma vez que a saída de uma comunidade implica  em seu uso para indicar qual a próxima comunidade.
+
+Finalmente, sendo $n$ o número de nós da rede e $n_i$ o número de nós pertencente à comunidade $i$, expande-se a Equação~\ref{eq:map-equation} em
 \begin{align}
-q_\curvearrowright    &= \sum_{i = 1}^m q_{i\curvearrowright}\\
-p^i_\circlearrowright &= q_{i \curvearrowright} + \sum_{\alpha \in i} p_\alpha  \\
-H(\mathcal{Q})         &= - \sum_{i = 1}^m \frac{q_{i \curvearrowright}}{q_\curvearrowright} \log_2 \frac{q_{i \curvearrowright}}{q_\curvearrowright} \\
-H(\mathcal{P}^i)      &= - \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} \log_2 \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} 
--  \sum_{\alpha \in i} \frac{p_\alpha}{p^i_\circlearrowright} \log_2  \frac{p_\alpha}{p^i_\circlearrowright}\\
-L(\mathsf{M})           &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \sum_{i = 1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright} - \sum_{\alpha = 1}^n p_\alpha \log_2 p_\alpha + \sum_{i = 1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.
+q_{i \curvearrowright} &= \tau \frac{n - n_i}{n} \sum_{\alpha \in i} p_\alpha + (1 - \tau) \sum_{\alpha \in i} \sum_{\beta \nin i} p_\alpha w_{\alpha \beta} \nonumber \\
+q_\curvearrowright       &= \sum_{i = 1}^m q_{i\curvearrowright} \nonumber \\
+p^i_\circlearrowright    &= q_{i \curvearrowright} + \sum_{\alpha \in i} p_\alpha \nonumber \\
+H(\mathcal{Q})            &= - \sum_{i = 1}^m \frac{q_{i \curvearrowright}}{q_\curvearrowright} \log_2 \frac{q_{i \curvearrowright}}{q_\curvearrowright} \nonumber \\
+H(\mathcal{P}^i)         &= - \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} \log_2 \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} 
+-  \sum_{\alpha \in i} \frac{p_\alpha}{p^i_\circlearrowright} \log_2  \frac{p_\alpha}{p^i_\circlearrowright} \nonumber \\
+L(\mathsf{M})              &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \sum_{i = 1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright} - \sum_{\alpha = 1}^n p_\alpha \log_2 p_\alpha + \sum_{i = 1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.
 \end{align}
 
 Existem variações da Equação de Mapa para detecção de comunidades sobrepostas~\cite{Viamontes_Esquivel2011-it} e hierárquicas~\cite{Rosvall2011-yi}. Este trabalho usa ambas as variações.
 
 Para o algoritmo que permite que os nós pertençam a mais de uma comunidade, \citeonline{Viamontes_Esquivel2011-it} usam \textit{conexões com memória} para lembrar o passo anterior do \textit{random walker}. No caso de se mover para um nó que pertence à múltiplas comunidades, ele se manterá na comunidade de onde veio, se possível.
 
-Para isso, duas alterações são feitas na Equação de Mapa: ajuste de probabilidade para considerar nós em múltiplas comunidades, probabilidades diferentes para entrada e saída do \textit{codebook} índice.
+Para isso, duas alterações são feitas na Equação de Mapa: mudança da definição de $p_\alpha$ para considerar nós em múltiplas comunidades (detalhada na Equação~\ref{eq:page-rank-overlap}) e a soma das probabilidades condicionais desses nós (detalhada mais à frente na Equação~\ref{eq:map-equation-overlap}).
 
-Para calculá-las, transforma-se a matriz de adjacência de um grafo ponderado e direcionado $\mathcal{W}$ na matriz estocástica colunar $w$, onde a soma dos pesos de entrada do nó (coluna) é normalizado para que some 1.
-
-Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker} chegar em $\beta$ a partir do nó $\alpha$ e são definidos como:
-
-\begin{align*}
-w_{\alpha \beta} = 
-    \begin{cases*}
-        0, & \text{se não há conexão entre $\alpha$ e $\beta$,}\\
-        \frac{\mathcal{W}_{\alpha \beta}}
-               {\sum_\beta \mathcal{W}_{\alpha \beta}},
-                & \text{caso contrário.}
-    \end{cases*}
-\end{align*}
-
-Na equação original, a probabilidade estacionária $p_\alpha$ de um \textit{random walker} estar em um nó $\alpha$ é dada pelo equação PageRank resolvida pelo Método das Potências:
-
-\begin{equation*}
-p_\alpha = \sum_{\beta \to \alpha} (1 - \tau)  \frac{p_\beta}{d_\beta} + \frac{1}{n} \tau
-\end{equation*}
-
-TODO: passar essa equação para mesma notação que a equação de múltiplas comunidades (usando a matrix estocástica $W$).
-
-Na variação da Equação de Mapa com sobreposição, a probabilidade estacionária $p_{\alpha_i}$ para todo nó $\alpha$ pertencente à comunidade $i$ é resolvida pelo sistema de equações
-
-\begin{align*}
+Na equação original, a probabilidade estacionária $p_\alpha$ de um \textit{random walker} estar em um nó $\alpha$ é dada pelo Equação~\ref{eq:page-rank}. Na variação com sobreposição, cada nó $\alpha$ possui uma probabilidade separada de estar em uma comunidade $i$, a probabilidade estacionária $p_{\alpha_i}$ é resolvida pelo sistema de equações
+\begin{equation} \label{eq:page-rank-overlap}
 p_{\alpha_i} = \sum_\beta \sum_{j \in M_\beta} p_{\beta_j} \delta_{\alpha_i \beta_j} \left[ (1 - \tau)  w_{\beta \alpha} + \frac{1}{n} \tau \right],
-\end{align*}
+\end{equation}
 onde $\delta_{\alpha_i \beta_j}$ é a função de transição entre comunidades, definida como
-
 \begin{equation*}
 \delta_{\alpha_i \beta_j} =
     \begin{cases*}
@@ -358,23 +360,19 @@ onde $\delta_{\alpha_i \beta_j}$ é a função de transição entre comunidades,
     \end{cases*}
 \end{equation*}
 
-A Equação de Mapa adaptada é
-
-\begin{equation*}
+A Equação de Mapa para comunidades com sobreposição é
+\begin{equation} \label{eq:map-equation-overlap}
     L(\mathsf{M}) = q_\curvearrowleft \log_2 q_\curvearrowleft
-                               - \sum_{i=1}^m q_{i \curvearrowleft} \log_2 q_{i \curvearrowleft}
-                               - \sum_{i=1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright}
+                               - 2 \sum_{i=1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright}
                                - \sum_{i=1}^m \sum_{\alpha \in i} p_{\alpha_i} \log_2  p_{\alpha_i}
-                               + \sum_{i=1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,,                            
-\end{equation*}
-onde ...
-
-% Ronie: okay... aqui preciso de uma ajuda. A equação é basicamente a mesma da Equação de Mapa, essa aí é uma versão expandida. Estou comparando os dois papers pra ver se entendo o que está acontecendo, mas está difícil. Consegue me ajudar ou indicar alguém pra me dar uma ajuda. Estou tentando compreender sozinho, mas está levando MUITO tempo.
+                               + \sum_{i=1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.                            
+\end{equation}
 
 A variação hierárquica do algoritmo possibilita detecção de comunidades aninhadas, nesse caso, ela é uma generalização da Equação de Mapa original que permite que múltiplos \textit{codebooks}.
 
 %% SE USAMOS AS VARIAÇÕES DA EQUAÇÃO DE MAPA, ENTÃO PRECISAMOS APRESENTÁ-LAS AQUI
-% Ronie: vou tentar colocar de maneira bem resumida, pq cada uma é um trabalho bastante completo. Me avisa se ficar insuficiente, por favor.
+% Ronie: Feito!!!! Demorou uma vida pra entender como as equações dos três artigos se relacionavam, mas entendi :) A pior parte foi entender que a matriz estocástica W é linear, enquanto que nos materiais introdutórios ela é _sempre_ colunar, essa confusão me fez ficar dois fins se semana batendo a cabeça com 'essa conta não faz sentido'. Pois é, não fazia mesmo.
+% Ronie: Está faltando só a equação hierárquica, estou escrevendo ela agora.
 
 %===================================
 \section{Assortatividade} \label{sec:assortatividade}
