@@ -269,9 +269,9 @@ Se cada nó for representado por uma sequência de bits, podemos medir quanta in
 
 Os códigos usados por cada grupo são chamados \textit{codebooks}, os códigos que indicam qual \textit{codebook} será usado também é um \textit{codebook}, funcionando como um índice. Na Figura~\ref{fig:graph04}, existem três deles, um para cada grupo, contendo os nós \enquote{00}, \enquote{01}, \enquote{10}, \enquote{110} e o código de saída \enquote{111}. O \textit{codebook} índice possui os códigos: \enquote{0}, \enquote{10} e \enquote{11}.
 
-Dessa forma o caminho que começa no nó mais abaixo do grafo da Figura~\ref{fig:graph03} e termina no nó do canto superior esquerdo é descrito pela sequência binária \enquote{000 1110 1011 1111 1101}, usando 19 bits. O mesmo caminho, usando a codificação da Figura~\ref{fig:graph04} é \enquote{\textbf{0} 01 110 \textit{111} \textbf{11} 00 01 10} possui 17 bits, onde os números em negrito indicam entrada em um grupo e o número em itálico indica saída do grupo.
+Dessa forma o caminho que começa no nó mais abaixo do grafo da Figura~\ref{fig:graph03} e termina no nó do canto superior esquerdo é descrito pela sequência binária \enquote{000 1110 1011 1111 1101}, usando 19 bits. O mesmo caminho, usando a codificação da Figura~\ref{fig:graph04} é \enquote{\textbf{0} 01 110 \textit{111} \textbf{11} 00 01 10} e possui 17 bits (os números em negrito indicam entrada em um grupo e o número em itálico indica saída do grupo).
 
-Nesse caminho curto, ambas as codificações têm tamanhos similares, Porém, em um caminho infinitamente longo (ergódico), o uso de múltiplos \textit{codebooks} pode produzir um código mais compacto do que o uso de um único \textit{codebook}. Como exemplo, o caminho da Figura~\ref{fig:walk01} usando a codificação da Figura~\ref{fig:graph03} possui 2880 bits, enquanto possui 1776 bits usando a codificação da Figura~\ref{fig:graph04}.
+Nesse caminho curto, ambas as codificações têm tamanhos similares, Porém, em um caminho infinitamente longo (ergódico), o uso de múltiplos \textit{codebooks} pode produzir um código mais compacto do que o uso de um único \textit{codebook}. Como exemplo, o caminho da Figura~\ref{fig:walk01} usando a codificação com um único \textit{codebook}da Figura~\ref{fig:graph03} possui 2880 bits, enquanto possui 1776 bits usando a codificação com três \textit{codebooks} da Figura~\ref{fig:graph04}.
 
 \begin{figure}[ht]
   \centering
@@ -292,16 +292,16 @@ A \enquote{Equação de Mapa}\footnote{No original: \textit{Map Equation}}~\cite
 
 A Equação de Mapa é
 \begin{equation} \label{eq:map-equation}
-  L(\mathsf{M}) = q_\curvearrowright H(\mathcal{Q}) + \sum_{i=1}^{m}p^i_\circlearrowright H(\mathcal{P}^i)\,,
+  L(\mathsf{M}) = q_\curvearrowright H(\mathcal{Q}) + \sum_{i \in \mathsf{M}} p^i_\circlearrowright H(\mathcal{P}^i)\,,
 \end{equation}
-onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento; $\mathsf{M}$ é o particionamento dos nós em $m$ comunidades; $i = 1, 2, \ldots, m$; $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de qualquer comunidade e passar para o \textit{codebook} índice; $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é número médio de bits usado para representar o \textit{codebook} índice segundo a distribuição de probabilidade $\mathcal{Q}$; e $H(\mathcal{P}^i)$ também é o número médio de bits, mas dessa vez daqueles usados na comunidade $i$ segundo a distribuição $\mathcal{P}^i$; finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
+onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento; $\mathsf{M}$ é o particionamento dos nós em comunidades $i \in \mathsf{M}$; $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de qualquer comunidade e passar para o \textit{codebook} índice; $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é número médio de bits usado para representar o \textit{codebook} índice segundo a distribuição de probabilidade $\mathcal{Q}$; e $H(\mathcal{P}^i)$ também é o número médio de bits, mas dessa vez daqueles usados na comunidade $i$ segundo a distribuição $\mathcal{P}^i$; finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
 
 $H(\textbf{p})$ é a equação que descreve a entropia da informação segundo uma certa distribuição de probabilidade $\textbf{p}$~\cite{Shannon1948-ic}. Ela se refere a média de bits necessária, por símbolo, para se representar a informação gerada por um processo estocástico e é expressa como:
 \begin{equation*}
 H(\textbf{p}) = - \sum_\alpha p_\alpha \log_2 p_\alpha\,.
 \end{equation*}
 
-Nessa equação, $p_\alpha$ é a probabilidade estacionária do \textit{walker} passar pelo nó$\alpha$, ou seja, em um caminho infinito, qual fração de tempo o \textit{walker} teria passado por $\alpha$~\cite{Rosvall2009-sd}.
+Nessa equação, $p_\alpha$ é a probabilidade estacionária do \textit{walker} passar pelo nó $\alpha$, ou seja, em um caminho infinito, qual fração de tempo o \textit{walker} teria passado por $\alpha$~\cite{Rosvall2009-sd}.
 
 Para calcular $p_\alpha$ inicia-se com a matriz estocástica linear $W$, gerada a partir da matriz de adjacência $A$ direcionada e ponderada. Em uma matriz estocástica linear, a soma dos pesos de entrada do nó (linha) é normalizado para que resulte em 1. Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker}  em $\alpha$ chegar ao nó $\beta$.  Transportada para a realidade do MCar, essa é a probabilidade de alguém na ocupação $\alpha$ fazer a transição para a ocupação $\beta$.
 
@@ -315,11 +315,11 @@ w_{\alpha \beta} =
     \end{cases*}
 \end{align}
 
-A primeira cláusula da Equação~\ref{eq:matriz-estocastica} garante que a matriz estocástica possua linhas totalizando 1 quando o nó não possui conexões de saída. Para efeitos do \textit{random walker}, isso significa que ele se teleporta para um nó qualquer da rede quando se encontra em um nó sem saída. Caso contrário, os nós sem conexões de saída acumulariam a probabilidade total da rede~\cite{Franceschet2011-ef}.
+A primeira cláusula da Equação~\ref{eq:matriz-estocastica} garante que a matriz estocástica possua linhas totalizando 1 quando o nó não possui conexões de saída. Para efeitos do \textit{random walker}, isso significa que ele se teleporta para um nó qualquer da rede quando se encontra em um nó sem saída. Caso contrário, os nós sem conexões de saída acumulariam a probabilidade total da rede~\cite{Page1999-ag}.
 
 A probabilidade estacionária $p_\alpha$ é calculada pelo sistema de equações
 \begin{equation} \label{eq:page-rank}
-p_\alpha = \sum_\beta (1 - \tau) p_\beta w_{\beta \alpha} + \frac{1}{n} \tau\,,
+p_\alpha = \frac{1}{n} \tau + \sum_\beta (1 - \tau) p_\beta w_{\beta \alpha}\,,
 \end{equation}
 onde $\tau$ é a probabilidade do \textit{walker} ser teleportado para um nó aleatório. A primeira cláusula da Equação~\ref{eq:matriz-estocastica} e a presença de $\tau$ transformam o \textit{random walker} em um \textit{random surfer}. Esse artifício foi usado por~\citeonline{Page1999-ag} na criação do algoritmo de PageRank e fornece a base para a Equação de Mapa.
 
@@ -327,14 +327,14 @@ O recurso de teleporte garante a ergodicidade do caminho e, segundo o teorema de
 
 A partir de $p_\alpha$, é possível expandir a Equação de Mapa.
 
-Sendo $q_{i \curvearrowright}$ a probabilidade de saída da comunidade $i$, $q_{\curvearrowright}$ é a probabilidade de saída de qualquer comunidade. O valor de $q_{\curvearrowright}$ equivale à taxa de uso do \textit{codebook} índice, uma vez que a saída de uma comunidade implica  em seu uso para indicar qual a próxima comunidade.
+Sendo $q_{i \curvearrowright}$ a probabilidade de saída da comunidade $i$ e $q_{\curvearrowright}$ a probabilidade de saída de qualquer comunidade, o valor de $q_{\curvearrowright}$ equivale à taxa de uso do \textit{codebook} índice, uma vez que a saída de uma comunidade implica  em seu uso para indicar qual a próxima comunidade.
 
 Finalmente, sendo $n$ o número de nós da rede e $n_i$ o número de nós pertencente à comunidade $i$, expande-se a Equação~\ref{eq:map-equation} em
 \begin{align}
-q_{i \curvearrowright} &= \tau \frac{n - n_i}{n} \sum_{\alpha \in i} p_\alpha + (1 - \tau) \sum_{\alpha \in i} \sum_{\beta \nin i} p_\alpha w_{\alpha \beta} \nonumber \\
-q_\curvearrowright       &= \sum_{i = 1}^m q_{i\curvearrowright} \nonumber \\
+q_{i \curvearrowright} &= \frac{n - n_i}{n} \tau \sum_{\alpha \in i} p_\alpha + (1 - \tau) \sum_{\alpha \in i} \sum_{\beta \nin i} p_\alpha w_{\alpha \beta} \nonumber \\
+q_\curvearrowright       &= \sum_{i \in M} q_{i\curvearrowright} \nonumber \\
 p^i_\circlearrowright    &= q_{i \curvearrowright} + \sum_{\alpha \in i} p_\alpha \nonumber \\
-H(\mathcal{Q})            &= - \sum_{i = 1}^m \frac{q_{i \curvearrowright}}{q_\curvearrowright} \log_2 \frac{q_{i \curvearrowright}}{q_\curvearrowright} \nonumber \\
+H(\mathcal{Q})            &= - \sum_{i \in M} \frac{q_{i \curvearrowright}}{q_\curvearrowright} \log_2 \frac{q_{i \curvearrowright}}{q_\curvearrowright} \nonumber \\
 H(\mathcal{P}^i)         &= - \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} \log_2 \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} 
 -  \sum_{\alpha \in i} \frac{p_\alpha}{p^i_\circlearrowright} \log_2  \frac{p_\alpha}{p^i_\circlearrowright} \nonumber \\
 L(\mathsf{M})              &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \sum_{i = 1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright} - \sum_{\alpha = 1}^n p_\alpha \log_2 p_\alpha + \sum_{i = 1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.
@@ -342,9 +342,9 @@ L(\mathsf{M})              &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \
 
 Existem variações da Equação de Mapa para detecção de comunidades sobrepostas~\cite{Viamontes_Esquivel2011-it} e hierárquicas~\cite{Rosvall2011-yi}. Este trabalho usa ambas as variações.
 
-Para o algoritmo que permite que os nós pertençam a mais de uma comunidade, \citeonline{Viamontes_Esquivel2011-it} usam \textit{conexões com memória} para lembrar o passo anterior do \textit{random walker}. No caso de se mover para um nó que pertence à múltiplas comunidades, ele se manterá na comunidade de onde veio, se possível.
+Para o algoritmo que permite que os nós pertençam a mais de uma comunidade, \citeonline{Viamontes_Esquivel2011-it} usam \textit{conexões com memória} para lembrar o passo anterior do \textit{random walker}. Quando ele se mover para um nó que pertence à múltiplas comunidades, ele se manterá na comunidade de onde veio, se possível.
 
-Para isso, duas alterações são feitas na Equação de Mapa: mudança da definição de $p_\alpha$ para considerar nós em múltiplas comunidades (detalhada na Equação~\ref{eq:page-rank-overlap}) e a soma das probabilidades condicionais desses nós (detalhada mais à frente na Equação~\ref{eq:map-equation-overlap}).
+Para isso, duas alterações são feitas na Equação de Mapa: mudança da definição de $p_\alpha$ para considerar nós em múltiplas comunidades (detalhada na Equação~\ref{eq:page-rank-overlap}) e a soma das probabilidades condicionais desses nós (detalhada na Equação~\ref{eq:map-equation-overlap}).
 
 Na equação original, a probabilidade estacionária $p_\alpha$ de um \textit{random walker} estar em um nó $\alpha$ é dada pelo Equação~\ref{eq:page-rank}. Na variação com sobreposição, cada nó $\alpha$ possui uma probabilidade separada de estar em uma comunidade $i$, a probabilidade estacionária $p_{\alpha_i}$ é resolvida pelo sistema de equações
 \begin{equation} \label{eq:page-rank-overlap}
@@ -368,7 +368,25 @@ A Equação de Mapa para comunidades com sobreposição é
                                + \sum_{i=1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.                            
 \end{equation}
 
-A variação hierárquica do algoritmo possibilita detecção de comunidades aninhadas, nesse caso, ela é uma generalização da Equação de Mapa original que permite que múltiplos \textit{codebooks}.
+A variação hierárquica do algoritmo possibilita detecção de comunidades aninhadas, nesse caso, ela é uma generalização da Equação de Mapa original que permite múltiplos \textit{codebooks} índices.
+
+Nessa variação, cada partição $\mathsf{M}$ possui um subparticionamento $\mathsf{M}^i$. Cada um dos subgrupos de $\mathsf{M}^i$ possui outro subparticionamento $\mathsf{M}^{ij}$ e assim sucessivamente até o particionamento final $\mathsf{M}^{ij \ldots k}$.
+
+A Equação de Mapa hierárquica é
+\begin{equation} \label{eq:map-equation-hierarchical}
+      L(\mathsf{M}) = q_\curvearrowright H(\mathcal{Q}) + \sum_{i \in \mathsf{M}} L(\mathsf{M}^i),
+\end{equation}
+com os níveis intermediários
+\begin{equation*}
+    L(\mathsf{M}^i) = q_\curvearrowright^i H(\mathcal{Q}^i) + \sum_{j \in \mathsf{M}^i} L(\mathsf{M}^{ij}),
+\end{equation*}
+e com os níveis finais
+\begin{equation*}
+    L(\mathsf{M}^{ij \ldots k}) = p_\circlearrowright^{ij \ldots k} H(\mathcal{P}^{ij \ldots k}).
+\end{equation*}
+
+A Equação de Mapa original (Equação~\ref{eq:map-equation}) é na verdade um caso específico da Equação~\ref{eq:map-equation-hierarchical}. Também é possível notar que a Equação de Mapa com sobreposição (Equação~\ref{eq:map-equation-overlap}) pode ser aplicada junto à variação hierárquica, resultando em uma versão hierárquica que permite que os nós pertençam a mais de um grupo.
+
 
 %% SE USAMOS AS VARIAÇÕES DA EQUAÇÃO DE MAPA, ENTÃO PRECISAMOS APRESENTÁ-LAS AQUI
 % Ronie: Feito!!!! Demorou uma vida pra entender como as equações dos três artigos se relacionavam, mas entendi :) A pior parte foi entender que a matriz estocástica W é linear, enquanto que nos materiais introdutórios ela é _sempre_ colunar, essa confusão me fez ficar dois fins se semana batendo a cabeça com 'essa conta não faz sentido'. Pois é, não fazia mesmo.
