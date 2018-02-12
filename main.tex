@@ -118,17 +118,17 @@ Também os modelos de carreiras têm se modificado e teorias como as das \textit
 
 No entanto, o movimento de uma pessoa entre ocupações profissionais não é simples. A capacitação do indivíduo, a atratividade da nova ocupação e o próprio conhecimento de que uma transição é possível a tornam mais fácil ou difícil para os profissionais. Quando essa transição é percebida como uma barreira por um número suficiente de pessoas, surge uma \textit{fronteira de carreira}~\cite{Gunz2007-hr}. Essas fronteiras delimitam um grupo de ocupações nas quais um indivíduo tem maiores chances de permanecer durante sua trajetória profissional, denominado aqui como \textit{ilha ocupacional}.
 
-Esse trabalho utiliza o conceito de fronteira de carreira~\cite{Gunz2007-hr}, um banco de dados real com milhões de experiências profissionais ~\cite{VAGAS_Tecnologia2014-yv} e técnicas de detecção de comunidades em redes~\cite{Rosvall2009-sd} para encontrar ilhas ocupacionais no mercado de trabalho brasileiro, discutir e entender sua estrutura.
+Esse trabalho utiliza o conceito de fronteira de carreira~\cite{Gunz2007-hr}, um banco de dados com milhões de experiências profissionais ~\cite{VAGAS_Tecnologia2014-yv} e técnicas de detecção de comunidades em redes~\cite{Rosvall2009-sd,Edler2017-kt} para encontrar ilhas ocupacionais no mercado de trabalho brasileiro, discutir e entender sua estrutura.
 
-O estudo revela onde estão as fronteiras das ilhas, quais suas composições e apresenta \textit{insights} sobre suas estruturas. O resultado obtido pode ser usado para o refinamento de teorias sobre carreira, como uma classificação natural para as ocupações baseada na movimentação profissional, ou como subsídio para o planejamento de carreiras.
+O estudo revela onde estão as fronteiras das ilhas, quais suas composições e apresenta \textit{insights} sobre suas estruturas. O resultado obtido pode ser usado para o refinamento de teorias sobre carreira, como uma classificação natural para as ocupações baseada na movimentação profissional ou como subsídio para o planejamento de carreiras.
 
-A principal contribuição desse trabalho está em tornar concreto o conceito de \textit{fronteiras de carreira}, aplicando técnicas de Ciência de Redes para revelar a estrutura da rede de movimentação profissional no Brasil. O trabalho se estende nesse processo, derivando o conceito de ilha ocupacional a partir das fronteiras de carreiras como grupos de ocupação que se isolam de outros, onde a movimentação inter-ilhas é rara em comparação à movimentação intra-ilhas.
+A principal contribuição desse trabalho está em tornar concreto o conceito de \textit{fronteiras de carreira}, aplicando técnicas de Ciência de Redes para revelar a estrutura da movimentação profissional no Brasil. O trabalho se estende nesse processo, derivando o conceito de ilha ocupacional a partir das fronteiras de carreiras como grupos de ocupação que se isolam de outros, onde a movimentação inter-ilhas é rara em comparação à movimentação intra-ilhas.
 
 Explorando esse conceito, o trabalho caracteriza a topologia das ilhas ocupacionais e propõe a identificação de \textit{polos ocupacionais} como ocupações que possuem papel crucial na estrutura. A topologia encontrada na maior parte das ilhas tende a um formato estrelado, sugerindo que a atuação nos polos afeta a ilha como um todo.
 
 A presença de uma ilha gigante nos resultados fornece indícios que suportam o modelo de \textit{Carreira sem Fronteiras}, ao mesmo tempo em que indica que ela não abrange todos os segmentos profissionais.
 
-Esse artigo está organizado da seguinte forma. A Seção~\ref{sec:carreira} descreve o conceito de fronteira da carreira, enquanto a Seção~\ref{sec:mapa} descreve o banco de dados utilizado na pesquisa. As Seções~\ref{sec:comunidades} e~\ref{sec:assortatividade} descrevem os algoritmos empregados para detecção de comunidades e a medição utilizada na caracterização da topologia. Finalmente, a Seção~\ref{sec:resultados} discute e levanta questões sobre os resultados obtidos. As conexões entre fronteiras de carreira e o algoritmo utilizado para detecção de comunidades são feitas ao final das Seções~\ref{sec:carreira} e~\ref{sec:comunidades}.
+Esse artigo está organizado da seguinte forma. A Seção~\ref{sec:carreira} descreve o conceito de fronteira da carreira, enquanto a Seção~\ref{sec:mapa} descreve o banco de dados utilizado na pesquisa. As Seções~\ref{sec:comunidades} e~\ref{sec:assortatividade} descrevem os algoritmos empregados para detecção de comunidades e a medição utilizada na caracterização da topologia. Finalmente, a Seção~\ref{sec:resultados} discute e levanta questões sobre os resultados obtidos.
 
 %===================================
 \section{Sobre Carreira e seus Conceitos Associados} \label{sec:carreira}
@@ -140,13 +140,9 @@ Apesar das discussões sobre as mudanças nos modelos de carreira, passando de u
 
 Para os fins desse trabalho, define-se carreira como \textit{a sequência de \textbf{ocupações} pela qual um indivíduo passa em sua vida profissional}. Essa definição é similar à de \citeonline{Arthur1989-rn}, porém, limita sua abrangência e a torna mais concreta. Isso permite uma análise menos subjetiva, uma vez que ocupações profissionais podem ser extraídas de currículos e analisadas quantitativamente. No entanto, ela se torna mais limitada, já que essa definição exclui aspectos psicológicos ou sociais.
 
-\begin{comment} Ronie: isso é o início de outra argumentação
-Em resumo, a argumentação é que uma \enquote{coisa} social é um construto pessoal e subjetivo, mas se torna objetivo quando há um consenso por um número suficiente de pessoas. Essa mesma linha de raciocínio é explorada por \citeonline{Abbott1995-ft} para explicar o surgimento de \enquote{entidades} sociais, como profissões, a partir do reconhecimento das diferenças entre elas por um número crescente de pessoas.
-\end{comment}
+Essa pesquisa empresta o conceito de \textit{fronteiras de carreira} (\textit{career boundaries}) descrito por \citeonline{Gunz2007-hr} para dar significado ao trabalho. A fronteira de carreira significa que uma mudança entre ocupações nem sempre pode ser realizada livremente. Por exemplo, um profissional precisa de graduação especializada antes de poder se mover da ocupação de \enquote{Auxiliar de Jardinagem} para \enquote{Médico}, por outro lado, a barreira para o mesmo profissional exercer a ocupação de \enquote{Jardineiro} se limita à experiência. É possível perceber que as barreiras não são simétricas, em tempos de crise econômica é mais simples para um \enquote{Engenheiro} tornar-se um \enquote{Corretor de Imóveis} do que o contrário.
 
-Essa pesquisa empresta o conceito de \textit{fronteiras de carreira} (\textit{career boundaries}) descrito por \citeonline{Gunz2007-hr} para dar significado ao trabalho. A fronteira de carreira significa que uma mudança entre ocupações nem sempre pode ser realizada livremente. Por exemplo, um profissional precisa de graduação especializada antes de poder se mover da ocupação de \enquote{Auxiliar de Jardinagem} para \enquote{Médico}, por outro lado, a barreira para o mesmo profissional exercer a ocupação de \enquote{Jardineiro} se limita à experiência. É possível perceber que as barreiras não são simétricas, em um momento de crise é mais simples para um \enquote{Engenheiro} tornar-se um \enquote{Corretor de Imóveis} do que o contrário.
-
-Essas barreiras também não se limitam ao conhecimento, quaisquer dificuldades na movimentação podem criar fronteiras. Por exemplo, alguém morando em um grande centro urbano dificilmente exerceria a ocupação de \enquote{Agricultor} sem mover-se para o campo. Um \enquote{Diretor Financeiro} precisaria adequar seu padrão de vida antes de uma transição para uma ocupação com ganhos mais modestos. Uma profissão que está desaparecendo, como \enquote{Contínuo}, possui barreiras mais altas do que uma nascendo, como \enquote{Analista de Experiência do Usuário}.
+As barreiras não se limitam ao conhecimento, quaisquer dificuldades na movimentação podem criar fronteiras. Por exemplo, alguém morando em um grande centro urbano dificilmente exerceria a ocupação de \enquote{Agricultor} sem mover-se para o campo. Um \enquote{Diretor Financeiro} precisaria adequar seu padrão de vida antes de uma transição para uma ocupação com ganhos mais modestos. Uma profissão que está desaparecendo, como \enquote{Contínuo}, possui barreiras mais altas do que uma nascendo, como \enquote{Analista de Experiência do Usuário}.
 
 Um dos pontos principais desse trabalho está na argumentação de \citeonline{Gunz2007-hr} sobre como uma fronteira subjetiva se torna objetiva. Em sua argumentação as fronteiras de carreira são subjetivas e pessoais, onde cada um tem para si quais transições podem ser feitas em sua própria carreira. No entanto, elas se tornam objetivas quando um número suficientemente grande de pessoas possui a mesma compreensão sobre essas transições, a ponto dela ser perceptível em um nível macroscópico.
 
@@ -158,9 +154,7 @@ Essas fronteiras isolam algumas ocupações das outras, criando um grupo coeso p
 
 No presente trabalho esses aglomerados de ocupações são chamados \textit{ilhas de ocupações} ou \textit{ilhas ocupacionais}, refletindo a facilidade de movimentação dentro de suas fronteiras e o distanciamento de outros grupos.
 
-Como será visto a seguir, as ocupações serão representadas por nós em um grafo, enquanto as conexões trarão informações sobre as transições entre ocupações. Neste tipo de representação, outro conceito central introduzido para o desenvolvimento da pesquisa é o de \textit{polos ocupacionais}, ou seja, ocupações dentro de uma ilha por onde passa o maior fluxo de profissionais. Dada a topologia em formato de estrela encontrada nas ilhas, é esperado que perturbações nesses nós, como aumento ou diminuição no fluxo de profissionais, afetem a rede como um todo e sua eliminação causem o esfacelamento da ilha, ou seja, são as principais responsáveis por manter a ilha \textit{coesa}~\cite{Callaway2000-ug}. 
-
-% Ronie: esse paper é provisório, só dei uma passado por cima. Antes de fixá-lo vou estudar com calma.
+Como será visto a seguir, as ocupações serão representadas por nós em um grafo, enquanto as conexões trarão informações sobre as transições entre ocupações. Neste tipo de representação, outro conceito central introduzido para o desenvolvimento da pesquisa é o de \textit{polos ocupacionais}, ou seja, ocupações dentro de uma ilha por onde passa o maior fluxo de profissionais. Dada a topologia em formato de estrela encontrada nas ilhas, é esperado que perturbações nesses nós, como aumento ou diminuição no fluxo de profissionais, afetem a rede como um todo e sua eliminação causem o esfacelamento da ilha, ou seja, são as principais responsáveis por manter a ilha coesa. 
 
 %===================================
 \section{O Mapa de Carreiras} \label{sec:mapa}
@@ -179,7 +173,7 @@ O Mapa VAGAS de Carreiras~\cite{VAGAS_Tecnologia2014-yv} é uma rede que resume 
 
 As ocupações no MCar foram definidas a partir de \textit{consenso} nos currículos. Como o título da ocupação é um campo em que o usuário digita livremente, assumiu-se que, se um grupo \enquote{suficientemente grande} de pessoas entra em acordo sobre uma certa nomenclatura, ela representa objetivamente uma ocupação. Essa abordagem é colocada de maneira implícita em ~\citeonline{Abbott1995-ft}, enquanto \citeonline{Gunz2007-hr} a exploram para definir fronteiras de carreiras.
 
-Uma das maiores dificuldades para se estabelecer uma ocupação através de consenso está em definir o quanto ele deve ser \enquote{suficientemente grande} para que seja considerada como tal. Para os fins desse trabalho, esse número foi obtido de forma experimental e empírica. Para isso, procurou-se o número mínimo de repetições exatas na grafia das ocupações de maneira que não fossem encontrados erros de digitação recorrentes, ou seja, que das ocupações criadas por consenso, nenhuma fosse resultado de erros frequentes de digitação. Esse número foi definido em 30 repetições da mesma grafia no título da ocupação.
+Uma das maiores dificuldades para se estabelecer uma ocupação através de consenso está em definir o quanto ele deve ser \enquote{suficientemente grande} para que seja considerada como tal. Para os fins desse trabalho, esse número foi obtido de forma experimental e empírica. Para isso, procurou-se o número mínimo de repetições na grafia das ocupações de maneira que não fossem encontrados erros de digitação recorrentes, ou seja, que das ocupações criadas por consenso, nenhuma fosse mero resultado de erro. Esse número foi definido em 30 repetições da mesma grafia no título da ocupação.
 
 Para a criação do MCar foram usados os currículos anonimizados de 10 milhões de usuários registrados no site VAGAS.com.br. A seleção de dados, bem como o processamento das informações, seguiu um procedimento conservador. Isso significa que as decisões tomadas em sua construção procuram minimizar os erros decorrentes da qualidade dos dados, mesmo que isso signifique trabalhar com uma quantidade menor deles. Utilizando o exemplo na Figura~\ref{fig:ex-mapa-midia}, isso significa que, provavelmente, muito mais do que 16 pessoas na base de dados fizeram a transição de \enquote{supervisor-de-midia} para a ocupação \enquote{gerente-de-midia}, porém, esses 16 são livres de erros e subjetividade.
 
@@ -189,7 +183,7 @@ Finalmente, algumas informações gerais foram extraídas dos currículos que pa
 
 As informações extraídas são o sexo, último salário, graduação (se existente) ou escolaridade, e a sequência de ocupações pela qual o profissional passou com seu título, descrição e período em que exerceu a ocupação. Esse trabalho utiliza apenas a sequência de ocupações.
 
-O título da ocupação é um dos principais artefatos do MCar, é ele quem fornece a identidade para o nó. Como descrito acima, nos currículos, o título da ocupação é um campo de texto livre, ou seja, o usuário pode digitar o título sem restrições. Se por um lado isso permite a identificação de ocupações de nicho, novas ou que usem jargão de áre; por outro isso significa que os títulos possuem erros de grafia, variações de gênero (como em \enquote{advogado} e \enquote{advogada} ou \enquote{moto boy} e \enquote{moto girl}), composição de múltiplas ocupações em um mesmo título (como \enquote{caixa/balconista}), abreviações e toda a gama de erros de interpretação possíveis.
+O título da ocupação é um dos principais artefatos do MCar, é ele quem fornece a identidade para o nó. Como descrito acima, nos currículos, o título da ocupação é um campo de texto livre, ou seja, o usuário pode digitar o título sem restrições. Se por um lado isso permite a identificação de ocupações de nicho, novas ou que usem jargão de área, por outro significa que os títulos possuem erros de grafia, variações de gênero (como em \enquote{advogado} e \enquote{advogada} ou \enquote{moto boy} e \enquote{moto girl}), composição de múltiplas ocupações em um mesmo título (como \enquote{caixa/balconista}), abreviações e toda a gama de erros de interpretação possíveis.
 
 As ocupações passam por um corretor ortográfico criado especificamente para esse trabalho, uma vez que um corretor tradicional não é capaz de identificar jargões de área como \enquote{enfermeiranda}, \enquote{rigger} ou \enquote{IRLA}.
 
@@ -197,11 +191,39 @@ Como exemplo, o dicionário do corretor possui cerca de 750 variações ortográ
 
 Após o trabalho de correção ortográfica, os títulos foram agrupados e contados. Especialistas da empresa verificaram os resultados dos maiores grupos para identificar anomalias, como ocupações com os títulos \enquote{sim}, \enquote{não} e \enquote{o mesmo}. Ocupações como essas foram excluídas do trabalho.
 
-A partir desse ponto o trabalho diverge do MCar. Enquanto o segundo usa conexões direcionadas entre duas ocupações, o primeiro usa trigramas direcionados, ou seja, sequências de três ocupações.  Dessa forma, o algoritmo consegue identificar ocupações que pertencem a múltiplas comunidades. Os detalhes são explicados da Seção \ref{sec:infomap}.
+A partir desse ponto essa pesquisa diverge do MCar, usando os mesmos dados, mas processando-os de maneira diferente. Enquanto o segundo usa conexões direcionadas entre duas ocupações, o primeiro usa trigramas direcionados, ou seja, sequências de três ocupações.  Dessa forma, o algoritmo consegue identificar ocupações que pertencem a múltiplas comunidades. Os detalhes são explicados ainda nessa seção.
 
 No MCar, a sequência de ocupação foi usada para gerar pares. Por exemplo, um currículo com a sequência de ocupações \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} gera os pares \enquote{saladeiro} $\to$ \enquote{chapeiro} e \enquote{chapeiro} $\to$ \enquote{cozinheiro}. Os pares foram agrupados e sua contagem se torna o peso de cada conexão na rede final.
 
 Finalmente, as conexões foram conectadas pela ocupações em comum e a rede final foi construída e armazenada em um banco de dados de grafo. Um sistema online\footnote{Disponível em \url{http://www.vagas.com.br/mapa-de-carreiras}} disponibiliza as informações publicamente. Apesar de gratuito e de consulta pública, os dados do Mapa VAGAS da Carreira não são de uso livre. A empresa gentilmente cedeu os dados ao pesquisador para esse trabalho.
+
+Para essa pesquisa, são usado \textit{trigramas de ocupações} ao invés de conexões simples. Por exemplo, um histórico profissional com quatro ocupações como \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} $\to$ \enquote{chef} gera dois trigramas \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} e \enquote{chapeiro} $\to$ \enquote{cozinheiro} $\to$ \enquote{chef}. 
+
+Históricos profissionais com apenas duas ocupações (bigramas) também são utilizadas. O trabalho usa preferencialmente trigramas, mas recorre a eles se não houver informação suficiente disponível. Históricos profissionais com apenas uma ocupação são descartados. Trigramas e bigramas com menos de 5 ocorrências são descartados.
+
+Depois do processo de limpeza, a rede resultante foi analisada quanto ao número de componentes. Os resultados na Tabela~\ref{tab:componentes} indicam vários componentes com apenas um nó, alguns poucos com dois e três nós e um componente gigante. Os componentes menores foram descartados e apenas as ocupações presentes na ocupação gigante foram usados.
+
+Os componentes com apenas um nó são sequências de ocupações que se repetem, por exemplo \enquote{engenheiro de tubulação} $\to$ \enquote{engenheiro de tubulação}, mas não possuem conexão com outras ocupações.
+
+\begin{table}
+    \centering
+    \begin{tabular}{@{} c r @{}}
+        \toprule
+        Tamanho & Componentes \\
+        \midrule
+        1        &  1.087 \\
+        2        &  19 \\
+        3        &  1 \\
+        7.267 &  1 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Tabela de frequência por tamanho de componente na rede.}
+    \label{tab:componentes}
+\end{table}
+
+O rede final possui 7.267 ocupações e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas.
+
+Para caracterizar a rede na Seção~\ref{sec:resultados}, a rede foi convertida em uma rede sem memória, efetivamente unificando trigramas e bigramas em conexões direcionadas e ponderadas. A rede transformada possui as mesmas 7.267 ocupações com 73.064 conexões.
 
 %===================================
 \section{Grafos e Detecção de Comunidades} \label{sec:comunidades}
@@ -301,7 +323,7 @@ $H(\textbf{p})$ é a equação que descreve a entropia da informação segundo u
 H(\textbf{p}) = - \sum_\alpha p_\alpha \log_2 p_\alpha\,.
 \end{equation*}
 
-Nessa equação, $p_\alpha$ é a probabilidade estacionária do \textit{walker} passar pelo nó $\alpha$, ou seja, em um caminho infinito, qual fração de tempo o \textit{walker} teria passado por $\alpha$~\cite{Rosvall2009-sd}.
+Nessa equação, $p_\alpha$ é a probabilidade estacionária da rede, ou seja, em um caminho infinito, qual fração de tempo o \textit{walker} estaria em $\alpha$~\cite{Rosvall2009-sd}.
 
 Para calcular $p_\alpha$ inicia-se com a matriz estocástica linear $W$, gerada a partir da matriz de adjacência $A$ direcionada e ponderada. Em uma matriz estocástica linear, a soma dos pesos de entrada do nó (linha) é normalizado para que resulte em 1. Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker}  em $\alpha$ chegar ao nó $\beta$.  Transportada para a realidade do MCar, essa é a probabilidade de alguém na ocupação $\alpha$ fazer a transição para a ocupação $\beta$.
 
@@ -336,11 +358,93 @@ q_\curvearrowright       &= \sum_{i \in M} q_{i\curvearrowright} \nonumber \\
 p^i_\circlearrowright    &= q_{i \curvearrowright} + \sum_{\alpha \in i} p_\alpha \nonumber \\
 H(\mathcal{Q})            &= - \sum_{i \in M} \frac{q_{i \curvearrowright}}{q_\curvearrowright} \log_2 \frac{q_{i \curvearrowright}}{q_\curvearrowright} \nonumber \\
 H(\mathcal{P}^i)         &= - \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} \log_2 \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} 
--  \sum_{\alpha \in i} \frac{p_\alpha}{p^i_\circlearrowright} \log_2  \frac{p_\alpha}{p^i_\circlearrowright} \nonumber \\
-L(\mathsf{M})              &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \sum_{i = 1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright} - \sum_{\alpha = 1}^n p_\alpha \log_2 p_\alpha + \sum_{i = 1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.
+-  \sum_{\alpha \in i} \frac{p_\alpha}{p^i_\circlearrowright} \log_2  \frac{p_\alpha}{p^i_\circlearrowright} \label{eq:eta-p} \\
+L(\mathsf{M})              &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \sum_{i = 1}^m q_{i \curvearrowright} \log_2 q_{i \curvearrowright} - \sum_{\alpha = 1}^n p_\alpha \log_2 p_\alpha + \sum_{i = 1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,. \nonumber
 \end{align}
 
-Existem variações da Equação de Mapa para detecção de comunidades sobrepostas~\cite{Viamontes_Esquivel2011-it} e hierárquicas~\cite{Rosvall2011-yi}. Este trabalho usa a variação hierárquica.
+\subsection{Redes com Memória}  \label{sec:redes-com-memoria}
+
+Na modelagem do MCar, um \enquote{Analista de Sistemas} e um \enquote{Arquiteto} têm chances similares de se tornarem \enquote{Coordenador de Projetos}. Entretanto, apesar de receber o mesmo nome, as competências de um coordenador de projetos da área de software e de arquitetura são bastante diferentes. Na realidade, essa é uma ocupação que pode figurar em duas ilhas ocupacionais bastante distintas pois a movimentação entre essas duas áreas é relativamente rara em comparação com a movimentação dentro de si mesmas.
+
+O padrão esperado nesse caso, é que profissionais de cada ilha vão para essa \enquote{Gerente de Projetos} e voltem para outras de sua própria ilha ao invés de cruzar a fronteira de carreira. Para poder identificar esse padrão, é preciso considerar não apenas o trabalho imediatamente anterior, mas também o subsequente.
+
+No MCar as ocupações prévias do profissional não influenciam seu próximo passo, apenas sua ocupação atual. No entanto, como exemplificado no caso acima, a \enquote{perda de memória} da ocupação anterior compromete a identificação das comunidades.
+
+Efetivamente, o MCar modela o fluxo de profissionais como um cadeia de Markov de primeira ordem. Considerar ocupações anteriores transforma o fluxo da rede em uma cadeia de Markov de ordem superior ou \enquote{Redes com Memória}\footnote{no original: \textit{Memory Networks}} \cite{Edler2017-kt}.
+
+\begin{figure}[htb]
+    \centering
+    \subfloat[][Simples] {
+        \includegraphics[width=0.3\linewidth]{ex-multilayer-04.pdf}
+        \label{fig:ex-multilayer-simples}
+    }
+    \subfloat[][Direcionada]{
+        \includegraphics[width=0.3\linewidth]{ex-multilayer-05.pdf}
+        \label{fig:ex-multilayer-direcionada}
+    }
+    \subfloat[][Trigramas] {
+        \includegraphics[width=0.3\linewidth]{ex-multilayer-01.pdf}
+        \label{fig:ex-multilayer-trigrama}
+    }
+    \caption{Exemplo de uma rede com 4 nós e representações com sucessivos aumentos de informação. Os nós são GP - \textit{Gerente de Projetos}, AS - \textit{Analista de Sistemas}, AQ - \textit{Arquiteto} e CP - \textit{Coordenador de Projetos}. A rede simples da Figura~\ref{fig:ex-multilayer-simples} faz as conexões entre AS e CP agirem como bidirecionais; a rede direcionada da Figura~\ref{fig:ex-multilayer-direcionada} unifica as probabilidades de um \textit{random-walker} caminhar entre CP e GP, ignorando onde estava anteriormente. Os fluxos com dois níveis de memória (processo markoviano de segunda ordem) podem ser observados na Figura~\ref{fig:ex-multilayer-trigrama}}
+\end{figure}
+
+\citeonline{Edler2017-kt} adaptam a Equação de Mapa  para trabalhar com  Redes com Memória transformando-as em uma rede multi-camadas em uma representação chamada \enquote{Rede com Memória em Multi-Camadas}\footnote{no original: \textit{Multilayer Memory Network}}. Um rede multi-camadas é usada para representar redes em sistemas complexos onde existem contextos diferentes de relacionamento~\cite{Kivela2014-pb}. Por exemplo, em uma rede social onde pessoas participam de vários eventos, cada camada pode representar um evento, enquanto os relacionamentos podem representar a interação entre elas em cada evento. 
+
+\begin{figure}[htb]
+    \centering
+    \subfloat[][Trigramas] {
+        \includegraphics[width=0.3\linewidth]{ex-multilayer-01.pdf}
+        \label{fig:ex-multilayer1}
+    }
+    \subfloat[][Como camadas] {
+        \includegraphics[width=0.3\linewidth]{ex-multilayer-02.pdf}
+        \label{fig:ex-multilayer2}
+    }
+    \subfloat[][Projeção] {
+        \includegraphics[width=0.3\linewidth]{ex-multilayer-03.pdf}
+        \label{fig:ex-multilayer3}
+    }
+    \caption{Exemplo de uma rede com 4 nós e 4 trigramas (8 conexões). Os nós são GP - \textit{Gerente de Projetos}, AS - \textit{Analista de Sistemas}, AQ - \textit{Arquiteto} e CP - \textit{Coordenador de Projetos}. A mesma rede usando camadas para representar dois níveis de memória é exibida na Figura~\ref{fig:ex-multilayer2}, cada camada representa o nó anterior da conexão e cada imagem do nó na camada é chamado de \textit{nó-estado}. A projeção das camadas de volta para uma rede de camada única está na Figura~\ref{fig:ex-multilayer3}, as anotações em cada nó indicam a camada daquele nó-estado.}
+    \label{fig:ex-multilayer-camadas}
+\end{figure}
+
+O exemplo da Figura~\ref{fig:ex-multilayer-camadas} mostra a rede formada pelas ocupações \enquote{Arquiteto}, \enquote{Analista de Sistemas}, \enquote{Coordenador de Projetos} e \enquote{Gerente de Projetos} e suas representações em camadas. A partir dessa representação é possível projetar uma rede de uma única camada (uma rede \enquote{comum}), criando-se um \textit{nó-estado} para cada nó em cada camada. Ignorando-se nós-estado que não possuem conexões, essa projeção cria um nó-estado para cada conexão de entrada, como pode ser observado na Figura~\ref{fig:ex-multilayer3}.
+
+Um vez que a probabilidade estacionária é calculada através das conexões de saída, os nós-estado que possuem saída para os mesmos nós podem ser unificados sem perda de informação para identificação de comunidades. No exemplo da Figura~\ref{fig:ex-multilayer3}, a os nós $\text{CP}_\text{AS}$ e $\text{CP}_\text{AQ}$ podem ser unidos em um único nó. \citeonline{Edler2017-kt} chamam esse simplificação de Rede com Memória Esparsa\footnote{no original: \textit{Sparse Memory Network}}.
+
+\begin{figure}[htb]
+    \centering
+    \subfloat[][Projeção] {
+        \includegraphics[width=0.3\linewidth]{ex-multilayer-03.pdf}
+        \label{fig:ex-multilayer-projecao}
+    }
+    \subfloat[][Rede com Memória Esparsa] {
+    \includegraphics[width=0.3\linewidth]{ex-multilayer-06.pdf}
+    \label{fig:ex-multilayer-esparsa}
+}
+    \caption{A rede pode ser simplificada unificando nós que possuem saída para os mesmos nós-estados, criando uma Rede com Memória Esparsa~\cite{Edler2017-kt}}
+    \label{fig:ex-multilayer-memoria}
+\end{figure}
+
+Dessa forma, a aplicação da Equação de Mapa (Equação \ref{eq:map-equation}) permanece a mesma, bastando que os nós-estado que permanecem na mesma comunidade compartilhem o mesmo código. Para isso, a probabilidade estacionária $p_{\alpha_i}$ do nó $\alpha$ na comunidade $i$ passa ser a soma das probabilidades dos nós-estado $\alpha^s$ de $\alpha$ que estão na mesma comunidade $i$ em qualquer camada $S$,
+
+\begin{equation*} \label{eq:page-rank-multilayer}
+\pi_{\alpha_i} = \sum_{s \in S} p_{\alpha_i^s}\,.
+\end{equation*}
+
+Substituindo a probabilidade estacionária na Equação~\ref{eq:eta-p}, $H(\mathcal{P}^i)$ passa a ser
+
+\begin{equation*}
+H(\mathcal{P}^i) = - \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} \log_2 \frac{q_{i \curvearrowright}}{p^i_\circlearrowright} 
+-  \sum_{\alpha \in i} \frac{\pi_{\alpha_i}}{p^i_\circlearrowright} \log_2  \frac{\pi_{\alpha_i}}{p^i_\circlearrowright}\,.
+\end{equation*}
+
+\begin{comment}
+% NOTA Ronie: E esse pedaço caiu também pq usei a equação do artigo mais recente do Rosvall. A frustração é que demorei duas (ou três) semanas pra entender e combinar as equações de 3 artigos em uma coisa que fizesse sentido >_<''  Ai... ai... 
+
+====
+\subsubsection{Variação com Sobreposição de Comunidades}
 
 Para o algoritmo que permite que os nós pertençam a mais de uma comunidade, \citeonline{Viamontes_Esquivel2011-it} usam \textit{conexões com memória} para lembrar o passo anterior do \textit{random walker}. Quando ele se mover para um nó que pertence à múltiplas comunidades, ele se manterá na comunidade de onde veio, se possível.
 
@@ -367,9 +471,13 @@ A Equação de Mapa para comunidades com sobreposição é
                                - \sum_{i=1}^m \sum_{\alpha \in i} p_{\alpha_i} \log_2  p_{\alpha_i}
                                + \sum_{i=1}^m p^i_\circlearrowright \log_2 p^i_\circlearrowright\,.                            
 \end{equation}
+\end{comment}
 
 \begin{comment}
 %% NOTA (Ronie): Tive problemas com o software para rodar a versão hierárquica SEM sobreposição. Para evitar alongar ainda mais esse artigo, excluí as partes de hierarquia. Não vai fazer muita falta, até pq o foco aqui são as ilhas (e não 'ilhas aninhadas').
+
+Deixei o texto aqui embaixo por via das dúvidas.
+====
 
 A variação hierárquica do algoritmo possibilita detecção de comunidades aninhadas, nesse caso, ela é uma generalização da Equação de Mapa original que permite múltiplos \textit{codebooks} índices.
 
@@ -404,7 +512,7 @@ A assortatividade é uma medida de quão nós similares estão conectados entre 
 
 A assortatividade de grau é de especial interesse na análise de redes, pois permite caracterizar sua topologia. Redes com assortatividade negativa (desassortativas), remetem à topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde nós de grau muito alto (\textit{hubs}) se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:ex-sobreposicao-ti} mostra um exemplo de uma rede em que predomina essa topologia.
 
-Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote{estrela}, em que todos os nós de alto grau só se conectam a nós de grau muito baixo. Como exemplos, a ilha ocupacional relacionada a \enquote{fisioterapia} na Figura~\ref{fig:ex-assortatividade-negativa}, com assortatividade $-0,27$, possui todos os nós conectados a um \textit{hub} central, com poucas conexões entre ocupações periféricas. Já a ilha relacionada a \enquote{bolsistas} na Figura~\ref{fig:ex-bolsistas}, com assortatividade $-0,07$, não possui um \textit{hub} tão claramente definido; ainda que existam alguns nós folhas conectados a nós de maior grau, boa parte dos nós possui grau similar.
+Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote{estrela}, em que todos os nós de alto grau só se conectam a nós de grau muito baixo. Como exemplos, a ilha ocupacional relacionada a \enquote{Engenheiro de Segurança do Trabalho} na Figura~\ref{fig:ex-assortatividade-negativa}, com assortatividade $-0,53$, possui todos os nós conectados a um \textit{hub} central, com poucas conexões entre ocupações periféricas. Já a ilha relacionada a \enquote{bolsistas} na Figura~\ref{fig:ex-bolsistas}, com assortatividade $-0,07$, não possui um \textit{hub} tão claramente definido; ainda que existam alguns nós folhas conectados a nós de maior grau, boa parte dos nós possui grau similar.
 
 \begin{figure}[ht]
     \centering
@@ -419,8 +527,7 @@ Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote
     \caption{Assortatividade e Topologia}
 \end{figure}
 
-A assortatividade de grau em uma rede direcionada pode ser caracterizada pelo coeficiente de correlação de Pearson dos graus~\cite{Barabasi2016-rn}. Seja $k_i^\leftarrow$ e $k_i^\rightarrow$,  respectivamente, os graus de entrada e saída do nó $i$, $E$ o conjunto de conexões da rede, $e = (m, n) \mid e \in E$ as conexões de $E$, $m$ o vértice de onde $e$ sai e $n$ o vértice para onde $e$ aponta, definem-se os \textit{graus remanescentes} $\delta_e^\leftarrow$ e $\delta_e^\rightarrow$ da conexão $e$ como
-
+A assortatividade de grau em uma rede direcionada pode ser caracterizada pelo coeficiente de correlação de Pearson dos graus~\cite{Barabasi2016-rn}. Seja $k_i^\leftarrow$ e $k_i^\rightarrow$,  respectivamente, os graus de entrada e saída do nó $i$, seja $E$ o conjunto de conexões da rede, $e = (m, n) \mid e \in E$ as conexões de $E$, $m$ o vértice de onde $e$ sai e $n$ o vértice para onde $e$ aponta, definem-se os \textit{graus remanescentes} $\delta_e^\leftarrow$ e $\delta_e^\rightarrow$ da conexão $e$ como
 \begin{align*}
 \delta_e^\leftarrow &= k_n^\leftarrow - 1
 \\
@@ -459,15 +566,39 @@ r &= \frac{p - q}
 
 % Descrição dos dados:
 
-Os dados usadas para esse trabalho são do MCar de fevereiro de 2017. Após o processo de limpeza da informação o grafo resultante possui 8.395 nós e 74.197 conexões. A versão com trigramas usada para identificação das Ilhas Ocupacionais possui o mesmo número de nós distribuídos em 146.548 trigramas.
+Os dados usadas para esse trabalho são do MCar de fevereiro de 2017. Após o processo de limpeza da informação o grafo resultante possui 7.267 nós e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas.
 
-A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-grau}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 86,51\% das conexões da rede.
+A transformação dos bigramas e trigramas em conexões resulta em 73.064 conexões e essa versão é usada abaixo para caracterizar a rede.
 
-Por ser uma rede direcionada, um certo cuidado na análise é necessário, uma vez que o grau dos nós não corresponde diretamente ao número de nós conectados. Imaginando que cada nó pode ter uma ou duas conexões com o mesmo nó vizinho, o grau $k_i$, varia em relação ao número de vizinhos entre $k_i = v_i$ e $k_i = 2v_i$, onde $v$ é o número de nós conectados ao nó $i$ por uma conexão de entrada ou saída.
+A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-grau}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 85,86\% das conexões da rede.
 
-O quanto cada nó contribui para a conectividade da rede pode ser observada no gráfico de Pareto da Figura~\ref{fig:pareto-egografo}. As ocupações estão ordenadas pelo número de vizinhos. Exatamente 10\% dos nós com mais vizinhos são suficientes para conectar 95,77\% da rede.
+Por ser uma rede direcionada, um certo cuidado na análise é necessário, uma vez que o grau dos nós não corresponde diretamente ao número de nós conectados. Imaginando que cada nó pode ter uma ou duas conexões com o mesmo nó vizinho, o grau $k_i$, varia em relação ao número de vizinhos entre $k_i = v_i$ (uma conexão por vizinho) e $k_i = 2v_i$ (cada vizinho possui uma conexão de entrada e saída com $k$), onde $v$ é o número de nós conectados ao nó $i$ por uma conexão de entrada ou saída.
 
-O nó de maior grau \textit{Auxiliar Administrativo} possui 6.308 das 90.800 conexões da rede, mas forma um subgrafo com os nós vizinhos com 3.962 dos 7.450 nós da rede, ou seja, 53,18\% das ocupações de alguma forma possui fluxo de profissionais saindo ou entrando dessa ocupação.
+O quanto cada nó contribui para a conectividade da rede pode ser observada utilizando-se ego-grafos. Um ego-grafo é um subgrafo que inclui um nó, todos os seus vizinhos e as conexões entre eles~\cite{Newman2010-od}. Como o número de conexões em uma rede direcionada não representa necessariamente o número de nós conectados, o uso do ego-grafo permite identificar \textit{hubs} que possuem maior conectividade sem que necessariamente possuam o maior número de conexões. Considerar o nó central junto aos seus vizinhos permite medir o quanto os subgrafos se sobrepõem sem precisar de ajustes quanto ao nó central.
+
+No gráfico de Pareto da Figura~\ref{fig:pareto-egografo}. As ocupações estão ordenadas pelo tamanho do ego-grafo. Exatamente 25\% dos maiores ego-grafos são suficientes para conectar 98,31\% da rede. O nó de maior grau \textit{Auxiliar Administrativo} possui um ego grafo com 3.369 ocupações das da 7.267, ou seja, 46,36\% das ocupações de alguma forma possui fluxo de profissionais saindo ou entrando dessa ocupação.
+
+A Tabela~\ref{tab:top-egografos} contém os 5 maiores ego grafos do MCar. Devido a presença de \textit{hubs} de grau elevado é esperado que os maiores ego-grafos compartilhem uma grande quantidade de nós.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{@{} l r r r @{}}
+    	\toprule
+    	Ocupação                  & Ego-grafo & Acumulado & Inéditos \\
+        \midrule
+    	Auxiliar Administrativo   & 3.369    & 3.369     & 3.369    \\
+    	Vendedor                  & 1.790    & 3.566     & 197      \\
+    	Assistente Administrativo & 1.704    & 3.655     & 89       \\
+    	Recepcionista                & 1.338    & 3.707     & 52       \\
+    	Atendente                      & 1.249    & 3.739     & 32       \\
+    	Auxiliar de Produção      & 1.061    & 3.954     & 215      \\
+        \bottomrule
+    \end{tabular}
+    \caption{Tabela com os 5 maiores ego-grafos do MCar. A coluna \textit{Acumulado} contém o número de nós do ego-grafo da linha somado com os anteriores, excluindo-se nós já vistos. A coluna \textit{Inéditos} contém o número de nós esse ego-grafo possui que não estão em nenhum dos ego-grafos anteriores.}
+    \label{tab:top-egografos}
+\end{table}
+
+%% PAREI AQUI!!! Ronie
 
 Na Figura~\ref{fig:pareto-egografo}, o acumulativo considera apenas o nós \textit{novos} em relação às ocupações anteriores. Por exemplo, a segunda ocupação mais conectada (\textit{Vendedor}, com 2215 nós vizinhos) possui apenas 218 nós \enquote{inéditos} em relação a \textit{Auxiliar Administrativo}, a terceira ocupação (\textit{Assistente Administrativo}, com 2.192 nós vizinhos) contribui apenas com 83 nós não conectados pelas duas ocupações anteriores.
 
@@ -527,7 +658,7 @@ Os resultados de compressão para cada variação são apresentados na Tabela~\r
     Com sobreposição & 50,30\%       & 926     \\
     \bottomrule
   \end{tabular}
-  \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo (variação) de particionamento. \textit{Compressão} significa qual a compressão de informação obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Ihas Ocupacionais} é o número de partições resultantes.}
+  \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo (variação) de particionamento. \textit{Compressão} significa qual a compressão de informação obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Ihas Ocupacionais} é o número de partições não-triviais resultantes (ao menos 3 nós na comunidade).}
   \label{tab:metodos}
 \end{table}
 

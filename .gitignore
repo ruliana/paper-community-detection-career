@@ -6,3 +6,4 @@
 *.pdf
 *.gz
 .Rproj.user
+**/.ipynb-checkpoints/
