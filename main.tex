@@ -568,13 +568,13 @@ r &= \frac{p - q}
 
 Os dados usadas para esse trabalho são do MCar de fevereiro de 2017. Após o processo de limpeza da informação o grafo resultante possui 7.267 nós e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas.
 
-A transformação dos bigramas e trigramas em conexões resulta em 73.064 conexões e essa versão é usada abaixo para caracterizar a rede.
+A transformação dos bigramas e trigramas em conexões resulta em 73.064 conexões e essa versão é usada para caracterizar a rede quanto ao grau e conectividade.
 
 A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-grau}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 85,86\% das conexões da rede.
 
 Por ser uma rede direcionada, um certo cuidado na análise é necessário, uma vez que o grau dos nós não corresponde diretamente ao número de nós conectados. Imaginando que cada nó pode ter uma ou duas conexões com o mesmo nó vizinho, o grau $k_i$, varia em relação ao número de vizinhos entre $k_i = v_i$ (uma conexão por vizinho) e $k_i = 2v_i$ (cada vizinho possui uma conexão de entrada e saída com $k$), onde $v$ é o número de nós conectados ao nó $i$ por uma conexão de entrada ou saída.
 
-O quanto cada nó contribui para a conectividade da rede pode ser observada utilizando-se ego-grafos. Um ego-grafo é um subgrafo que inclui um nó, todos os seus vizinhos e as conexões entre eles~\cite{Newman2010-od}. Como o número de conexões em uma rede direcionada não representa necessariamente o número de nós conectados, o uso do ego-grafo permite identificar \textit{hubs} que possuem maior conectividade sem que necessariamente possuam o maior número de conexões. Considerar o nó central junto aos seus vizinhos permite medir o quanto os subgrafos se sobrepõem sem precisar de ajustes quanto ao nó central.
+A contribuição de cada nó para a conectividade da rede pode ser observada utilizando-se ego-grafos. Um ego-grafo é um subgrafo por um nó, todos os seus vizinhos e as conexões entre eles~\cite{Newman2010-od}. Como o número de conexões em uma rede direcionada não representa necessariamente o número de nós conectados, o uso do ego-grafo permite identificar \textit{hubs} que possuem maior conectividade sem que necessariamente possuam o maior número de conexões. Considerar o nó central junto aos seus vizinhos permite medir o quanto os subgrafos se sobrepõem sem a necessidade de ajustes quanto ao nó central.
 
 No gráfico de Pareto da Figura~\ref{fig:pareto-egografo}. As ocupações estão ordenadas pelo tamanho do ego-grafo. Exatamente 25\% dos maiores ego-grafos são suficientes para conectar 98,31\% da rede. O nó de maior grau \textit{Auxiliar Administrativo} possui um ego grafo com 3.369 ocupações das da 7.267, ou seja, 46,36\% das ocupações de alguma forma possui fluxo de profissionais saindo ou entrando dessa ocupação.
 
@@ -594,17 +594,23 @@ A Tabela~\ref{tab:top-egografos} contém os 5 maiores ego grafos do MCar. Devido
     	Auxiliar de Produção      & 1.061    & 3.954     & 215      \\
         \bottomrule
     \end{tabular}
-    \caption{Tabela com os 5 maiores ego-grafos do MCar. A coluna \textit{Acumulado} contém o número de nós do ego-grafo da linha somado com os anteriores, excluindo-se nós já vistos. A coluna \textit{Inéditos} contém o número de nós esse ego-grafo possui que não estão em nenhum dos ego-grafos anteriores.}
+    \caption{Tabela com os 5 maiores ego-grafos do MCar. A coluna \textit{Acumulado} contém o número de nós do ego-grafo da linha somado com os anteriores, excluindo-se nós já vistos. A coluna \textit{Inéditos} contém o número de nós que o ego-grafo possui que não estão nos ego-grafos anteriores.}
     \label{tab:top-egografos}
 \end{table}
 
-%% PAREI AQUI!!! Ronie
+Essa característica reforça conceitos sobre movimentação profissional como a Carreira sem Fronteiras e a Carreira Proteana, indicando que uma grande quantidade de profissionais trilha por carreiras variadas e se adaptam a diferentes ocupações. No entanto, há uma rápida queda no número de conexões e no tamanho do ego-grafo, sugerindo que esses conceitos não se aplicam a todas as ocupações igualmente e que um número pequeno delas funciona como \enquote{coringa} ou \enquote{ponte} para movimentação profissional. Se essa característica está presente por que as ocupações são mais genéricas, por serem típicas do início de carreira ou por algum efeito de mercado é algo a ser investigado em trabalhos futuros.
 
-Na Figura~\ref{fig:pareto-egografo}, o acumulativo considera apenas o nós \textit{novos} em relação às ocupações anteriores. Por exemplo, a segunda ocupação mais conectada (\textit{Vendedor}, com 2215 nós vizinhos) possui apenas 218 nós \enquote{inéditos} em relação a \textit{Auxiliar Administrativo}, a terceira ocupação (\textit{Assistente Administrativo}, com 2.192 nós vizinhos) contribui apenas com 83 nós não conectados pelas duas ocupações anteriores.
+%% Ronie: Aqui em cima tem algo que posso investigar na dissertação, acredito. Se há alguma correlação entre essas ocupações e escolaridade (sei que tem), e alguma correlação com o tempo de trabalho ou a idade.
 
-%% AH, VOCÊ NÃO VAI DEIXAR O LEITOR CURIOSO PARA SABER QUAL É ESSA OCUPAÇÃO QUE SE CONECTA COM QUASE TODAS AS OUTRAS, VAI? DIZ AÍ! E ESCREVA TAMBÉM. INCLUSIVE, VALEM ALGUNS COMENTÁRIOS SOBRE TAL OCUPAÇÃO.
+O \enquote{Paradoxo da Amizade}~\cite{Barabasi2016-rn} parece valer para pessoas transitando entre ocupações. O paradoxo é dado como \enquote{na média, meus amigos são mais populares que eu}, transportado para o contexto desse trabalho seria enunciado como \enquote{na média, os outros trabalhos que eu poderia executar têm mais opções de movimentação que o meu}. Esse paradoxo tem uma explicação simples, como se observa na Figura~\ref{fig:pareto-egografo}, um nó qualquer têm grandes chances de estar conectado a um ou mais \textit{hubs} o que, na média, faz com que as ocupações vizinhas tenham mais conexões do que as suas próprias.
 
-%Ronie: Fiz uma besteira aqui, esqueci de tirar a conexões duplicadas (ida e volta) para gerar o número que estava antes. Quando fui conferir, percebi o erro. Acabou que revisei todos os números e gráficos, por medo.
+% Ronie: Esses dois parágrafos abaixo estão meio estranhos no texto. Mas os pontos são:
+% 1 - Em uma rede direcionada, o ego-grafo é melhor de se analisar do que o grau. Isso pq, diferente de uma rede não-direcionada, o grau _não_ significa o número de vizinhos.
+% 2 - Eu poderia ter usado um histograma (distribuição de frequência) para fazer uma análise similar. Na literatura de ciência de redes é praticamente o único gráfico que se vê. Mas, apesar das propriedades estatísticas interessantes, o histograma é bem menos informativo. O Pareto mostra claramente a contribuição dos hubs para a conectividade da rede, enquanto que o histograma relega eles a uma cauda fina e ruidosa (parece mais uma 'sujeira' do que a característica mais importante da rede). É um ponto que pode ser um pouco controverso (embora seja um detalhe), mas eu gostaria de tentar sustentá-lo melhor nesses parágrafos. Acha que vale o esforço ou é melhor 'passar reto' e nem mencionar?
+
+A Figura~\ref{fig:pareto-egografo} ilustra a diferença entre o grau e a conectividade da rede que é importante do ponto de vista dessa pesquisa. Enquanto o grau identifica corretamente os \textit{hubs}, o gráfico de Pareto dos ego-grafos mostra que a rede é mais conectada do que seu número de conexões. Comparando os dois gráficos, percebe-se que, enquanto a distribuição de grau e do tamanho do ego-grafo são similares, o acumulado do primeiro cresce mais suavemente que o do segundo, indicando que os \textit{hubs} possuem proporcionalmente mais conexões unidirecionais, ou seja, menos conexões conectam mais nós.
+
+Duas coisas a serem consideradas aqui, essa característica dos \textit{hubs} pode ser um efeito colateral do corte artificial de 5 conexões e uma análise similar poderia ser obtida projetando uma rede não-direcionada e analisando sua distribuição de grau.
 
 \begin{figure}[htb]
   \centering
@@ -616,22 +622,25 @@ Na Figura~\ref{fig:pareto-egografo}, o acumulativo considera apenas o nós \text
       \includegraphics[width=0.49\linewidth]{pareto-egografo}
       \label{fig:pareto-egografo}
   }  
-  \caption{Gráficos de Pareto com a distribuição de grau  do MCar e com o tamanho dos subgrafos formados pelos nós com maior conectividade. Os gráficos estão colocados lado a lado para facilitar a comparação. Os nós estão ordenados de maneira decrescente no eixo horizontal; na Figura~\ref{fig:pareto-grau}  as ocupações de grau maior no estão à esquerda e ocupações de menor grau estão à direita. na Figura~\ref{fig:pareto-egografo} elas estão ordenadas pelo tamanho do subgrafo formado pela ocupação e todos os seus vizinhos. Os eixos direitos, em escala logarítmica, estão associados às linhas cheias e representam, respectivamente, o grau do nó e o tamanho do subgrafo. Os eixos esquerdos estão associados às linhas tracejadas; na Figura~\ref{fig:pareto-grau} ela representa a somatória de todos os graus em porcentagem e qual a contribuição das ocupações à esquerda para essa totalização; na Figura~\ref{fig:pareto-egografo} ela representa a quantidade de ocupações que o subgrafo formado pelas ocupações à esquerda}
+  \caption{Gráficos de Pareto com a distribuição de grau  do MCar e com o tamanho dos ego-grafos. Os gráficos estão colocados lado a lado para facilitar a comparação. Os nós estão ordenados de maneira decrescente no eixo horizontal; na Figura~\ref{fig:pareto-grau}  as ocupações de grau maior no estão à esquerda e ocupações de menor grau estão à direita. na Figura~\ref{fig:pareto-egografo} elas estão ordenadas pelo tamanho do ego-grafo. Os eixos direitos, em escala logarítmica, estão associados às linhas cheias e representam, respectivamente, o grau do nó e o tamanho do ego-grafo. Os eixos esquerdos estão associados às linhas tracejadas; na Figura~\ref{fig:pareto-grau} ela representa a somatória de todos os graus em porcentagem e qual a contribuição das ocupações à esquerda para essa totalização; na Figura~\ref{fig:pareto-egografo} ela representa a quantidade de ocupações que os ego-grafos à esquerda conectam.}
   \label{fig:paretos}
 \end{figure}
 
-Observando a Figura~\ref{fig:paretos} é possível notar que quase $1/4$ das ocupações possui apenas uma conexão (1.689 delas, 22,67\%), mas pouco menos de $1/3$ (2.317 delas, 31,10\%) possui apenas um nó vizinho.
+Observando a Figura~\ref{fig:paretos} é possível notar que cerca de $1/5$ das ocupações possui apenas uma conexão (1.547 delas, 21,29\%), mas pouco mais de $1/3$ (2.682 delas, 36,91\%) possui um ego-grafo de tamanho 2. A diferença entre ambos são os ego-grafos que possuem múltiplas conexões, tanto auto-referentes quanto de entrada e saída com seu vizinho.
 
-Essa característica parece reforçar o conceitos sobre movimentação profissional como a Carreira sem Fronteiras e a Carreira Proteana, indicando que uma grande quantidade de profissionais trilha por carreiras variadas e se adaptam a diferentes ocupações. No entanto, há uma rápida queda no número de conexões, sugerindo que esses conceitos não se aplicam a todas as ocupações igualmente. O \enquote{Paradoxo da Amizade}~\cite{Barabasi2016-rn} parece valer para pessoas transitando entre ocupações. O paradoxo é dado como \enquote{na média, meus amigos são mais populares que eu}, transportado para o contexto desse trabalho seria enunciado como \enquote{na média, os outros trabalhos que eu poderia executar têm mais opções de movimentação que o meu}. Esse paradoxo tem uma explicação simples, como se observa na Figura~\ref{fig:pareto-egografo}, um nó qualquer têm grandes chances de estar conectado a um ou mais \textit{hubs} o que, na média, faz com que as ocupações vizinhas tenham mais conexões do que as suas próprias.
+Isso indica que grande parte das ocupações ($1/3$) está na \enquote{borda} da rede, conectada a ela por apenas um vizinho. Se os \textit{hubs} reforçam os conceitos de Carreiras Proteanas e Carreiras sem Fronteiras, a quantidade de ocupações na borda da rede indica o contrário. A presença de ambas as características sugere novamente que as teorias mencionadas não se aplicam a todas as ocupações. Apesar dessa pesquisa conseguir indicar quais ocupações parecem se encaixar melhor nessas teorias e quais não, ela é incapaz de responder quais são as alternativas e por que elas acontecem.
 
-%% NA CIÊNCIA PRECISAMOS SER EXATOS. NÃO PODEMOS FICAR USANDO APROXIMADAMENTE O TEMPO TODO, OK? PADRONIZE DUAS CASAS DECIMAIS PARA PERCENTUAIS E ARREDONDE OS INTEIROS SE NECESSÁRIO.
-% Ronie: Okay!
-
-% Procedimento:
+% Ronie: O parágrafo acima me parece um ótimo gancho para alguém que trabalhe com essa parte. Gostaria de deixar isso bem atraente :D (mas não sei se cabe).
 
 Nos experimentos realizados, o algoritmo Infomap foi utilizado para encontrar o particionamento mais coeso do MCar em relação ao fluxo. Como exposto nas Seções~\ref{sec:carreira} e~\ref{sec:infomap}, esse particionamento é a própria definição de fronteiras de carreira.
 
-O Infomap é bastante robusto quanto aos parâmetros utilizados, ou seja, mesmo grandes variações em seus parâmetros devem produzir resultados similares~\cite{Kawamoto2015-ha,Lambiotte2012-fp}. Por essa razão foi usado o parâmetro padrão de probabilidade de teleporte de 0,15 e tempo.
+\begin{comment}
+Ronie: Vou tirar isso aqui, levanta mais dúvidas do que esclarece e em (quase) nenhum artigo que li eles explicam quais parâmetros foram utilizados. Entendo que facilita a reprodutibilidade, mas acho melhor eu tentar trabalhar em disponibilizar os dados =)
+
+====
+
+O Infomap é bastante robusto quanto aos parâmetros utilizados, ou seja, mesmo grandes variações em seus parâmetros devem produzir resultados similares~\cite{Kawamoto2015-ha,Lambiotte2012-fp}. Por essa razão foi usado o parâmetro padrão de probabilidade de teleporte de 0,15.
+\end{comment}
 
 Para esse algoritmo, quanto maior a compressão da informação do caminho do \textit{random walker}, melhor é o particionamento da rede~\cite{Rosvall2009-sd}.
 
@@ -641,9 +650,9 @@ O MCar foi testado em duas variações do algoritmo:
 \item Com sobreposição: permite-se que nós participem de mais de uma comunidade.
 \end{itemize}
 
-A variação com maior compressão revela a melhor caracterização de particionamento~\cite{Viamontes_Esquivel2011-it,Rosvall2011-yi}. Se a variação com sobreposição possuir maior compressão de informação do que as outras, assume-se que suas comunidades, intrinsecamente, compartilham nós.
+A variação com maior compressão revela a melhor caracterização de particionamento~\cite{Viamontes_Esquivel2011-it,Rosvall2011-yi,Edler2017-kt}. Se a variação com sobreposição possuir maior compressão de informação do que as outras, assume-se que suas comunidades, intrinsecamente, compartilham nós.
 
-Os resultados de compressão para cada variação são apresentados na Tabela~\ref{tab:metodos}. É possível observar que  há um ganho expressivo de compressão de informação quando se permite a sobreposição de comunidades, revelando que existem ocupações compartilhadas entre grupos profissionais diferentes. Ainda assim, uma quantidade relativamente pequena de ocupações, cerca de 11\%, é compartilhada entre ilhas.
+Os resultados de compressão para cada variação são apresentados na Tabela~\ref{tab:metodos}. É possível observar que há ganho na compressão de informação quando se permite a sobreposição de comunidades, revelando a movimentação dos profissionais é melhor caracterizada quando as ilhas compartilham ocupações. Uma quantidade relativamente pequena de ocupações,  cerca de 11\%, é compartilhada entre ilhas.
 
 % INTUITIVAMENTE UMA COMPRESSÃO MAIOR IMPLICA EM MENOS COMUNIDADES, PORÉM SUA TABELA MOSTRA O CONTRÁRIO, ASSIM COMO O TEXTO. DE ACORDO COM SUA EXPLICAÇÃO UMA MAIOR COMPRESSÃO IMPLICA EM MELHOR PARTICIONAMENTO E, PORTANTO, MAIS COMUNIDADES.
 % Ronie: Aqui acho que preciso melhorar a explicação. Como tb não expliquei as variações hierárquicas e com sobreposição do Infomap estão também falta uma peça do quebra cabeças. A compressão dessa 'descrição do caminho do random walker' acaba criando um balanço entre quantidade de nós e de comunidades. Se não houverem 'gargalos' de fluxo, o random walker não fica 'preso' em um subgrafo e a melhor compressão acontece simplesmente por códigos mais curtos nos nós mais frequentes, sem divisão em comunidades. Por outro lado, quando existe um gargalo o random walker fica preso por um longo tempo de um lado ou de outro dele, nesse formato a melhor compressão acontece se cada 'prisão' reutilizar os códigos mais curtos e criarmos um outro código para passar de um lado para o outro do gargalo. O que está acontecendo na variação com sobreposição é que existem nós, ao invés de conexãos, que são fronteira entre as comunidades. Uma boa ilustração disso é o grafo 'gravata borboleta' com 5 nós e 6 conexões, nesse formato: ▷◁. Sem permitir sobreposição de comunidades, o nós central força os dois triângulos a pertencer em uma única comunidade. Permitindo a sobreposição, o nó central consegue participar de duas comunidades: ▷ e ◁. Se fosse uma rede com uma conexão entre os triângulos, desse jeito: ▷—◁, então o gargalo seria a conexão (não o nó) e o algoritmo que não permite sobreposição teria a melhor compressão.
@@ -651,22 +660,29 @@ Os resultados de compressão para cada variação são apresentados na Tabela~\r
 \begin{table}
   \centering
   \begin{tabular}{@{} l r r @{}}
-    \toprule
-    Variação         & Compressão & Ilhas Ocupacionais  \\
+  	\toprule
+  	Variação         & Compressão & Ilhas Ocupacionais \\
     \midrule
-    Simples          & 46,08\%       & 123     \\
-    Com sobreposição & 50,30\%       & 926     \\
+  	Simples          & 46,08\%    & 65                \\
+  	Com sobreposição & 50,30\%    & 624                \\
     \bottomrule
   \end{tabular}
   \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo (variação) de particionamento. \textit{Compressão} significa qual a compressão de informação obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Ihas Ocupacionais} é o número de partições não-triviais resultantes (ao menos 3 nós na comunidade).}
   \label{tab:metodos}
 \end{table}
 
-\citeonline{Viamontes_Esquivel2011-it} apresentam um exemplo intuitivo do significado dessa sobreposição usando aeroportos europeus e norte-americanos. Transposto para a realidade do MCar, uma ocupação que pertence a mais de uma comunidade significa que os profissionais que transitam por ela, em sua maioria, voltam aos seus grupos de origem ao invés de migrarem para outros. Não fosse dessa forma, esses grupos conectados seriam considerados como um conjunto único de ocupações pelo algoritmo.
+Apesar de usar a expressão \enquote{compartilham ocupações}, a interpretação mais correta é que as ilhas possuem \textit{suas próprias versões} das ocupações. \citeonline{Viamontes_Esquivel2011-it} apresentam um exemplo intuitivo do significado desse \enquote{compartilhamento} usando aeroportos europeus e norte-americanos. Transposto para a realidade do MCar, uma ocupação que pertence a mais de uma comunidade significa que os profissionais que transitam por ela, em sua maioria, voltam aos seus grupos de origem ao invés de migrarem para outros. Não fosse dessa forma, esses grupos conectados seriam considerados como um conjunto único de ocupações pelo algoritmo ou a ocupação estaria em apenas na comunidade com fluxo predominante.
 
 Existem duas explicações possíveis. A primeira é que essas ocupações são \textit{homônimas} e, portanto, distintas, o que significa que há uma fronteira entre elas. A segunda é que essas ocupações são similares, mas fatores não especificados dificultam a transição de um grupo para outro, o que também indica uma fronteira de carreira, ainda que mais fraca.
 
+Um exemplo da primeira explicação é a ocupação \enquote{Coordenador de Projetos}, que está associada tanto à Arquitetura quanto à Software. Um possível exemplo da segunda é a ocupação de \enquote{Professor} que aparece em diversas ilhas, sugerindo que há especializações nessa ocupação que impedem que um Professor se movimente entre ilhas, o que condiz com o conhecimento tácito sobre a profissão, um Professor de Matemática não se transforma em um Professor de Língua Portuguesa facilmente.
+
 Em qualquer uma dessas interpretações, as ocupações que participam de mais de uma ilha ocupacional revelam uma fronteira e não uma ponte.
+
+\begin{comment}
+Ronie: Lá se vai mais um pedaço do trabalho pro brejo :D Lição aprendida: o trabalho de pesquisa tem muito 'vai e vem', não compensa escrever coisas em detalhes e caprichar no português até a trabalho estar quase concluído. O próximo vai funcionar melhor e ser bem mais rápido :)
+
+====
 
 Os resultados obtidos foram comparados com o trabalho de \citeonline{Viamontes_Esquivel2011-it} para obter uma perspectiva mais ampla sobre o significado da compressão (Tabela~\ref{tab:comparativo}). É possível observar que o MCar é a rede que mais se beneficia de uma estrutura que permite sobreposição de comunidades.
 
@@ -693,10 +709,8 @@ Os resultados obtidos foram comparados com o trabalho de \citeonline{Viamontes_E
   \label{tab:comparativo}
 \end{table}
 
-A distribuição de tamanho das ilhas resultantes da partição com sobreposição está na Figura~\ref{fig:pareto-comunidades}. Mais de 75\% delas possui uma única ocupação, representando apenas 8\% de todas as ocupações. %% ESSA TABELA MERECE UMA DISCUSSÃO UM POUCO MAIS AMPLA. INVISTA AQUI UM BOM PARÁGRAFO DISCUTINDO OS DADOS E RESULTADOS DA TABELA, OK? LEMBRE-SE DE USAR DUAS CASAS DECIMAIS NOS PERCENTUAIS.
-% Ronie: pois é, o trabalho original usa ora uma, ora duas casas na mesma tabela =/ adicionei uma casa decimal, vale a pena?
-
-O tamanho das ilhas decresce rapidamente, 15\% das maiores ilhas (cerca de 135) englobam 90\% das ocupações, enquanto a maior ilha possui sozinha cerca de $1/4$ das ocupações. Essa ilha gigante indica que o conceito de Carreira sem Fronteiras é uma realidade, já que não é possível identificar fronteiras claras para uma imensa quantidade de ocupações. Por outro lado, a identificação de ilhas ocupacionais sugere que a Carreira sem Fronteiras não é aplicável irrestritamente. Adicionalmente, a análise pontual das maiores ilhas pode fornecer mais insumos na compreensão do que faz a Carreira sem Fronteiras ser possível.
+A distribuição de tamanho das ilhas resultantes da partição com sobreposição está na Figura~\ref{fig:pareto-comunidades}. Mais de 75\% delas possui uma única ocupação, representando apenas 8\% de todas as ocupações. 
+\end{comment}
 
 \begin{figure}[htb]
     \centering
@@ -705,14 +719,9 @@ O tamanho das ilhas decresce rapidamente, 15\% das maiores ilhas (cerca de 135) 
     \label{fig:pareto-comunidades}
 \end{figure}
 
-%% A QUE RESOLUÇÃO VOCÊ SE REFERE NO PARÁGRAFO ACIMA?
-% Ronie (retirei o parágrafo): Limite de Resolução é uma limitação dos algoritmos de detecção de comunidade. Dependendo do algoritmo, ele não é capaz de separar algumas comunidades simplesmente por causa do tamanho da rede ou do número de conexões. Como a maior parte desses algoritmos parte de uma função de otimização global, isso significa que o número relativo de links decide se é melhor uma comunidade estar separada ou junta. Com muito poucas conexões, a função sempre decide por juntar com uma comunidade maior. Na prática, se eu diminuir o tamanho da rede em partes que não interessam, uma comunidade pode 'surgir', apenas pelo todo ter menos conexões. É um problema bem chatinho e algoritmos diferentes podem ter limites de resolução causados por coisas diferentes. No caso do Infomap, o limite tem a ver com o fluxo inter-comunidades (não lembro os detalhes agora, mas o trabalho do Kuwamoto explica isso).
-
 As comunidades, em sua maioria, possuem uma topologia em que predomina a forma de estrela ou estrelas com múltiplos centros. Isso significa poucos \textit{hubs} conectando quase todos os outros nós. Esse formato é caracterizado por uma assortatividade negativa, ou seja, nós de alto grau conectados a nós de baixo grau~\cite{Barabasi2016-rn}.
 
-A assortatividade das 162 ilhas com ao menos três ocupações é exibida na Figura~\ref{fig:assortatividade}. Quase todas elas possuem assortatividade negativa, embora essa característica seja suavizada em ilhas ocupacionais maiores.
-
-A assortatividade negativa confirma a existência de polos ocupacionais para grande parte das ilhas. Na Figura~\ref{fig:ex-ilhas-ocupacionais} são apresentados três exemplos emblemáticos sobre a assortatividade e o efeito esperados dos polos.
+A assortatividade das 624 ilhas com ao menos três ocupações é exibida na Figura~\ref{fig:assortatividade}. Quase todas elas possuem assortatividade negativa, confirmando a existência de polos ocupacionais. Na Figura~\ref{fig:ex-ilhas-ocupacionais} são apresentados três exemplos emblemáticos sobre a assortatividade e o efeito esperados dos polos.
 
 \begin{figure}[htb]
     \centering
@@ -720,9 +729,6 @@ A assortatividade negativa confirma a existência de polos ocupacionais para gra
     \caption{Assortatividade pelo número de ocupações na ilha com o eixo $x$ em escala logarítmica.}
     \label{fig:assortatividade}
 \end{figure}
-
-%% PRECISAMOS MOSTRAR E DISCUTIR ALGUNS EXEMPLOS DE COMUNIDADES AQUI. VAMOS DEBATER SEUS COMENTÁRIOS ABAIXO E DEFINIR ALGUNS CAMINHOS PARA FECHARMOS O TRABALHO
-% Ronie: Acredito que resolvemos isso na vez que conversamos no LCoN, certo? Incorporei o que entendi da conversa nessa versão :)
 
 A ilha que se inicia com \enquote{Aluno de Iniciação Científica} é exibida na Figura~\ref{fig:ex-sobreposicao-ciencia}. A topologia estrelada é claramente observável, irradiando-se a partir do \textit{polo ocupacional}. O fluxo predominante parte de \textit{Aluno de Iniciação Científica}, passa por \textit{Aluno de Mestrado} e termina em \textit{Aluno de Doutorado} sem que haja fluxo na direção contrária, reforçando o conhecimento tácito sobre a área.
 
@@ -768,19 +774,13 @@ A topologia é mais similar a de \textit{centro e raios}, em que as ocupações 
 
 Esse trabalho reúne os conceitos fronteiras de carreira de \citeonline{Gunz2007-hr}, os trabalhos de Ciência de Redes sobre detecção de comunidades por fluxo baseados em \cite{Rosvall2009-sd} e os dados de um dos maiores sites brasileiros de carreira~\cite{VAGAS_Tecnologia2014-yv} para contribuir na compreensão da movimentação profissional.
 
-A rede profissional possui \textit{hubs}, o que fornece indícios de que carreiras menos regulares são comuns, como advogam as Carreiras sem Fronteiras e Carreiras Proteanas, ao mesmo tempo que sugerem que eles possuem limitações.
+A rede profissional possui \textit{hubs}, o que fornece indícios de que carreiras menos regulares são comuns, como advogam as Carreiras sem Fronteiras e Carreiras Proteanas. Ao mesmo tempo a presença de muitos pequenos ego-grafos e ilhas ocupacionais diminutas sugerem que há alternativas para essas teorias.
 
-O algoritmo Infomap foi aplicado para identificar as fronteiras de carreiras, gerando \textit{ilhas ocupacionais}, que são conjuntos de ocupações em que a movimentação interna é significativamente mais frequente do que movimentações para outras \textit{ilhas}. O termo foi introduzido para facilitar a discussão e como uma analogia ao conceito sugerido por~\cite{Abbott1995-ft} em que a fronteira define o grupo, ao invés do grupo definir a fronteira.
+O algoritmo Infomap foi aplicado para identificar as fronteiras de carreiras, gerando \textit{ilhas ocupacionais}, que são conjuntos de ocupações em que a movimentação interna é significativamente mais frequente do que movimentações para outras \textit{ilhas}. O termo foi introduzido para facilitar a discussão e como uma analogia ao conceito sugerido por~\cite{Abbott1995-ft} em que a fronteira define o grupo, ao invés do grupo definir a fronteira. Essa abordagem usa a diferença entre os grupos para defini-los ao invés de alguma característica intrínseca. 
 
 A análise da assortatividade das ilhas mostrou que sua topologia tende ao formato estrelado ou de eixo e raios, o que motivou a introdução do termo \textit{polos ocupacionais} para identificar ocupações que dão coesão à ilha. Alguns exemplos emblemáticos dão dimensão aos dois conceitos introduzidos nesse trabalho.
 
 Conclui-se na expectativa que esse trabalho contribua para na compreensão das transições profissionais, no entanto, é preciso reconhecer as limitações dessa proposta e as questões que permanecem abertas.
-
-%% OPS, SIM, É VERDADE, MAS NÃO PODEMOS USAR ESSA REDAÇÃO EM UM ARTIGO CIENTÍFICO. PODEMOS DIZER, POR EXEMPLO, "ESSE TRABALHO TRAZ UMA IMPORTANTE CONTRIBUIÇÃO PARA O ENTENDIMENTO DAS MOVIMENTAÇÕES DE CARREIRA USANDO UMA BASE DE DADOS REAL E CONCEITOS DE CIÊNCIA DE REDES, E ABRE DIVERSAS PERSPECTIVAS RELEVANTES DE PESQUISA..."
-% Ronie: Feito
-
-%% NORMALMENTE AS CONCLUSÕES INICIAM FAZENDO UMA BREVE REVISÃO DE TUDO QUE FOI APRESENTADO, PARTINDO DAS HIPÓTESES DE PESQUISA, ATÉ AS CONCLUSÕES OBTIDAS. A PARTIR DISSO QUE INSERIMOS AS PERSPECTIVAS FUTURAS.
-% Ronie: Feito
 
 Os aspectos sociais e psicológicos das fronteiras de carreira não foram abordados e são eles quem podem responder a perguntas como \enquote{por que as fronteiras estão onde estão?} e \enquote{por que as ilhas possuem essa topologia?}. Espera-se que o conteúdo apresentado contribua de maneira quantitativa em discussões sociais e psicológicas sobre movimentação profissional.
 
