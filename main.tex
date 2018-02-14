@@ -652,28 +652,40 @@ O MCar foi testado em duas variações do algoritmo:
 
 A variação com maior compressão revela a melhor caracterização de particionamento~\cite{Viamontes_Esquivel2011-it,Rosvall2011-yi,Edler2017-kt}. Se a variação com sobreposição possuir maior compressão de informação do que as outras, assume-se que suas comunidades, intrinsecamente, compartilham nós.
 
-Os resultados de compressão para cada variação são apresentados na Tabela~\ref{tab:metodos}. É possível observar que há ganho na compressão de informação quando se permite a sobreposição de comunidades, revelando a movimentação dos profissionais é melhor caracterizada quando as ilhas compartilham ocupações. Uma quantidade relativamente pequena de ocupações,  cerca de 11\%, é compartilhada entre ilhas.
+Os resultados de compressão para cada variação são apresentados na Tabela~\ref{tab:metodos}. É possível observar que há ganho na compressão de informação quando se permite a sobreposição de comunidades, revelando a movimentação dos profissionais é melhor caracterizada quando as ilhas compartilham ocupações.
 
 % INTUITIVAMENTE UMA COMPRESSÃO MAIOR IMPLICA EM MENOS COMUNIDADES, PORÉM SUA TABELA MOSTRA O CONTRÁRIO, ASSIM COMO O TEXTO. DE ACORDO COM SUA EXPLICAÇÃO UMA MAIOR COMPRESSÃO IMPLICA EM MELHOR PARTICIONAMENTO E, PORTANTO, MAIS COMUNIDADES.
 % Ronie: Aqui acho que preciso melhorar a explicação. Como tb não expliquei as variações hierárquicas e com sobreposição do Infomap estão também falta uma peça do quebra cabeças. A compressão dessa 'descrição do caminho do random walker' acaba criando um balanço entre quantidade de nós e de comunidades. Se não houverem 'gargalos' de fluxo, o random walker não fica 'preso' em um subgrafo e a melhor compressão acontece simplesmente por códigos mais curtos nos nós mais frequentes, sem divisão em comunidades. Por outro lado, quando existe um gargalo o random walker fica preso por um longo tempo de um lado ou de outro dele, nesse formato a melhor compressão acontece se cada 'prisão' reutilizar os códigos mais curtos e criarmos um outro código para passar de um lado para o outro do gargalo. O que está acontecendo na variação com sobreposição é que existem nós, ao invés de conexãos, que são fronteira entre as comunidades. Uma boa ilustração disso é o grafo 'gravata borboleta' com 5 nós e 6 conexões, nesse formato: ▷◁. Sem permitir sobreposição de comunidades, o nós central força os dois triângulos a pertencer em uma única comunidade. Permitindo a sobreposição, o nó central consegue participar de duas comunidades: ▷ e ◁. Se fosse uma rede com uma conexão entre os triângulos, desse jeito: ▷—◁, então o gargalo seria a conexão (não o nó) e o algoritmo que não permite sobreposição teria a melhor compressão.
 
 \begin{table}
   \centering
-  \begin{tabular}{@{} l r r @{}}
+  \begin{tabular}{@{} l r r r r @{}}
   	\toprule
-  	Variação         & Compressão & Ilhas Ocupacionais \\
-    \midrule
-  	Simples          & 46,08\%    & 65                \\
-  	Com sobreposição & 50,30\%    & 624                \\
-    \bottomrule
+  	Método           & Compressão & Ilhas Ocupacionais & Ocupações & \% em Ilhas \\ \midrule
+  	Simples          & 46,08\%    & 65                 & 5.906     & 81,27\%     \\
+  	Com sobreposição & 50,30\%    & 624                & 5.631     & 77,49\%     \\ \bottomrule
   \end{tabular}
-  \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo (variação) de particionamento. \textit{Compressão} significa qual a compressão de informação obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Ihas Ocupacionais} é o número de partições não-triviais resultantes (ao menos 3 nós na comunidade).}
+  \caption{Métodos de detecção de comunidades e seus resultados. O \textit{Método} se refere ao tipo (variação) de particionamento. \textit{Compressão} significa qual a compressão de informação obtida pelo Infomap em relação a uma rede sem particionamento. \textit{Ihas Ocupacionais} é o número de partições não-triviais resultantes (ao menos 3 nós na comunidade). Em \textit{Ocupações} está o número de nós que fazem parte de alguma ilha e \textit{\% em Ilhas} mostra o mesmo número, proporcionalmente às 7.267 ocupações do MCar.}
   \label{tab:metodos}
 \end{table}
 
 Apesar de usar a expressão \enquote{compartilham ocupações}, a interpretação mais correta é que as ilhas possuem \textit{suas próprias versões} das ocupações. \citeonline{Viamontes_Esquivel2011-it} apresentam um exemplo intuitivo do significado desse \enquote{compartilhamento} usando aeroportos europeus e norte-americanos. Transposto para a realidade do MCar, uma ocupação que pertence a mais de uma comunidade significa que os profissionais que transitam por ela, em sua maioria, voltam aos seus grupos de origem ao invés de migrarem para outros. Não fosse dessa forma, esses grupos conectados seriam considerados como um conjunto único de ocupações pelo algoritmo ou a ocupação estaria em apenas na comunidade com fluxo predominante.
 
-Existem duas explicações possíveis. A primeira é que essas ocupações são \textit{homônimas} e, portanto, distintas, o que significa que há uma fronteira entre elas. A segunda é que essas ocupações são similares, mas fatores não especificados dificultam a transição de um grupo para outro, o que também indica uma fronteira de carreira, ainda que mais fraca.
+Existem duas explicações possíveis. A primeira é que essas ocupações são \textit{homônimas} e, portanto, distintas, o que significa que há uma fronteira entre elas, como exibido no exemplo da Figura~\ref{fig:homonimos}. A segunda é que essas ocupações são similares, mas fatores não especificados dificultam a transição de um grupo para outro, o que também indica uma fronteira de carreira, ainda que mais fraca.
+
+\begin{figure}[htb]
+    \centering
+    \subfloat[][Arquitetura] {
+        \includegraphics[width=0.49\linewidth]{ex-coordenador-de-projetos-arquiteto2.pdf}
+        \label{fig:homonimo-arquiteto}
+    }    
+    \subfloat[][Software] {
+        \includegraphics[width=0.49\linewidth]{ex-coordenador-de-projetos-software2.pdf}
+        \label{fig:homonimo-software}
+    }  
+    \caption{Duas ilhas ocupacionais compartilhando a ocupação \enquote{Coordenador de Projetos} (em destaque). Apesar de possuírem o mesmo nome são ocupações diferentes, a movimentação entre as ilhas é pouco representativa se comparada a movimentação intra-ilha. Apenas uma fração das ocupações de cada ilha está exibida nessa figura. O tamanho do nó indica o fluxo de profissionais que passa pela ocupação enquanto a espessura da conexão indica o tamanho do fluxo entre elas.}
+    \label{fig:homonimos}
+\end{figure}
 
 Um exemplo da primeira explicação é a ocupação \enquote{Coordenador de Projetos}, que está associada tanto à Arquitetura quanto à Software. Um possível exemplo da segunda é a ocupação de \enquote{Professor} que aparece em diversas ilhas, sugerindo que há especializações nessa ocupação que impedem que um Professor se movimente entre ilhas, o que condiz com o conhecimento tácito sobre a profissão, um Professor de Matemática não se transforma em um Professor de Língua Portuguesa facilmente.
 
@@ -752,11 +764,11 @@ A topologia é mais similar a de \textit{centro e raios}, em que as ocupações 
 \begin{figure}[ht]
     \centering
     \subfloat[][Iniciação Científica] {
-        \includegraphics[width=0.5\linewidth]{ex-sobreposicao-aluno-iniciacao.pdf}
+        \includegraphics[width=0.5\linewidth]{ex-sobreposicao-aluno-iniciacao2.pdf}
         \label{fig:ex-sobreposicao-ciencia}
     }
-    \subfloat[][Tecnologia da Informação] {
-        \includegraphics[width=0.5\linewidth]{ex-sobreposicao-analista-de-sistemas.pdf}
+    \subfloat[][Recursos Humanos] {
+        \includegraphics[width=0.5\linewidth]{ex-sobreposicao-recursos-humanos.pdf}
         \label{fig:ex-sobreposicao-ti}
     }
     \\    
@@ -776,7 +788,7 @@ Esse trabalho reúne os conceitos fronteiras de carreira de \citeonline{Gunz2007
 
 A rede profissional possui \textit{hubs}, o que fornece indícios de que carreiras menos regulares são comuns, como advogam as Carreiras sem Fronteiras e Carreiras Proteanas. Ao mesmo tempo a presença de muitos pequenos ego-grafos e ilhas ocupacionais diminutas sugerem que há alternativas para essas teorias.
 
-O algoritmo Infomap foi aplicado para identificar as fronteiras de carreiras, gerando \textit{ilhas ocupacionais}, que são conjuntos de ocupações em que a movimentação interna é significativamente mais frequente do que movimentações para outras \textit{ilhas}. O termo foi introduzido para facilitar a discussão e como uma analogia ao conceito sugerido por~\cite{Abbott1995-ft} em que a fronteira define o grupo, ao invés do grupo definir a fronteira. Essa abordagem usa a diferença entre os grupos para defini-los ao invés de alguma característica intrínseca. 
+A Equação de Mapa~\cite{Rosvall2009-sd} foi aplicada usando o software Infomap~\cite{Edler2012-hh} para identificar as fronteiras de carreiras, gerando \textit{ilhas ocupacionais}, que são conjuntos de ocupações em que a movimentação interna é significativamente mais frequente do que movimentações para outras \textit{ilhas}. O termo foi introduzido para facilitar a discussão e como uma analogia ao conceito sugerido por~\cite{Abbott1995-ft} em que a fronteira define o grupo, ao invés do grupo definir a fronteira. Essa abordagem usa a diferença entre os grupos para defini-los ao invés de alguma característica intrínseca. 
 
 A análise da assortatividade das ilhas mostrou que sua topologia tende ao formato estrelado ou de eixo e raios, o que motivou a introdução do termo \textit{polos ocupacionais} para identificar ocupações que dão coesão à ilha. Alguns exemplos emblemáticos dão dimensão aos dois conceitos introduzidos nesse trabalho.
 
