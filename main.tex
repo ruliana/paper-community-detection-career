@@ -512,17 +512,17 @@ A assortatividade é uma medida de quão nós similares estão conectados entre 
 
 A assortatividade de grau é de especial interesse na análise de redes, pois permite caracterizar sua topologia. Redes com assortatividade negativa (desassortativas), remetem à topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde nós de grau muito alto (\textit{hubs}) se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:ex-sobreposicao-ti} mostra um exemplo de uma rede em que predomina essa topologia.
 
-Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote{estrela}, em que todos os nós de alto grau só se conectam a nós de grau muito baixo. Como exemplos, a ilha ocupacional relacionada a \enquote{Engenheiro de Segurança do Trabalho} na Figura~\ref{fig:ex-assortatividade-negativa}, com assortatividade $-0,53$, possui todos os nós conectados a um \textit{hub} central, com poucas conexões entre ocupações periféricas. Já a ilha relacionada a \enquote{bolsistas} na Figura~\ref{fig:ex-bolsistas}, com assortatividade $-0,07$, não possui um \textit{hub} tão claramente definido; ainda que existam alguns nós folhas conectados a nós de maior grau, boa parte dos nós possui grau similar.
+Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote{estrela}, em que todos os nós de alto grau só se conectam a nós de grau muito baixo. Como exemplos, a ilha ocupacional relacionada a \enquote{Fonoaudiologia} na Figura~\ref{fig:ex-assortatividade-negativa}, com assortatividade $-0,99$, possui todos os nós conectados a um \textit{hub} central, com nenhuma conexão entre as ocupações periféricas. Já a ilha relacionada a \enquote{Coordenador de Mídia} na Figura~\ref{fig:ex-assortatividade-positiva}, com assortatividade $0,18$, possui uma estrutura um pouca mais distribuída e o grau do nós é similar, com exceção do próprio \enquote{Coordenador de Mídia}.
 
 \begin{figure}[ht]
     \centering
-    \subfloat[][Engenheiro de Segurança do Trabalho - Assortatividade $-0,53$] {
+    \subfloat[][Assortatividade $-0,99$] {
         \includegraphics[width=0.4\linewidth]{ex-assortatividade-negativa.pdf}
         \label{fig:ex-assortatividade-negativa}
     }
-    \subfloat[][Assortatividade $-0,07$] {
-        \includegraphics[width=0.4\linewidth]{ex-sobreposicao-bolsistas.pdf}
-        \label{fig:ex-bolsistas}
+    \subfloat[][Assortatividade $0,18$] {
+        \includegraphics[width=0.4\linewidth]{ex-assortatividade-positiva.pdf}
+        \label{fig:ex-assortatividade-positiva}
     }    
     \caption{Assortatividade e Topologia}
 \end{figure}
@@ -733,7 +733,7 @@ A distribuição de tamanho das ilhas resultantes da partição com sobreposiç�
 
 As comunidades, em sua maioria, possuem uma topologia em que predomina a forma de estrela ou estrelas com múltiplos centros. Isso significa poucos \textit{hubs} conectando quase todos os outros nós. Esse formato é caracterizado por uma assortatividade negativa, ou seja, nós de alto grau conectados a nós de baixo grau~\cite{Barabasi2016-rn}.
 
-A assortatividade das 624 ilhas com ao menos três ocupações é exibida na Figura~\ref{fig:assortatividade}. Quase todas elas possuem assortatividade negativa, confirmando a existência de polos ocupacionais. Na Figura~\ref{fig:ex-ilhas-ocupacionais} são apresentados três exemplos emblemáticos sobre a assortatividade e o efeito esperados dos polos.
+A assortatividade das 624 ilhas com ao menos três ocupações é exibida na Figura~\ref{fig:assortatividade}. Quase todas elas possuem assortatividade negativa, reforçando o conceito de polos ocupacionais. Na Figura~\ref{fig:ex-ilhas-ocupacionais} são apresentados três exemplos que ilustram a importância dos polos ocupacionais.
 
 \begin{figure}[htb]
     \centering
@@ -742,24 +742,29 @@ A assortatividade das 624 ilhas com ao menos três ocupações é exibida na Fig
     \label{fig:assortatividade}
 \end{figure}
 
-A ilha que se inicia com \enquote{Aluno de Iniciação Científica} é exibida na Figura~\ref{fig:ex-sobreposicao-ciencia}. A topologia estrelada é claramente observável, irradiando-se a partir do \textit{polo ocupacional}. O fluxo predominante parte de \textit{Aluno de Iniciação Científica}, passa por \textit{Aluno de Mestrado} e termina em \textit{Aluno de Doutorado} sem que haja fluxo na direção contrária, reforçando o conhecimento tácito sobre a área.
+A ilha com o polo \enquote{Aluno de Iniciação Científica} é exibida na Figura~\ref{fig:ex-sobreposicao-ciencia}. A topologia estrelada é claramente observável, irradiando-se a partir do \textit{polo ocupacional}. O fluxo predominante parte de \textit{Aluno de Iniciação Científica}, passa por \textit{Aluno de Mestrado}, \textit{Aluno de Doutorado} e termina em \textit{Pos-Doutorando} sem que haja fluxo na direção contrária, reforçando o conhecimento tácito sobre a área.
 
-O polo ocupacional é claramente \textit{Aluno de Iniciação Científica}. O reforço dessa ocupação deve distribuir o fluxo de pessoas para as outras ocupações, em especial o fluxo mais forte \textit{Aluno de Mestrado} $\rightarrow$ \textit{Aluno de Doutorado}. Por outro lado, seu enfraquecimento tende a minar o fluxo de pessoa para outras ocupações, provocando o enfraquecimento da ilha como um todo.
+O polo ocupacional é claramente \textit{Aluno de Iniciação Científica} que recebe um forte fluxo de \textit{Monitor}. O reforço do polo deve distribuir o fluxo de pessoas para as outras ocupações. Outro ponto de especial interesse é que, a partir de\textit{Aluno de Mestrado} o fluxo intensifica até \textit{Pos-Doutorando}, sugerindo que os profissionais que se tornam \textit{Alunos de Mestrado} tem forte tendência de prosseguir na carreira acadêmica.
 
-Essa análise pontual dá dimensão à contribuição desse trabalho. Nesse caso, identificada a ilha, o polo e o fluxo predominante,  ações para reforçar uma ocupação, como \textit{Aluno de Doutorado}, por exemplo, passam a ser óbvias. Essa análise superficial sugere que aumentar o número de alunos de iniciação científica, desestimular sua movimentação para outras ocupações ou incentivar o fluxo para o mestrado provocaria o efeito desejado. A proporção de pessoas em cada fluxo fornece um \enquote{funil} para se estimar quantas pessoas seriam necessárias em cada ocupação para atingir um certo resultado.
+Por outro lado, o enfraquecimento do polo tende a minar o fluxo de pessoa para outras ocupações, provocando o enfraquecimento da ilha como um todo.
 
-As proporções entre as ocupações, por exemplo, entre \textit{Aluno de Iniciação Científica}, \textit{Aluno de Mestrado} e \textit{Aluno de Doutorado} também podem servir como comparativo entre uma instituição de ensino e o \enquote{mercado}.
+Essa análise pontual dá dimensão à contribuição desse trabalho. Nesse caso, identificada a ilha, o polo e o fluxo predominante,  ações para reforçar uma ocupação, como \textit{Pos-Doutorando}, por exemplo, passam a ser óbvias. Essa análise superficial sugere que aumentar o número de alunos de iniciação científica, desestimular sua movimentação para outras ocupações ou incentivar o fluxo para o mestrado provocaria o efeito desejado. A proporção de pessoas em cada fluxo fornece um \enquote{funil} para se estimar quantas pessoas seriam necessárias em cada ocupação para atingir um certo resultado.
 
-A ilha ocupacional relacionada à \textit{Tecnologia da Informação}, exibida na Figura~\ref{fig:ex-sobreposicao-ti}, possui uma topologia de estrela com três polos claros: \textit{Gerente de Projetos}, \textit{Analista de Sistemas} e \textit{Analista de Suporte}. Cada um deles funciona como centro de seu próprio conjunto de ocupações, mas com grande movimentação de profissionais entre si.
+A ilha ocupacional relacionada à \textit{Recursos Humanos}, exibida na Figura~\ref{fig:ex-sobreposicao-recursos-humanos}, possui uma topologia de estrela com polo em \textit{Analista de Recursos Humanos} que se alimenta principalmente de \textit{Assistente de Recursos Humanos} e \textit{Analista de Departamento Pessoal}. Apesar de alguma dispersão, o fluxo prossegue para ocupações mais administrativas \textit{Coordenador}, \textit{Supervisor} e \textit{Gerente}, com uma certa força para \textit{Consultor}.
 
-A remoção de um desses polos desconectaria a parte das ocupações em que esse polos são a única conexão com a ilha ocupacional, mas não seria suficiente para esfacelá-la como no caso anterior. A conexão de maior fluxo nessa ilha está entre \textit{Analista de Suporte} $\rightarrow$ \textit{Analista de Sistemas}. Chama a atenção não haver um fluxo direto significativo entre \textit{Analista de Suporte} e \textit{Gerente de Projetos}, indicando que \textit{Analista de Sistemas} pode funcionar como uma \textit{ponte} entre essas ocupações.
+Nessa ilha, o polo sugere ser a própria razão de ser da área, uma vez que as ocupações anteriores não estão diretamente relacionadas à função ou são juniores e o fluxo prossegue para ocupações administrativas. A outras ocupações \textit{Analistas} que se dispersam a partir do polo sugerem especializações do \textit{Analista de Recursos Humanos}, em especial \textit{Analista de Administração de Pessoal} e \textit{Analista de Recrutamento e Seleção}, que possuem fluxo similares de entrada e saída para ele. Peculiarmente, \textit{Psicólogo} possui fluxo similar, mas as funções esperadas da ocupação não são diretamente relacionadas à \textit{Recursos Humanos}.
 
-%% EXISTE UM DESEQUILÍBRIO NA PROFUNDIDADE DA EXPLICAÇÃO DO CASO 1 PARA ESTE CASO 2 E O PRÓXIMO, FAVOR BALANCEAR.
-% Ronie: Feito, mas não consegui aprofundar mais.
+No último exemplo na Figura~\ref{fig:ex-sobreposicao-analista-ambiental} gira em torno do polo \textit{Analista Ambiental}, mas não possui o mesmo fluxo claro de progressão como os exemplo anteriores. Junto a ele, outros dois polos menores \textit{Engenheiro Ambiental} a \textit{Técnico em Meio Ambiente} trocam fluxos com o polo, enquanto ocupações administrativas como \textit{Coordenador}, \textit{Gerente} e \textit{Consultor} recebem fluxos dos três polos enquanto \textit{Estagiário} as alimenta.
 
-No último exemplo da Figura~\ref{fig:ex-sobreposicao-vendas}, exibindo a ilha relacionada a \textit{Comercial e Vendas}, os polos não são tão claros. \textit{Gerente Comercial} e \textit{Consultor de Vendas} se destacam, mas quatro outros nós possuem grande fluxo e alta conectividade. A remoção de um desses nós não afetaria a rede da mesma forma que nos exemplos anteriores. Nota-se também que há um forte fluxo entre todos os nós de maior fluxo, diferentemente do exemplo da ilha de \textit{Tecnologia da Informação}, em que dois dos polos possuem conexão tão tênue que não figura entre as conexões de maior fluxo da rede.
+Ao lado esquerdo da Figura~\ref{fig:ex-sobreposicao-analista-ambiental} é possível observar ocupações de ensino e pesquisa, como \textit{Professora}, \textit{Docente} e \textit{Pesquisador}. Sua presença na ilha sugere que são especializadas na área Ambiental, ainda que os profissionais não tenham deixado explícito em seus currículos.
 
-A topologia é mais similar a de \textit{centro e raios}, em que as ocupações mais periféricas se conectam entre si, mas ainda assim possuem um grau elevado de conexões.
+A presença de ocupações que se relacionam com \textit{Segurança do Trabalho} e \textit{SMS} (Segurança, Meio Ambiente e Saúde) indicam um certo compartilhamento dessa área e Meio Ambiente, ainda que não seja forte o suficiente para juntar as ilhas. São ocupações que, apesar de compartilhar o título, parecem ser executadas em contexto diferentes, de modo que um \textit{Engenheiro de Segurança do Trabalho} possui pessoas que vão e vêm da área ambiental, sem haver uma troca com outros áreas.
+
+Essa característica condiz com o conhecimento tácito de que é mais fácil permanecer em uma certa área de atuação (Meio Ambiente), ainda que a profissão em si seja mais geral (Segurança do Trabalho).
+
+Os exemplos acima demonstram como essa pesquisa pode ser utilizada. Ela contribui fortemente para as análises feitas, mas precisam de conhecimento externo, como o significado das funções (\enquote{Gerente é uma ocupação administrativa}), para dar significado aos resultados.
+
+A pesquisa consegue delinear características essenciais da movimentação profissional, como ilhas e polos, mas é insuficiente, por si, para explicar o porquê elas ocorrem e o que exatamente significam em cada contexto.
 
 \begin{figure}[ht]
     \centering
@@ -769,14 +774,14 @@ A topologia é mais similar a de \textit{centro e raios}, em que as ocupações 
     }
     \subfloat[][Recursos Humanos] {
         \includegraphics[width=0.5\linewidth]{ex-sobreposicao-recursos-humanos.pdf}
-        \label{fig:ex-sobreposicao-ti}
+        \label{fig:ex-sobreposicao-recursos-humanos}
     }
     \\    
-    \subfloat[][Comercial e Vendas] {
-        \includegraphics[width=0.5\linewidth]{ex-sobreposicao-consultor-de-vendas.pdf}
-        \label{fig:ex-sobreposicao-vendas}
+    \subfloat[][Ambiental] {
+        \includegraphics[width=0.5\linewidth]{ex-sobreposicao-analista-ambiental.pdf}
+        \label{fig:ex-sobreposicao-analista-ambiental}
     }
-    \caption{Três exemplos de ilhas ocupacionais. O tamanho e a cor do nó estão relacionados ao fluxo de profissionais que passa por ele, quanto maior e mais escuro o nó, maior o fluxo. Da mesma forma, a espessura e a cor das conexões está relacionada ao fluxo de profissionais entre uma ocupação e outra. O polos ocupacionais são identificados pelo volume de pessoas transitando por eles e pela sua alta conectividade (visualmente os nós maiores e mais centrais). Para facilitar a visualização, nas Figuras~\ref{fig:ex-sobreposicao-ti} e~\ref{fig:ex-sobreposicao-vendas}, apenas as conexões e nós de maior fluxo são apresentados. A Figura~\ref{fig:ex-sobreposicao-ciencia}, no entanto, mostra a ilha completa.}
+    \caption{Três exemplos de ilhas ocupacionais. O tamanho e a cor do nó estão relacionados ao fluxo de profissionais que passa por ele, quanto maior e mais escuro o nó, maior o fluxo. Da mesma forma, a espessura e a cor das conexões está relacionada ao fluxo de profissionais entre uma ocupação e outra. O polos ocupacionais são identificados pelo volume de pessoas transitando por eles e pela sua alta conectividade (visualmente os nós maiores e mais centrais). Para facilitar a visualização, nas Figuras~\ref{fig:ex-sobreposicao-recursos-humanos} e~\ref{fig:ex-sobreposicao-analista-ambiental}, apenas as conexões e nós de maior fluxo são apresentados. A Figura~\ref{fig:ex-sobreposicao-ciencia}, no entanto, mostra a ilha completa.}
     \label{fig:ex-ilhas-ocupacionais}
 \end{figure}
 
