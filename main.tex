@@ -113,13 +113,13 @@ Resumo vai aqui
 \section{Introdução}
 %===================================
 
-Cada trajetória profissional é bastante particular. Enquanto alguns seguem caminhos bem definidos, como inúmeros presidentes de empresas que começaram como estagiários, outros trilham por sequências improváveis de ocupações, como o início da carreira de Sílvio Santos, que foi Camelô e Paraquedista Militar antes de começar a carreira como Apresentador de TV; ou Monja Coen, que foi jornalista até seus 36 anos antes de se tornar uma Monja Budista.
+Cada trajetória profissional é bastante particular. Enquanto alguns seguem caminhos bem definidos, como inúmeros presidentes de empresas que começaram como estagiários, outros trilham por sequências improváveis de ocupações, como o início da carreira de Sílvio Santos, que foi Camelô e Paraquedista Militar antes de começar a carreira como Apresentador de TV (REF); ou Monja Coen, que foi jornalista até seus 36 anos antes de se tornar uma Monja Budista (REF).
 
 Também os modelos de carreiras têm se modificado e teorias como as das \textit{Carreiras Proteanas} e \textit{Carreiras sem Fronteiras} advogam um distanciamento das carreiras comuns em favor de trajetórias com foco maior no indivíduo~\cite{Bendassolli2009-bg}. A carreira proteana coloca o indivíduo, e não as organizações, como protagonista da trajetória profissional, onde seus valores são usados na decisão dos próximos passos e o sucesso é subjetivo e medido pela satisfação pessoal~\cite{Hall2004-ke}. A carreira sem fronteiras, por sua vez, acontece quando a trajetória se faz independente das organizações ou hierarquias. Essas carreiras são caracterizadas por passagens por múltiplas empresas ou mudanças na especialidade do indivíduo, como um eletricista industrial que passa a atuar como web designer~\cite{Arthur1994-qq}.
 
 No entanto, o movimento de uma pessoa entre ocupações profissionais não é simples. A capacitação do indivíduo, a atratividade da nova ocupação e o próprio conhecimento de que uma transição é possível a tornam mais fácil ou difícil para os profissionais. Quando essa transição é percebida como uma barreira por um número suficiente de pessoas, surge uma \textit{fronteira de carreira}~\cite{Gunz2007-hr}. Essas fronteiras delimitam um grupo de ocupações nas quais um indivíduo tem maiores chances de permanecer durante sua trajetória profissional, denominado aqui como \textit{ilha ocupacional}.
 
-Esse trabalho utiliza o conceito de fronteira de carreira~\cite{Gunz2007-hr}, um banco de dados com milhões de experiências profissionais ~\cite{VAGAS_Tecnologia2014-yv} e técnicas de detecção de comunidades em redes~\cite{Rosvall2009-sd,Edler2017-kt} para encontrar ilhas ocupacionais no mercado de trabalho brasileiro, discutir e entender sua estrutura.
+Esse trabalho utiliza o conceito de fronteira de carreira~\cite{Gunz2007-hr}, um banco de dados real com milhões de experiências profissionais ~\cite{VAGAS_Tecnologia2014-yv} e técnicas de detecção de comunidades em redes~\cite{Rosvall2009-sd,Edler2017-kt} para encontrar ilhas ocupacionais no mercado de trabalho brasileiro, discutir e entender sua estrutura.
 
 O estudo revela onde estão as fronteiras das ilhas, quais suas composições e apresenta \textit{insights} sobre suas estruturas. O resultado obtido pode ser usado para o refinamento de teorias sobre carreira, como uma classificação natural para as ocupações baseada na movimentação profissional ou como subsídio para o planejamento de carreiras.
 
@@ -129,15 +129,13 @@ Explorando esse conceito, o trabalho caracteriza a topologia das ilhas ocupacion
 
 A presença de uma ilha gigante nos resultados fornece indícios que suportam o modelo de \textit{Carreira sem Fronteiras}, ao mesmo tempo em que indica que ela não abrange todos os segmentos profissionais.
 
-Esse artigo está organizado da seguinte forma. A Seção~\ref{sec:carreira} descreve o conceito de fronteira da carreira, enquanto a Seção~\ref{sec:mapa} descreve o banco de dados utilizado na pesquisa. As Seções~\ref{sec:comunidades} e~\ref{sec:assortatividade} descrevem os algoritmos empregados para detecção de comunidades e a medição utilizada na caracterização da topologia. Finalmente, a Seção~\ref{sec:resultados} discute e levanta questões sobre os resultados obtidos.
+Esse artigo está organizado da seguinte forma. A Seção~\ref{sec:carreira} descreve conceitos sobre carreira, fronteira de carreira, ilhas ocupacionais, polos ocupacionais e outros conceitos associados relevantes, enquanto a Seção~\ref{sec:mapa} descreve o banco de dados utilizado na pesquisa. As Seções~\ref{sec:comunidades} e~\ref{sec:assortatividade} descrevem os algoritmos empregados para detecção de comunidades e a medição utilizada na caracterização da topologia. Finalmente, a Seção~\ref{sec:resultados} discute e levanta questões sobre os resultados obtidos.
 
 %===================================
 \section{Sobre Carreira e seus Conceitos Associados} \label{sec:carreira}
 %===================================
 
-Segundo~\citeonline{Arthur1989-rn}, carreira é \foreignquote{english}{uma sequência evolutiva da experiência profissional de uma pessoa no tempo}\footnote{No original: \enquote{an evolving sequence of person's work experience over time}.}.
-
-Apesar das discussões sobre as mudanças nos modelos de carreira, passando de um modelo linear e centrado na organização para um modelo centrado no indivíduo, as definições de carreira são frequentemente associadas à progressão profissional do indivíduo~\cite{Baruch2004-oy,Sullivan2009-xb,Bendassolli2009-bg}.
+Segundo~\citeonline{Arthur1989-rn}, carreira é \foreignquote{english}{uma sequência evolutiva da experiência profissional de uma pessoa no tempo}\footnote{No original: \enquote{an evolving sequence of person's work experience over time}.}. Apesar das discussões sobre as mudanças nos modelos de carreira, passando de um modelo linear e centrado na organização para um modelo centrado no indivíduo, as definições de carreira são frequentemente associadas à progressão profissional do indivíduo~\cite{Baruch2004-oy,Sullivan2009-xb,Bendassolli2009-bg}.
 
 Para os fins desse trabalho, define-se carreira como \textit{a sequência de \textbf{ocupações} pela qual um indivíduo passa em sua vida profissional}. Essa definição é similar à de \citeonline{Arthur1989-rn}, porém, limita sua abrangência e a torna mais concreta. Isso permite uma análise menos subjetiva, uma vez que ocupações profissionais podem ser extraídas de currículos e analisadas quantitativamente. No entanto, ela se torna mais limitada, já que essa definição exclui aspectos psicológicos ou sociais.
 
@@ -145,9 +143,7 @@ Essa pesquisa empresta o conceito de \textit{fronteiras de carreira} (\textit{ca
 
 As barreiras não se limitam ao conhecimento, quaisquer dificuldades na movimentação podem criar fronteiras. Por exemplo, alguém morando em um grande centro urbano dificilmente exerceria a ocupação de \enquote{Agricultor} sem mover-se para o campo. Um \enquote{Diretor Financeiro} precisaria adequar seu padrão de vida antes de uma transição para uma ocupação com ganhos mais modestos. Uma profissão que está desaparecendo, como \enquote{Contínuo}, possui barreiras mais altas do que uma nascendo, como \enquote{Analista de Experiência do Usuário}.
 
-Um dos pontos principais desse trabalho está na argumentação de \citeonline{Gunz2007-hr} sobre como uma fronteira subjetiva se torna objetiva. Em sua argumentação as fronteiras de carreira são subjetivas e pessoais, onde cada um tem para si quais transições podem ser feitas em sua própria carreira. No entanto, elas se tornam objetivas quando um número suficientemente grande de pessoas possui a mesma compreensão sobre essas transições, a ponto dela ser perceptível em um nível macroscópico.
-
-Dessa maneira, as fronteiras de carreira são definidas objetivamente quando uma quantidade suficiente de pessoas entra em \textit{consenso} sobre quais são as transições incomuns.
+Um dos pontos principais desse trabalho está na argumentação de \citeonline{Gunz2007-hr} sobre como uma fronteira subjetiva se torna objetiva. Em sua argumentação as fronteiras de carreira são subjetivas e pessoais, onde cada um tem para si quais transições podem ser feitas em sua própria carreira. No entanto, elas se tornam objetivas quando um número suficientemente grande de pessoas possui a mesma compreensão sobre essas transições, a ponto dela ser perceptível em um nível macroscópico. Dessa maneira, as fronteiras de carreira são definidas objetivamente quando uma quantidade suficiente de pessoas entra em \textit{consenso} sobre quais são as transições incomuns.
 
 Partindo desse pressuposto, a identificação de trajetórias comuns e incomuns é condição suficiente e necessária para a detecção de fronteiras entre carreiras. Suficiente, pois a própria definição de fronteira é dependente da identificação do que são transições \enquote{incomuns}. Necessária, pois não existem fronteiras objetivamente definidas sem o consenso.
 
@@ -155,7 +151,7 @@ Essas fronteiras isolam algumas ocupações das outras, criando um grupo coeso p
 
 No presente trabalho esses aglomerados de ocupações são chamados \textit{ilhas de ocupações} ou \textit{ilhas ocupacionais}, refletindo a facilidade de movimentação dentro de suas fronteiras e o distanciamento de outros grupos.
 
-Como será visto a seguir, as ocupações serão representadas por nós em um grafo, enquanto as conexões trarão informações sobre as transições entre ocupações. Neste tipo de representação, outro conceito central introduzido para o desenvolvimento da pesquisa é o de \textit{polos ocupacionais}, ou seja, ocupações dentro de uma ilha por onde passa o maior fluxo de profissionais. Dada a topologia em formato de estrela encontrada nas ilhas, é esperado que perturbações nesses nós, como aumento ou diminuição no fluxo de profissionais, afetem a rede como um todo e sua eliminação causem o esfacelamento da ilha, ou seja, são as principais responsáveis por manter a ilha coesa. 
+Como será visto a seguir, as ocupações serão representadas por nós em um grafo, enquanto as conexões trarão informações sobre as transições entre ocupações. Neste tipo de representação, outro conceito central introduzido para o desenvolvimento da pesquisa é o de \textit{polos ocupacionais}, ou seja, ocupações dentro de uma ilha por onde passa o maior fluxo de profissionais. Dada a topologia em formato de estrela encontrada nas ilhas, é esperado que perturbações nesses nós, como aumento ou diminuição no fluxo de profissionais, afetem a rede como um todo e suas eliminações causem o esfacelamento da ilha. Ou seja, os polos ocupacionais são os principais responsáveis por manter a ilha coesa. 
 
 %===================================
 \section{O Mapa de Carreiras} \label{sec:mapa}
@@ -174,17 +170,17 @@ O Mapa VAGAS de Carreiras~\cite{VAGAS_Tecnologia2014-yv} é uma rede que resume 
 
 As ocupações no MCar foram definidas a partir de \textit{consenso} nos currículos. Como o título da ocupação é um campo em que o usuário digita livremente, assumiu-se que, se um grupo \enquote{suficientemente grande} de pessoas entra em acordo sobre uma certa nomenclatura, ela representa objetivamente uma ocupação. Essa abordagem é colocada de maneira implícita em ~\citeonline{Abbott1995-ft}, enquanto \citeonline{Gunz2007-hr} a exploram para definir fronteiras de carreiras.
 
-Uma das maiores dificuldades para se estabelecer uma ocupação através de consenso está em definir o quanto ele deve ser \enquote{suficientemente grande} para que seja considerada como tal. Para os fins desse trabalho, esse número foi obtido de forma experimental e empírica. Para isso, procurou-se o número mínimo de repetições na grafia das ocupações de maneira que não fossem encontrados erros de digitação recorrentes, ou seja, que das ocupações criadas por consenso, nenhuma fosse mero resultado de erro. Esse número foi definido em 30 repetições da mesma grafia no título da ocupação.
+Uma das maiores dificuldades para se estabelecer uma ocupação através de consenso está em definir o quanto ele deve ser \enquote{suficientemente grande} para que seja considerado como tal. Para os fins desse trabalho, esse número foi obtido de forma experimental e empírica. Para isso, procurou-se o número mínimo de repetições na grafia das ocupações de maneira que não fossem encontrados erros de digitação recorrentes, ou seja, que das ocupações criadas por consenso, nenhuma fosse mero resultado de erro. Esse número foi definido em 30 repetições da mesma grafia no título da ocupação.
 
 Para a criação do MCar foram usados os currículos anonimizados de 10 milhões de usuários registrados no site VAGAS.com.br. A seleção de dados, bem como o processamento das informações, seguiu um procedimento conservador. Isso significa que as decisões tomadas em sua construção procuram minimizar os erros decorrentes da qualidade dos dados, mesmo que isso signifique trabalhar com uma quantidade menor deles. Utilizando o exemplo na Figura~\ref{fig:ex-mapa-midia}, isso significa que, provavelmente, muito mais do que 16 pessoas na base de dados fizeram a transição de \enquote{supervisor-de-midia} para a ocupação \enquote{gerente-de-midia}, porém, esses 16 são livres de erros e subjetividade.
 
-Da massa de currículos, apenas os atualizados no período entre 2011 e 2016 foram usados. Currículos em duplicação foram removidos usando o CPF como identificador; em caso de duplicação, apenas o currículo mais recente foi considerado. Na impossibilidade de se verificar a duplicação, como por exemplo, na ausência do CPF, o currículo também foi descartado.
+Da massa de currículos, apenas os atualizados no período entre 2011 e 2016 foram usados. Currículos em duplicidade foram removidos usando o CPF como identificador; em caso de duplicidade, apenas o currículo mais recente foi considerado. Na impossibilidade de se verificar a duplicidade, como por exemplo, na ausência do CPF, o currículo também foi descartado.
 
 Finalmente, algumas informações gerais foram extraídas dos currículos que passaram pelo processo acima e o restante das informações foi descartada, incluindo quaisquer maneiras de se identificar a pessoa descrita no currículo, garantindo a anonimidade do processo.
 
 As informações extraídas são o sexo, último salário, graduação (se existente) ou escolaridade, e a sequência de ocupações pela qual o profissional passou com seu título, descrição e período em que exerceu a ocupação. Esse trabalho utiliza apenas a sequência de ocupações.
 
-O título da ocupação é um dos principais artefatos do MCar, é ele quem fornece a identidade para o nó. Como descrito acima, nos currículos, o título da ocupação é um campo de texto livre, ou seja, o usuário pode digitar o título sem restrições. Se por um lado isso permite a identificação de ocupações de nicho, novas ou que usem jargão de área, por outro significa que os títulos possuem erros de grafia, variações de gênero (como em \enquote{advogado} e \enquote{advogada} ou \enquote{moto boy} e \enquote{moto girl}), composição de múltiplas ocupações em um mesmo título (como \enquote{caixa/balconista}), abreviações e toda a gama de erros de interpretação possíveis.
+O título da ocupação é um dos principais artefatos do MCar, é ele quem fornece a identidade para o nó. Como descrito acima, o título da ocupação é um campo de texto livre nos currículos, ou seja, o usuário pode digitar o título sem restrições. Se por um lado isso permite a identificação de ocupações de nicho, novas ou que usem jargão de área, por outro significa que os títulos possuem erros de grafia, variações de gênero (como em \enquote{advogado} e \enquote{advogada} ou \enquote{moto boy} e \enquote{moto girl}), composição de múltiplas ocupações em um mesmo título (como \enquote{caixa/balconista}), abreviações e toda a gama de erros de interpretação possíveis.
 
 As ocupações passam por um corretor ortográfico criado especificamente para esse trabalho, uma vez que um corretor tradicional não é capaz de identificar jargões de área como \enquote{enfermeiranda}, \enquote{rigger} ou \enquote{IRLA}.
 
@@ -196,13 +192,13 @@ A partir desse ponto essa pesquisa diverge do MCar, usando os mesmos dados, mas 
 
 No MCar, a sequência de ocupação foi usada para gerar pares. Por exemplo, um currículo com a sequência de ocupações \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} gera os pares \enquote{saladeiro} $\to$ \enquote{chapeiro} e \enquote{chapeiro} $\to$ \enquote{cozinheiro}. Os pares foram agrupados e sua contagem se torna o peso de cada conexão na rede final.
 
-Finalmente, as conexões foram conectadas pela ocupações em comum e a rede final foi construída e armazenada em um banco de dados de grafo. Um sistema online\footnote{Disponível em \url{http://www.vagas.com.br/mapa-de-carreiras}} disponibiliza as informações publicamente. Apesar de gratuito e de consulta pública, os dados do Mapa VAGAS da Carreira não são de uso livre. A empresa gentilmente cedeu os dados ao pesquisador para esse trabalho.
+Finalmente, as conexões foram estabelecidas pelas ocupações em comum e a rede final foi construída e armazenada em um banco de dados de grafo. Um sistema online\footnote{Disponível em \url{http://www.vagas.com.br/mapa-de-carreiras}} disponibiliza as informações publicamente. Apesar de gratuito e de consulta pública, os dados do Mapa VAGAS da Carreira não são de uso livre. A empresa gentilmente cedeu os dados ao pesquisador para esse trabalho.
 
-Para essa pesquisa, são usado \textit{trigramas de ocupações} ao invés de conexões simples. Por exemplo, um histórico profissional com quatro ocupações como \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} $\to$ \enquote{chef} gera dois trigramas \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} e \enquote{chapeiro} $\to$ \enquote{cozinheiro} $\to$ \enquote{chef}. 
+Para essa pesquisa, são usados \textit{trigramas de ocupações} ao invés de conexões simples. Por exemplo, um histórico profissional com quatro ocupações como \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} $\to$ \enquote{chef} gera dois trigramas \enquote{saladeiro} $\to$ \enquote{chapeiro} $\to$ \enquote{cozinheiro} e \enquote{chapeiro} $\to$ \enquote{cozinheiro} $\to$ \enquote{chef}. 
 
-Históricos profissionais com apenas duas ocupações (bigramas) também são utilizadas. O trabalho usa preferencialmente trigramas, mas recorre a eles se não houver informação suficiente disponível. Históricos profissionais com apenas uma ocupação são descartados. Trigramas e bigramas com menos de 5 ocorrências são descartados.
+Históricos profissionais com apenas duas ocupações (bigramas) também são utilizados. O trabalho usa preferencialmente trigramas, mas recorre aos bigramas se não houver informação suficiente disponível. Históricos profissionais com apenas uma ocupação são descartados. Trigramas e bigramas com menos de 5 ocorrências são descartados.
 
-Depois do processo de limpeza, a rede resultante foi analisada quanto ao número de componentes. Os resultados na Tabela~\ref{tab:componentes} indicam vários componentes com apenas um nó, alguns poucos com dois e três nós e um componente gigante. Os componentes menores foram descartados e apenas as ocupações presentes na ocupação gigante foram usados.
+Depois do processo de limpeza, a rede resultante foi analisada quanto ao número de componentes. Os resultados na Tabela~\ref{tab:componentes} indicam vários componentes com apenas um nó, alguns poucos com dois e três nós e um componente gigante. Os componentes menores foram descartados e apenas as ocupações presentes na ocupação gigante foram usadas.
 
 Os componentes com apenas um nó são sequências de ocupações que se repetem, por exemplo \enquote{engenheiro de tubulação} $\to$ \enquote{engenheiro de tubulação}, mas não possuem conexão com outras ocupações.
 
@@ -222,9 +218,7 @@ Os componentes com apenas um nó são sequências de ocupações que se repetem,
     \label{tab:componentes}
 \end{table}
 
-O rede final possui 7.267 ocupações e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas.
-
-Para caracterizar a rede na Seção~\ref{sec:resultados}, a rede foi convertida em uma rede sem memória, efetivamente unificando trigramas e bigramas em conexões direcionadas e ponderadas. A rede transformada possui as mesmas 7.267 ocupações com 73.064 conexões.
+O rede final possui 7.267 ocupações e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas. Para caracterizar a rede na Seção~\ref{sec:resultados}, ela foi convertida em uma \textit{rede sem memória}, efetivamente unificando trigramas e bigramas em conexões direcionadas e ponderadas. A rede transformada possui as mesmas 7.267 ocupações com 73.064 conexões.
 
 %===================================
 \section{Grafos e Detecção de Comunidades} \label{sec:comunidades}
@@ -250,7 +244,7 @@ Nesse trabalho, as comunidades são chamadas \textit{ilhas ocupacionais}.
 \subsection{O Algoritmo Infomap} \label{sec:infomap}
 %===================================
 
-Segundo \citeonline{Grunwald2007-bt}, quaisquer regularidades em um conjunto de dados podem ser usadas para comprimi-los, ou seja, descrevê-los usando uma quantidade menor de símbolos. Quanto maior a regularidade, maior a compressão, dessa forma, dentre várias representações possíveis dos dados, a que apresentar maior compressão é também aquela que melhor identifica padrões nos dados. A Descrição de Comprimento Mínimo (\textit{Minimum Description Length}) é a disciplina que estuda essa relação~\cite{Grunwald2007-bt}.
+Segundo \citeonline{Grunwald2007-bt}, quaisquer regularidades em um conjunto de dados podem ser usadas para comprimi-lo, ou seja, descrevê-lo usando uma quantidade menor de símbolos. Quanto maior a regularidade, maior a compressão, dessa forma, dentre várias representações possíveis dos dados, a que apresentar maior compressão é também aquela que melhor identifica padrões nos dados. A Descrição de Comprimento Mínimo (\textit{Minimum Description Length}) é a disciplina que estuda essa relação~\cite{Grunwald2007-bt}.
 
 O algoritmo Infomap aproveita essa dualidade entre detecção de padrões e compressão de dados para identificar padrões de fluxo em redes~\cite{Rosvall2009-sd}.
 
@@ -290,7 +284,7 @@ Apesar de ser uma rede regular, onde cada nó possui três conexões, sua topolo
 
 Se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de tamanho variável de  \citeonline{Huffman1952-ak} os nós mais frequentes são representados por códigos menores, resultando em uma codificação menor para representar um caminho do que uma que use códigos de tamanho fixo.
 
-Os códigos usados por cada grupo são chamados \textit{codebooks}, os códigos que indicam qual \textit{codebook} será usado também é um \textit{codebook}, funcionando como um índice. Na Figura~\ref{fig:graph04}, existem três deles, um para cada grupo, contendo os nós \enquote{00}, \enquote{01}, \enquote{10}, \enquote{110} e o código de saída \enquote{111}. O \textit{codebook} índice possui os códigos: \enquote{0}, \enquote{10} e \enquote{11}.
+Os códigos usados por cada grupo são chamados \textit{codebooks}, os códigos que indicam qual \textit{codebook} será usado também são \textit{codebooks}, funcionando como um índice. Na Figura~\ref{fig:graph04}, existem três deles, um para cada grupo, contendo os nós \enquote{00}, \enquote{01}, \enquote{10}, \enquote{110} e o código de saída \enquote{111}. O \textit{codebook} índice possui os códigos: \enquote{0}, \enquote{10} e \enquote{11}.
 
 Dessa forma, sem o uso de \textit{codebooks}, o caminho que começa no nó mais abaixo do grafo da Figura~\ref{fig:graph03} e termina no nó do canto superior esquerdo é descrito pela sequência binária \enquote{000 1110 1011 1111 1101}, usando 19 bits. O mesmo caminho, usando a codificação com \textit{codebooks} da Figura~\ref{fig:graph04} é \enquote{\textbf{0} 01 110 \textit{111} \textbf{11} 00 01 10} e possui 17 bits (os números em negrito indicam entrada em um grupo e o número em itálico indica saída do grupo).
 
@@ -326,7 +320,7 @@ H(\textbf{p}) = - \sum_\alpha p_\alpha \log_2 p_\alpha\,.
 
 Nessa equação, $p_\alpha$ é a probabilidade estacionária da rede, ou seja, em um caminho infinito, qual fração de tempo o \textit{walker} estaria em $\alpha$~\cite{Rosvall2009-sd}.
 
-Para calcular $p_\alpha$ inicia-se com a matriz estocástica linear $W$, gerada a partir da matriz de adjacência $A$ direcionada e ponderada. Em uma matriz estocástica linear, a soma dos pesos de entrada do nó (linha) é normalizado para que resulte em 1. Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker}  em $\alpha$ chegar ao nó $\beta$.  Transportada para a realidade do MCar, essa é a probabilidade de alguém na ocupação $\alpha$ fazer a transição para a ocupação $\beta$.
+Para calcular $p_\alpha$ inicia-se com a matriz estocástica linear $W$, gerada a partir da matriz de adjacência $A$ direcionada e ponderada. Em uma matriz estocástica linear, a soma dos pesos de entrada do nó (linha) é normalizada para que resulte em 1. Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker}  em $\alpha$ chegar ao nó $\beta$.  Transportada para a realidade do MCar, essa é a probabilidade de alguém na ocupação $\alpha$ fazer a transição para a ocupação $\beta$.
 
 Sendo $n$ o número de nós da rede, define-se $w_{\alpha \beta}$ como:
 \begin{align} \label{eq:matriz-estocastica}
