@@ -90,7 +90,7 @@
 \SingleSpacing
 
 % Titulo e coisas para cabeçalho
-\title{Identificação de Fronteiras de Carreiras através de Compressão de Fluxo em Grafos}
+\title{Identificação de Fronteiras de Carreiras Usando de Compressão de Fluxo em Grafos}
 \author{Ronie Uliana \and Leandro Nunes de Castro}
 
 \begin{document}
@@ -267,7 +267,7 @@ A Figura~\ref{fig:graph01} mostra um grafo regular, onde todos os nós possuem t
   \caption{Caminho de um \textit{random walker}}
 \end{figure}
 
-Apesar de ser uma rede regular, onde cada nó possui três conexões, sua topologia faz com que o \textit{random walker} fique \enquote{preso} nos grupos formados pelos nós $ABCD$, $EFGH$ e $IJKL$; escapando esporadicamente de um para outro, onde circula até escapar novamente. Esses grupos são destacados na Figura~\ref{fig:graph02}. O caminho percorrido pelo \textit{walker} é exibido na Figura~\ref{fig:walk02}, dessa vez destacando os grupos por onde ele passa. As cores em ambas as figuras torna fácil perceber seu comportamento.
+Apesar de ser uma rede regular, onde cada nó possui três conexões, sua topologia faz com que o \textit{random walker} fique \enquote{preso} nos grupos formados pelos nós $ABCD$, $EFGH$ e $IJKL$; escapando esporadicamente de um para outro, onde circula até escapar novamente. Esses grupos são destacados na Figura~\ref{fig:graph02}. O caminho percorrido pelo \textit{walker} é exibido na Figura~\ref{fig:walk02}, dessa vez destacando os grupos por onde ele passa. As cores em ambas as figuras tornam fácil perceber seu comportamento.
 
 \begin{figure}[ht]
   \centering
@@ -282,13 +282,13 @@ Apesar de ser uma rede regular, onde cada nó possui três conexões, sua topolo
   \caption{Rede e caminho destacados}
 \end{figure}
 
-Se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de tamanho variável de  \citeonline{Huffman1952-ak} os nós mais frequentes são representados por códigos menores, resultando em uma codificação menor para representar um caminho do que uma que use códigos de tamanho fixo.
+Se cada nó for representado por uma sequência de bits, podemos medir quanta informação é necessária para representar o caminho feito pelo \textit{random walker}. Usando a codificação de tamanho variável de  \citeonline{Huffman1952-ak} os nós mais frequentes são representados por códigos menores, o que leva a uma codificação menor para representar um caminho do que uma que use códigos de tamanho fixo.
 
 Os códigos usados por cada grupo são chamados \textit{codebooks}, os códigos que indicam qual \textit{codebook} será usado também são \textit{codebooks}, funcionando como um índice. Na Figura~\ref{fig:graph04}, existem três deles, um para cada grupo, contendo os nós \enquote{00}, \enquote{01}, \enquote{10}, \enquote{110} e o código de saída \enquote{111}. O \textit{codebook} índice possui os códigos: \enquote{0}, \enquote{10} e \enquote{11}.
 
 Dessa forma, sem o uso de \textit{codebooks}, o caminho que começa no nó mais abaixo do grafo da Figura~\ref{fig:graph03} e termina no nó do canto superior esquerdo é descrito pela sequência binária \enquote{000 1110 1011 1111 1101}, usando 19 bits. O mesmo caminho, usando a codificação com \textit{codebooks} da Figura~\ref{fig:graph04} é \enquote{\textbf{0} 01 110 \textit{111} \textbf{11} 00 01 10} e possui 17 bits (os números em negrito indicam entrada em um grupo e o número em itálico indica saída do grupo).
 
-Nesse caminho curto, ambas as codificações têm tamanhos similares, Porém, em um caminho infinitamente longo (ergódico), o uso de múltiplos \textit{codebooks} pode produzir um código mais compacto do que o uso de um único \textit{codebook}. Como exemplo, o caminho da Figura~\ref{fig:walk01} usando a codificação com um único \textit{codebook} da Figura~\ref{fig:graph03} possui 2880 bits contra 1776 bits usando a codificação com três \textit{codebooks} da Figura~\ref{fig:graph04}.
+Nesse caminho curto, ambas as codificações têm tamanhos similares, porém, em um caminho infinitamente longo (ergódico), o uso de múltiplos \textit{codebooks} pode produzir um código mais compacto do que o uso de um único \textit{codebook}. Como exemplo, o caminho da Figura~\ref{fig:walk01} usando a codificação com um único \textit{codebook} da Figura~\ref{fig:graph03} possui 2880 bits contra 1776 bits usando a codificação com três \textit{codebooks} da Figura~\ref{fig:graph04}.
 
 \begin{figure}[ht]
   \centering
@@ -311,7 +311,7 @@ A Equação de Mapa é
 \begin{equation} \label{eq:map-equation}
   L(\mathsf{M}) = q_\curvearrowright H(\mathcal{Q}) + \sum_{i \in \mathsf{M}} p^i_\circlearrowright H(\mathcal{P}^i)\,,
 \end{equation}
-onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento; $\mathsf{M}$ é o particionamento dos nós em comunidades $i \in \mathsf{M}$; $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de qualquer comunidade e passar para o \textit{codebook} índice; $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é número médio de bits usado para representar o \textit{codebook} índice segundo a distribuição de probabilidade $\mathcal{Q}$; e $H(\mathcal{P}^i)$ também é o número médio de bits, mas dessa vez daqueles usados na comunidade $i$ segundo a distribuição $\mathcal{P}^i$; finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
+onde $L(\cdot)$ é o menor tamanho de codificação possível para representar um certo particionamento; $\mathsf{M}$ é o particionamento dos nós em comunidades $i \in \mathsf{M}$; $q_\curvearrowright$ é a probabilidade de um \textit{random walker} sair de qualquer comunidade e passar para o \textit{codebook} índice; $H(\mathcal{Q})$ (\textit{eta} em maiúsculo) é o número médio de bits usado para representar o \textit{codebook} índice segundo a distribuição de probabilidade $\mathcal{Q}$; e $H(\mathcal{P}^i)$ também é o número médio de bits, mas dessa vez daqueles usados na comunidade $i$ segundo a distribuição $\mathcal{P}^i$; finalmente $p^i_\circlearrowright$ é a probabilidade do \textit{walker} estar na comunidade $i$.
 
 $H(\textbf{p})$ é a equação que descreve a entropia da informação segundo uma certa distribuição de probabilidade $\textbf{p}$~\cite{Shannon1948-ic}. Ela se refere a média de bits necessária, por símbolo, para se representar a informação gerada por um processo estocástico e é expressa como:
 \begin{equation*}
@@ -320,7 +320,7 @@ H(\textbf{p}) = - \sum_\alpha p_\alpha \log_2 p_\alpha\,.
 
 Nessa equação, $p_\alpha$ é a probabilidade estacionária da rede, ou seja, em um caminho infinito, qual fração de tempo o \textit{walker} estaria em $\alpha$~\cite{Rosvall2009-sd}.
 
-Para calcular $p_\alpha$ inicia-se com a matriz estocástica linear $W$, gerada a partir da matriz de adjacência $A$ direcionada e ponderada. Em uma matriz estocástica linear, a soma dos pesos de entrada do nó (linha) é normalizada para que resulte em 1. Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker}  em $\alpha$ chegar ao nó $\beta$.  Transportada para a realidade do MCar, essa é a probabilidade de alguém na ocupação $\alpha$ fazer a transição para a ocupação $\beta$.
+Para calcular $p_\alpha$ inicia-se com a matriz estocástica linear $W$, gerada a partir da matriz de adjacência $A$ direcionada e ponderada. Em uma matriz estocástica linear, a soma dos pesos de entrada do nó (linha) é normalizada para que resulte em 1. Cada elemento $w_{\alpha \beta}$ dessa matriz representa a probabilidade de um \textit{random walker}  em $\alpha$ chegar ao nó $\beta$. Transportada para a realidade do MCar, essa é a probabilidade de alguém na ocupação $\alpha$ fazer a transição para a ocupação $\beta$.
 
 Sendo $n$ o número de nós da rede, define-se $w_{\alpha \beta}$ como:
 \begin{align} \label{eq:matriz-estocastica}
@@ -342,11 +342,7 @@ onde $\tau$ é a probabilidade do \textit{walker} ser teleportado para um nó al
 
 O recurso de teleporte garante a ergodicidade do caminho e, segundo o teorema de Perron-Frobenius, faz com que a probabilidade estacionária seja definida~\cite{Rosvall2009-sd}.
 
-A partir de $p_\alpha$, é possível expandir a Equação de Mapa.
-
-Sendo $q_{i \curvearrowright}$ a probabilidade de saída da comunidade $i$ e $q_{\curvearrowright}$ a probabilidade de saída de qualquer comunidade, o valor de $q_{\curvearrowright}$ equivale à taxa de uso do \textit{codebook} índice, uma vez que a saída de uma comunidade implica  em seu uso para indicar qual a próxima comunidade.
-
-Finalmente, sendo $n$ o número de nós da rede e $n_i$ o número de nós pertencente à comunidade $i$, expande-se a Equação~\ref{eq:map-equation} em
+A partir de $p_\alpha$, é possível expandir a Equação de Mapa. Seja $q_{i \curvearrowright}$ a probabilidade de saída da comunidade $i$ e $q_{\curvearrowright}$ a probabilidade de saída de qualquer comunidade, o valor de $q_{\curvearrowright}$ equivale à taxa de uso do \textit{codebook} índice, uma vez que a saída de uma comunidade implica  em seu uso para indicar qual a próxima comunidade. Finalmente, seja $n$ o número de nós da rede e $n_i$ o número de nós pertencente à comunidade $i$, expande-se a Equação~\ref{eq:map-equation} em
 \begin{align}
 q_{i \curvearrowright} &= \frac{n - n_i}{n} \tau \sum_{\alpha \in i} p_\alpha + (1 - \tau) \sum_{\alpha \in i} \sum_{\beta \nin i} p_\alpha w_{\alpha \beta} \nonumber \\
 q_\curvearrowright       &= \sum_{i \in M} q_{i\curvearrowright} \nonumber \\
@@ -359,7 +355,7 @@ L(\mathsf{M})              &= q_\curvearrowright \log_2 q_\curvearrowright - 2 \
 
 \subsection{Redes com Memória}  \label{sec:redes-com-memoria}
 
-Na modelagem do MCar, um \enquote{Analista de Sistemas} e um \enquote{Arquiteto} têm chances similares de se tornarem \enquote{Coordenador de Projetos}. Entretanto, apesar de receber o mesmo nome, as competências de um coordenador de projetos da área de software e de arquitetura são bastante diferentes. Na realidade, essa é uma ocupação que pode figurar em duas ilhas ocupacionais bastante distintas pois a movimentação entre essas duas áreas é relativamente rara em comparação com a movimentação dentro de si mesmas.
+Na modelagem do MCar, um \enquote{Analista de Sistemas} e um \enquote{Arquiteto} têm chances similares de se tornarem \enquote{Coordenador de Projetos}. Entretanto, apesar de receber o mesmo nome, as competências de um coordenador de projetos da área de software e de arquitetura são bastante diferentes. Na realidade, essa é uma ocupação que pode figurar em duas ilhas ocupacionais bastante distintas, pois a movimentação entre essas duas áreas é relativamente rara em comparação com a movimentação dentro de si mesmas.
 
 O padrão esperado nesse caso, é que profissionais de cada ilha vão para essa \enquote{Gerente de Projetos} e voltem para outras de sua própria ilha ao invés de cruzar a fronteira de carreira. Para poder identificar esse padrão, é preciso considerar não apenas o trabalho imediatamente anterior, mas também o subsequente.
 
@@ -406,7 +402,7 @@ Efetivamente, o MCar modela o fluxo de profissionais como um cadeia de Markov de
 
 O exemplo da Figura~\ref{fig:ex-multilayer-camadas} mostra a rede formada pelas ocupações \enquote{Arquiteto}, \enquote{Analista de Sistemas}, \enquote{Coordenador de Projetos} e \enquote{Gerente de Projetos} e suas representações em camadas. A partir dessa representação é possível projetar uma rede de uma única camada (uma rede \enquote{comum}), criando-se um \textit{nó-estado} para cada nó em cada camada. Ignorando-se nós-estado que não possuem conexões, essa projeção cria um nó-estado para cada conexão de entrada, como pode ser observado na Figura~\ref{fig:ex-multilayer3}.
 
-Um vez que a probabilidade estacionária é calculada através das conexões de saída, os nós-estado que possuem saída para os mesmos nós podem ser unificados sem perda de informação para identificação de comunidades. No exemplo da Figura~\ref{fig:ex-multilayer3}, a os nós $\text{CP}_\text{AS}$ e $\text{CP}_\text{AQ}$ podem ser unidos em um único nó. \citeonline{Edler2017-kt} chamam esse simplificação de Rede com Memória Esparsa\footnote{no original: \textit{Sparse Memory Network}}.
+Uma vez que a probabilidade estacionária é calculada através das conexões de saída, os nós-estado que possuem saída para os mesmos nós podem ser unificados sem perda de informação para identificação de comunidades. No exemplo da Figura~\ref{fig:ex-multilayer3}, os nós $\text{CP}_\text{AS}$ e $\text{CP}_\text{AQ}$ podem ser unidos em um único nó. \citeonline{Edler2017-kt} chamam essa simplificação de Rede com Memória Esparsa\footnote{no original: \textit{Sparse Memory Network}}.
 
 \begin{figure}[htb]
     \centering
@@ -422,7 +418,7 @@ Um vez que a probabilidade estacionária é calculada através das conexões de 
     \label{fig:ex-multilayer-memoria}
 \end{figure}
 
-Dessa forma, a aplicação da Equação de Mapa (Equação \ref{eq:map-equation}) permanece a mesma, bastando que os nós-estado que permanecem na mesma comunidade compartilhem o mesmo código. Para isso, a probabilidade estacionária $p_{\alpha_i}$ do nó $\alpha$ na comunidade $i$ passa ser a soma das probabilidades dos nós-estado $\alpha^s$ de $\alpha$ que estão na mesma comunidade $i$ em qualquer camada $S$,
+Dessa forma, a aplicação da Equação de Mapa (Equação \ref{eq:map-equation}) permanece a mesma, bastando que os nós-estado que permanecem na mesma comunidade compartilhem o mesmo código. Para isso, a probabilidade estacionária $p_{\alpha_i}$ do nó $\alpha$ na comunidade $i$ passa a ser a soma das probabilidades dos nós-estado $\alpha^s$ de $\alpha$ que estão na mesma comunidade $i$ em qualquer camada $S$,
 
 \begin{equation*} \label{eq:page-rank-multilayer}
 \pi_{\alpha_i} = \sum_{s \in S} p_{\alpha_i^s}\,.
@@ -505,9 +501,9 @@ A Equação de Mapa original (Equação~\ref{eq:map-equation}) é na verdade um 
 
 A assortatividade é uma medida de quão nós similares estão conectados entre si~\cite{Newman2003-jn}. Quaisquer atributos dos nós podem ser usados como medida de assortatividade, por exemplo, se nós representarem pessoas e as conexões representarem amizades, medir a assortatividade de idade diria se as pessoas preferem amizades com outras de idade similar (assortatividade positiva) ou preferem amizades com pessoas muito mais velhas ou novas (assortatividade negativa ou desassortatividade).
 
-A assortatividade de grau é de especial interesse na análise de redes, pois permite caracterizar sua topologia. Redes com assortatividade negativa (desassortativas), remetem à topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde nós de grau muito alto (\textit{hubs}) se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:ex-sobreposicao-ti} mostra um exemplo de uma rede em que predomina essa topologia.
+A assortatividade de grau é de especial interesse na análise de redes, pois permite caracterizar sua topologia. Redes com assortatividade negativa (desassortativas), remetem à topologia de \enquote{eixo e raios} (\textit{hub and spokes}), onde nós de grau muito alto (\textit{hubs}) se conectam a muitos nós de grau mais baixo~\cite{Barabasi2016-rn}. A Figura~\ref{fig:assortatividade-topologia} mostra um exemplo de uma rede em que predomina essa topologia.
 
-Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote{estrela}, em que todos os nós de alto grau só se conectam a nós de grau muito baixo. Como exemplos, a ilha ocupacional relacionada a \enquote{Fonoaudiologia} na Figura~\ref{fig:ex-assortatividade-negativa}, com assortatividade $-0,99$, possui todos os nós conectados a um \textit{hub} central, com nenhuma conexão entre as ocupações periféricas. Já a ilha relacionada a \enquote{Coordenador de Mídia} na Figura~\ref{fig:ex-assortatividade-positiva}, com assortatividade $0,18$, possui uma estrutura um pouca mais distribuída e o grau do nós é similar, com exceção do próprio \enquote{Coordenador de Mídia}.
+Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote{estrela}, em que todos os nós de alto grau só se conectam a nós de grau muito baixo. Como exemplos, a ilha ocupacional relacionada a \enquote{Fonoaudiologia} na Figura~\ref{fig:ex-assortatividade-negativa}, com assortatividade $-0,99$, possui todos os nós conectados a um \textit{hub} central, com nenhuma conexão entre as ocupações periféricas. Já a ilha relacionada a \enquote{Coordenador de Mídia} na Figura~\ref{fig:ex-assortatividade-positiva}, com assortatividade $0,18$, possui uma estrutura um pouco mais distribuída e o grau dos nós é similar, com exceção do próprio \enquote{Coordenador de Mídia}.
 
 \begin{figure}[ht]
     \centering
@@ -520,9 +516,10 @@ Quanto menor a assortatividade, mais a rede se aproxima da topologia de \enquote
         \label{fig:ex-assortatividade-positiva}
     }    
     \caption{Assortatividade e Topologia}
+    \label{fig:assortatividade-topologia}
 \end{figure}
 
-A assortatividade de grau em uma rede direcionada pode ser caracterizada pelo coeficiente de correlação de Pearson dos graus~\cite{Barabasi2016-rn}. Seja $k_i^\leftarrow$ e $k_i^\rightarrow$,  respectivamente, os graus de entrada e saída do nó $i$, seja $E$ o conjunto de conexões da rede, $e = (m, n) \mid e \in E$ as conexões de $E$, $m$ o vértice de onde $e$ sai e $n$ o vértice para onde $e$ aponta, definem-se os \textit{graus remanescentes} $\delta_e^\leftarrow$ e $\delta_e^\rightarrow$ da conexão $e$ como
+A assortatividade de grau em uma rede direcionada pode ser caracterizada pelo coeficiente de correlação de Pearson dos graus~\cite{Barabasi2016-rn}. Seja $k_i^\leftarrow$ e $k_i^\rightarrow$,  respectivamente, os graus de entrada e saída do nó $i$, seja $E$ o conjunto de conexões da rede, $e = (m, n) \mid e \in E$ as conexões de $E$, $m$ o vértice de onde $e$ sai e $n$ o vértice para onde $e$ aponta, definem-se os \textit{graus remanescentes} de entrada e saída, respectivamente, $\delta_e^\leftarrow$ e $\delta_e^\rightarrow$ da conexão $e$ como
 \begin{align*}
 \delta_e^\leftarrow &= k_n^\leftarrow - 1
 \\
@@ -556,14 +553,19 @@ r &= \frac{p - q}
 
 
 %===================================
-\section{Resultados e Análises} \label{sec:resultados}
+\section{Análises do MCar Usando Compressão de Fluxo em Grafos} \label{sec:resultados}
 %===================================
 
+%% NESSA SEÇÃO INCLUA UM PARÁGRAFO INICIAL RESUMINDO TODAS AS ANÁLISES E RESULTADOS QUE SERÃO APRESENTADOS. A PARTIR DESSE PARÁGRAFO, SEPARE A SEÇÃO EM SUBSEÇÕES PARA FACILITAR A ANÁLISE.
+Essa seção apresenta...
+Blá, blá, blá
+
+\subsection{Descrição dos Dados}  \label{sec:descricao-dos-dados}
 % Descrição dos dados:
 
-Os dados usadas para esse trabalho são do MCar de fevereiro de 2017. Após o processo de limpeza da informação o grafo resultante possui 7.267 nós e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas.
+Os dados usados para esse trabalho são do MCar de fevereiro de 2017. Após o processo de limpeza da informação o grafo resultante possui 7.267 nós e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas. A transformação dos bigramas e trigramas em conexões resulta em 73.064 conexões e essa versão é usada para caracterizar a rede quanto ao grau e conectividade.
 
-A transformação dos bigramas e trigramas em conexões resulta em 73.064 conexões e essa versão é usada para caracterizar a rede quanto ao grau e conectividade.
+\subsection{Distribuição de Graus, Ego-Grafos e Modelos de Carreiras}  \label{sec:distribuicao-de-graus}
 
 A rede de ocupações possui a distribuição de grau exibida no gráfico de Pareto da Figura~\ref{fig:pareto-grau}. Ela possui uma grande concentração de conexões em poucos nós, formando \textit{hubs}. Os 25\% nós de maior grau são responsáveis por 85,86\% das conexões da rede.
 
@@ -571,9 +573,9 @@ Por ser uma rede direcionada, um certo cuidado na análise é necessário, uma v
 
 A contribuição de cada nó para a conectividade da rede pode ser observada utilizando-se ego-grafos. Um ego-grafo é um subgrafo por um nó, todos os seus vizinhos e as conexões entre eles~\cite{Newman2010-od}. Como o número de conexões em uma rede direcionada não representa necessariamente o número de nós conectados, o uso do ego-grafo permite identificar \textit{hubs} que possuem maior conectividade sem que necessariamente possuam o maior número de conexões. Considerar o nó central junto aos seus vizinhos permite medir o quanto os subgrafos se sobrepõem sem a necessidade de ajustes quanto ao nó central.
 
-No gráfico de Pareto da Figura~\ref{fig:pareto-egografo}. As ocupações estão ordenadas pelo tamanho do ego-grafo. Exatamente 25\% dos maiores ego-grafos são suficientes para conectar 98,31\% da rede. O nó de maior grau \textit{Auxiliar Administrativo} possui um ego grafo com 3.369 ocupações das da 7.267, ou seja, 46,36\% das ocupações de alguma forma possui fluxo de profissionais saindo ou entrando dessa ocupação.
+No gráfico de Pareto da Figura~\ref{fig:pareto-egografo} as ocupações estão ordenadas pelo tamanho do ego-grafo. Exatamente 25\% dos maiores ego-grafos são suficientes para conectar 98,31\% da rede. O nó de maior grau, \textit{Auxiliar Administrativo}, possui um ego-grafo com 3.369 ocupações das 7.267, ou seja, 46,36\% das ocupações de alguma forma possui fluxo de profissionais saindo ou entrando dessa ocupação.
 
-A Tabela~\ref{tab:top-egografos} contém os 5 maiores ego grafos do MCar. Devido a presença de \textit{hubs} de grau elevado é esperado que os maiores ego-grafos compartilhem uma grande quantidade de nós.
+A Tabela~\ref{tab:top-egografos} contém os 5 maiores ego-grafos do MCar. Devido a presença de \textit{hubs} de grau elevado é esperado que os maiores ego-grafos compartilhem uma grande quantidade de nós.
 
 \begin{table}[ht]
     \centering
@@ -597,7 +599,7 @@ Essa característica reforça conceitos sobre movimentação profissional como a
 
 %% Ronie: Aqui em cima tem algo que posso investigar na dissertação, acredito. Se há alguma correlação entre essas ocupações e escolaridade (sei que tem), e alguma correlação com o tempo de trabalho ou a idade.
 
-O \enquote{Paradoxo da Amizade}~\cite{Barabasi2016-rn} parece valer para pessoas transitando entre ocupações. O paradoxo é dado como \enquote{na média, meus amigos são mais populares que eu}, transportado para o contexto desse trabalho seria enunciado como \enquote{na média, os outros trabalhos que eu poderia executar têm mais opções de movimentação que o meu}. Esse paradoxo tem uma explicação simples, como se observa na Figura~\ref{fig:pareto-egografo}, um nó qualquer têm grandes chances de estar conectado a um ou mais \textit{hubs} o que, na média, faz com que as ocupações vizinhas tenham mais conexões do que as suas próprias.
+O \enquote{Paradoxo da Amizade}~\cite{Barabasi2016-rn} parece valer para pessoas transitando entre ocupações. O paradoxo é dado como \enquote{na média, meus amigos são mais populares que eu}, transportado para o contexto desse trabalho seria enunciado como \enquote{na média, os outros trabalhos que eu poderia executar têm mais opções de movimentação que o meu}. Esse paradoxo tem uma explicação simples, como se observa na Figura~\ref{fig:pareto-egografo}, um nó qualquer tem grandes chances de estar conectado a um ou mais \textit{hubs} o que, na média, faz com que as ocupações vizinhas tenham mais conexões do que as suas próprias.
 
 % Ronie: Esses dois parágrafos abaixo estão meio estranhos no texto. Mas os pontos são:
 % 1 - Em uma rede direcionada, o ego-grafo é melhor de se analisar do que o grau. Isso pq, diferente de uma rede não-direcionada, o grau _não_ significa o número de vizinhos.
@@ -605,7 +607,7 @@ O \enquote{Paradoxo da Amizade}~\cite{Barabasi2016-rn} parece valer para pessoas
 
 A Figura~\ref{fig:pareto-egografo} ilustra a diferença entre o grau e a conectividade da rede que é importante do ponto de vista dessa pesquisa. Enquanto o grau identifica corretamente os \textit{hubs}, o gráfico de Pareto dos ego-grafos mostra que a rede é mais conectada do que seu número de conexões. Comparando os dois gráficos, percebe-se que, enquanto a distribuição de grau e do tamanho do ego-grafo são similares, o acumulado do primeiro cresce mais suavemente que o do segundo, indicando que os \textit{hubs} possuem proporcionalmente mais conexões unidirecionais, ou seja, menos conexões conectam mais nós.
 
-Duas coisas a serem consideradas aqui, essa característica dos \textit{hubs} pode ser um efeito colateral do corte artificial de 5 conexões e uma análise similar poderia ser obtida projetando uma rede não-direcionada e analisando sua distribuição de grau.
+Duas coisas devem ser consideradas aqui: essa característica dos \textit{hubs} pode ser um efeito colateral do corte artificial de 5 conexões; e uma análise similar poderia ser obtida projetando uma rede não-direcionada e analisando sua distribuição de grau.
 
 \begin{figure}[htb]
   \centering
@@ -617,15 +619,17 @@ Duas coisas a serem consideradas aqui, essa característica dos \textit{hubs} po
       \includegraphics[width=0.49\linewidth]{pareto-egografo}
       \label{fig:pareto-egografo}
   }  
-  \caption{Gráficos de Pareto com a distribuição de grau  do MCar e com o tamanho dos ego-grafos. Os gráficos estão colocados lado a lado para facilitar a comparação. Os nós estão ordenados de maneira decrescente no eixo horizontal; na Figura~\ref{fig:pareto-grau}  as ocupações de grau maior no estão à esquerda e ocupações de menor grau estão à direita. na Figura~\ref{fig:pareto-egografo} elas estão ordenadas pelo tamanho do ego-grafo. Os eixos direitos, em escala logarítmica, estão associados às linhas cheias e representam, respectivamente, o grau do nó e o tamanho do ego-grafo. Os eixos esquerdos estão associados às linhas tracejadas; na Figura~\ref{fig:pareto-grau} ela representa a somatória de todos os graus em porcentagem e qual a contribuição das ocupações à esquerda para essa totalização; na Figura~\ref{fig:pareto-egografo} ela representa a quantidade de ocupações que os ego-grafos à esquerda conectam.}
+  \caption{Gráficos de Pareto com a distribuição de grau  do MCar e com o tamanho dos ego-grafos. Os gráficos estão colocados lado a lado para facilitar a comparação. Os nós estão ordenados de maneira decrescente no eixo horizontal; na Figura~\ref{fig:pareto-grau}  as ocupações de grau maior estão à esquerda e ocupações de menor grau estão à direita. Na Figura~\ref{fig:pareto-egografo} elas estão ordenadas pelo tamanho do ego-grafo. Os eixos direitos, em escala logarítmica, estão associados às linhas cheias e representam, respectivamente, o grau do nó e o tamanho do ego-grafo. Os eixos esquerdos estão associados às linhas tracejadas; na Figura~\ref{fig:pareto-grau} ela representa a somatória de todos os graus em porcentagem e qual a contribuição das ocupações à esquerda para essa totalização; na Figura~\ref{fig:pareto-egografo} ela representa a quantidade de ocupações que os ego-grafos à esquerda conectam.}
   \label{fig:paretos}
 \end{figure}
 
 Observando a Figura~\ref{fig:paretos} é possível notar que cerca de $1/5$ das ocupações possui apenas uma conexão (1.547 delas, 21,29\%), mas pouco mais de $1/3$ (2.682 delas, 36,91\%) possui um ego-grafo de tamanho 2. A diferença entre ambos são os ego-grafos que possuem múltiplas conexões, tanto auto-referentes quanto de entrada e saída com seu vizinho.
 
-Isso indica que grande parte das ocupações ($1/3$) está na \enquote{borda} da rede, conectada a ela por apenas um vizinho. Se os \textit{hubs} reforçam os conceitos de Carreiras Proteanas e Carreiras sem Fronteiras, a quantidade de ocupações na borda da rede indica o contrário. A presença de ambas as características sugere novamente que as teorias mencionadas não se aplicam a todas as ocupações. Apesar dessa pesquisa conseguir indicar quais ocupações parecem se encaixar melhor nessas teorias e quais não, ela é incapaz de responder quais são as alternativas e por que elas acontecem.
+Isso indica que grande parte das ocupações ($1/3$) está na \enquote{borda} da rede, conectada a ela por apenas um vizinho. Se os \textit{hubs} reforçam os conceitos de Carreiras Proteanas e Carreiras sem Fronteiras, a quantidade de ocupações na borda da rede indica o contrário. A presença de ambas características sugere novamente que as teorias mencionadas não se aplicam a todas as ocupações. Apesar dessa pesquisa conseguir indicar quais ocupações parecem se encaixar melhor nessas teorias e quais não, ela é incapaz de responder quais são as alternativas e por que elas acontecem.
 
 % Ronie: O parágrafo acima me parece um ótimo gancho para alguém que trabalhe com essa parte. Gostaria de deixar isso bem atraente :D (mas não sei se cabe).
+
+\subsection{Identificando Fronteiras de Carreira}  \label{sec:fronteiras-de-carreira}
 
 Nos experimentos realizados, o algoritmo Infomap foi utilizado para encontrar o particionamento mais coeso do MCar em relação ao fluxo. Como exposto nas Seções~\ref{sec:carreira} e~\ref{sec:infomap}, esse particionamento é a própria definição de fronteiras de carreira.
 
@@ -647,7 +651,7 @@ O MCar foi testado em duas variações do algoritmo:
 
 A variação com maior compressão revela a melhor caracterização de particionamento~\cite{Viamontes_Esquivel2011-it,Rosvall2011-yi,Edler2017-kt}. Se a variação com sobreposição possuir maior compressão de informação do que as outras, assume-se que suas comunidades, intrinsecamente, compartilham nós.
 
-Os resultados de compressão para cada variação são apresentados na Tabela~\ref{tab:metodos}. É possível observar que há ganho na compressão de informação quando se permite a sobreposição de comunidades, revelando a movimentação dos profissionais é melhor caracterizada quando as ilhas compartilham ocupações.
+Os resultados de compressão para cada variação são apresentados na Tabela~\ref{tab:metodos}. É possível observar que há ganho na compressão de informação quando se permite a sobreposição de comunidades, revelando que a movimentação dos profissionais é melhor caracterizada quando as ilhas compartilham ocupações.
 
 % INTUITIVAMENTE UMA COMPRESSÃO MAIOR IMPLICA EM MENOS COMUNIDADES, PORÉM SUA TABELA MOSTRA O CONTRÁRIO, ASSIM COMO O TEXTO. DE ACORDO COM SUA EXPLICAÇÃO UMA MAIOR COMPRESSÃO IMPLICA EM MELHOR PARTICIONAMENTO E, PORTANTO, MAIS COMUNIDADES.
 % Ronie: Aqui acho que preciso melhorar a explicação. Como tb não expliquei as variações hierárquicas e com sobreposição do Infomap estão também falta uma peça do quebra cabeças. A compressão dessa 'descrição do caminho do random walker' acaba criando um balanço entre quantidade de nós e de comunidades. Se não houverem 'gargalos' de fluxo, o random walker não fica 'preso' em um subgrafo e a melhor compressão acontece simplesmente por códigos mais curtos nos nós mais frequentes, sem divisão em comunidades. Por outro lado, quando existe um gargalo o random walker fica preso por um longo tempo de um lado ou de outro dele, nesse formato a melhor compressão acontece se cada 'prisão' reutilizar os códigos mais curtos e criarmos um outro código para passar de um lado para o outro do gargalo. O que está acontecendo na variação com sobreposição é que existem nós, ao invés de conexãos, que são fronteira entre as comunidades. Uma boa ilustração disso é o grafo 'gravata borboleta' com 5 nós e 6 conexões, nesse formato: ▷◁. Sem permitir sobreposição de comunidades, o nós central força os dois triângulos a pertencer em uma única comunidade. Permitindo a sobreposição, o nó central consegue participar de duas comunidades: ▷ e ◁. Se fosse uma rede com uma conexão entre os triângulos, desse jeito: ▷—◁, então o gargalo seria a conexão (não o nó) e o algoritmo que não permite sobreposição teria a melhor compressão.
@@ -664,7 +668,7 @@ Os resultados de compressão para cada variação são apresentados na Tabela~\r
   \label{tab:metodos}
 \end{table}
 
-Apesar de usar a expressão \enquote{compartilham ocupações}, a interpretação mais correta é que as ilhas possuem \textit{suas próprias versões} das ocupações. \citeonline{Viamontes_Esquivel2011-it} apresentam um exemplo intuitivo do significado desse \enquote{compartilhamento} usando aeroportos europeus e norte-americanos. Transposto para a realidade do MCar, uma ocupação que pertence a mais de uma comunidade significa que os profissionais que transitam por ela, em sua maioria, voltam aos seus grupos de origem ao invés de migrarem para outros. Não fosse dessa forma, esses grupos conectados seriam considerados como um conjunto único de ocupações pelo algoritmo ou a ocupação estaria em apenas na comunidade com fluxo predominante.
+Apesar de usar a expressão \enquote{compartilham ocupações}, a interpretação mais correta é que as ilhas possuem \textit{suas próprias versões} das ocupações. \citeonline{Viamontes_Esquivel2011-it} apresentam um exemplo intuitivo do significado desse \enquote{compartilhamento} usando aeroportos europeus e norte-americanos. Transposto para a realidade do MCar, uma ocupação que pertence a mais de uma comunidade significa que os profissionais que transitam por ela, em sua maioria, voltam aos seus grupos de origem ao invés de migrarem para outros. Não fosse dessa forma, esses grupos conectados seriam considerados como um conjunto único de ocupações pelo algoritmo ou a ocupação estaria apenas na comunidade com fluxo predominante.
 
 Existem duas explicações possíveis. A primeira é que essas ocupações são \textit{homônimas} e, portanto, distintas, o que significa que há uma fronteira entre elas, como exibido no exemplo da Figura~\ref{fig:homonimos}. A segunda é que essas ocupações são similares, mas fatores não especificados dificultam a transição de um grupo para outro, o que também indica uma fronteira de carreira, ainda que mais fraca.
 
@@ -739,9 +743,9 @@ A assortatividade das 624 ilhas com ao menos três ocupações é exibida na Fig
 
 A ilha com o polo \enquote{Aluno de Iniciação Científica} é exibida na Figura~\ref{fig:ex-sobreposicao-ciencia}. A topologia estrelada é claramente observável, irradiando-se a partir do \textit{polo ocupacional}. O fluxo predominante parte de \textit{Aluno de Iniciação Científica}, passa por \textit{Aluno de Mestrado}, \textit{Aluno de Doutorado} e termina em \textit{Pos-Doutorando} sem que haja fluxo na direção contrária, reforçando o conhecimento tácito sobre a área.
 
-O polo ocupacional é claramente \textit{Aluno de Iniciação Científica} que recebe um forte fluxo de \textit{Monitor}. O reforço do polo deve distribuir o fluxo de pessoas para as outras ocupações. Outro ponto de especial interesse é que, a partir de\textit{Aluno de Mestrado} o fluxo intensifica até \textit{Pos-Doutorando}, sugerindo que os profissionais que se tornam \textit{Alunos de Mestrado} tem forte tendência de prosseguir na carreira acadêmica.
+O polo ocupacional é claramente \textit{Aluno de Iniciação Científica} que recebe um forte fluxo de \textit{Monitor}. O reforço do polo deve distribuir o fluxo de pessoas para as outras ocupações. Outro ponto de especial interesse é que, a partir de \textit{Aluno de Mestrado} o fluxo intensifica até \textit{Pos-Doutorando}, sugerindo que os profissionais que se tornam \textit{Alunos de Mestrado} têm forte tendência de prosseguir na carreira acadêmica.
 
-Por outro lado, o enfraquecimento do polo tende a minar o fluxo de pessoa para outras ocupações, provocando o enfraquecimento da ilha como um todo.
+Por outro lado, o enfraquecimento do polo tende a minar o fluxo de pessoas para outras ocupações, provocando o enfraquecimento da ilha como um todo.
 
 Essa análise pontual dá dimensão à contribuição desse trabalho. Nesse caso, identificada a ilha, o polo e o fluxo predominante,  ações para reforçar uma ocupação, como \textit{Pos-Doutorando}, por exemplo, passam a ser óbvias. Essa análise superficial sugere que aumentar o número de alunos de iniciação científica, desestimular sua movimentação para outras ocupações ou incentivar o fluxo para o mestrado provocaria o efeito desejado. A proporção de pessoas em cada fluxo fornece um \enquote{funil} para se estimar quantas pessoas seriam necessárias em cada ocupação para atingir um certo resultado.
 
@@ -749,15 +753,15 @@ A ilha ocupacional relacionada à \textit{Recursos Humanos}, exibida na Figura~\
 
 Nessa ilha, o polo sugere ser a própria razão de ser da área, uma vez que as ocupações anteriores não estão diretamente relacionadas à função ou são juniores e o fluxo prossegue para ocupações administrativas. A outras ocupações \textit{Analistas} que se dispersam a partir do polo sugerem especializações do \textit{Analista de Recursos Humanos}, em especial \textit{Analista de Administração de Pessoal} e \textit{Analista de Recrutamento e Seleção}, que possuem fluxo similares de entrada e saída para ele. Peculiarmente, \textit{Psicólogo} possui fluxo similar, mas as funções esperadas da ocupação não são diretamente relacionadas à \textit{Recursos Humanos}.
 
-No último exemplo na Figura~\ref{fig:ex-sobreposicao-analista-ambiental} gira em torno do polo \textit{Analista Ambiental}, mas não possui o mesmo fluxo claro de progressão como os exemplo anteriores. Junto a ele, outros dois polos menores \textit{Engenheiro Ambiental} a \textit{Técnico em Meio Ambiente} trocam fluxos com o polo, enquanto ocupações administrativas como \textit{Coordenador}, \textit{Gerente} e \textit{Consultor} recebem fluxos dos três polos enquanto \textit{Estagiário} as alimenta.
+No último exemplo na Figura~\ref{fig:ex-sobreposicao-analista-ambiental} gira em torno do polo \textit{Analista Ambiental}, mas não possui o mesmo fluxo claro de progressão como os exemplos anteriores. Junto a ele, outros dois polos menores \textit{Engenheiro Ambiental} a \textit{Técnico em Meio Ambiente} trocam fluxos com o polo, enquanto ocupações administrativas como \textit{Coordenador}, \textit{Gerente} e \textit{Consultor} recebem fluxos dos três polos enquanto \textit{Estagiário} as alimenta.
 
 Ao lado esquerdo da Figura~\ref{fig:ex-sobreposicao-analista-ambiental} é possível observar ocupações de ensino e pesquisa, como \textit{Professora}, \textit{Docente} e \textit{Pesquisador}. Sua presença na ilha sugere que são especializadas na área Ambiental, ainda que os profissionais não tenham deixado explícito em seus currículos.
 
-A presença de ocupações que se relacionam com \textit{Segurança do Trabalho} e \textit{SMS} (Segurança, Meio Ambiente e Saúde) indicam um certo compartilhamento dessa área e Meio Ambiente, ainda que não seja forte o suficiente para juntar as ilhas. São ocupações que, apesar de compartilhar o título, parecem ser executadas em contexto diferentes, de modo que um \textit{Engenheiro de Segurança do Trabalho} possui pessoas que vão e vêm da área ambiental, sem haver uma troca com outros áreas.
+A presença de ocupações que se relacionam com \textit{Segurança do Trabalho} e \textit{SMS} (Segurança, Meio Ambiente e Saúde) indicam um certo compartilhamento dessa área e Meio Ambiente, ainda que não seja forte o suficiente para juntar as ilhas. São ocupações que, apesar de compartilhar o título, parecem ser executadas em contextos diferentes, de modo que um \textit{Engenheiro de Segurança do Trabalho} possui pessoas que vão e vêm da área ambiental, sem haver uma troca com outras áreas.
 
 Essa característica condiz com o conhecimento tácito de que é mais fácil permanecer em uma certa área de atuação (Meio Ambiente), ainda que a profissão em si seja mais geral (Segurança do Trabalho).
 
-Os exemplos acima demonstram como essa pesquisa pode ser utilizada. Ela contribui fortemente para as análises feitas, mas precisam de conhecimento externo, como o significado das funções (\enquote{Gerente é uma ocupação administrativa}), para dar significado aos resultados.
+Os exemplos acima ilustram como essa pesquisa pode ser utilizada. Ela contribui fortemente para as análises feitas, mas precisam de conhecimento externo, como o significado das funções (\enquote{Gerente é uma ocupação administrativa}), para dar significado aos resultados.
 
 A pesquisa consegue delinear características essenciais da movimentação profissional, como ilhas e polos, mas é insuficiente, por si, para explicar o porquê elas ocorrem e o que exatamente significam em cada contexto.
 
@@ -792,7 +796,7 @@ A Equação de Mapa~\cite{Rosvall2009-sd} foi aplicada usando o software Infomap
 
 A análise da assortatividade das ilhas mostrou que sua topologia tende ao formato estrelado ou de eixo e raios, o que motivou a introdução do termo \textit{polos ocupacionais} para identificar ocupações que dão coesão à ilha. Alguns exemplos emblemáticos dão dimensão aos dois conceitos introduzidos nesse trabalho.
 
-Conclui-se na expectativa que esse trabalho contribua para na compreensão das transições profissionais, no entanto, é preciso reconhecer as limitações dessa proposta e as questões que permanecem abertas.
+Conclui-se na expectativa que esse trabalho contribua para a compreensão das transições profissionais, no entanto, é preciso reconhecer as limitações dessa proposta e as questões que permanecem abertas.
 
 Os aspectos sociais e psicológicos das fronteiras de carreira não foram abordados e são eles quem podem responder a perguntas como \enquote{por que as fronteiras estão onde estão?} e \enquote{por que as ilhas possuem essa topologia?}. Espera-se que o conteúdo apresentado contribua de maneira quantitativa em discussões sociais e psicológicas sobre movimentação profissional.
 
