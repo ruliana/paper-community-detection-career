@@ -557,11 +557,12 @@ r &= \frac{p - q}
 %===================================
 
 %% NESSA SEÇÃO INCLUA UM PARÁGRAFO INICIAL RESUMINDO TODAS AS ANÁLISES E RESULTADOS QUE SERÃO APRESENTADOS. A PARTIR DESSE PARÁGRAFO, SEPARE A SEÇÃO EM SUBSEÇÕES PARA FACILITAR A ANÁLISE.
-Essa seção apresenta...
-Blá, blá, blá
+% Ronie: Feito!
+Essa seção apresenta os resultados da aplicação das técnicas descritas nas seções anteriores para a identificar padrões relevantes no MCar, especialmente na identificação das Ilhas Ocupacionais e na descrição de suas características.
+
+Os dados utilizados são resumidos brevemente na Seção~\ref{sec:descricao-dos-dados}, enquanto a distribuição de grau, a conectividade do MCar e sua relação com modelos de carreira são descritos na Seção~\ref{sec:distribuicao-de-graus}. A identificação de Fronteiras de Carreira e sua caracterização são apresentados na Seção~\ref{sec:fronteiras-de-carreira}.
 
 \subsection{Descrição dos Dados}  \label{sec:descricao-dos-dados}
-% Descrição dos dados:
 
 Os dados usados para esse trabalho são do MCar de fevereiro de 2017. Após o processo de limpeza da informação o grafo resultante possui 7.267 nós e 145.115 conexões, sendo 68.771 bigramas e 76.344 trigramas. A transformação dos bigramas e trigramas em conexões resulta em 73.064 conexões e essa versão é usada para caracterizar a rede quanto ao grau e conectividade.
 
@@ -571,7 +572,7 @@ A rede de ocupações possui a distribuição de grau exibida no gráfico de Par
 
 Por ser uma rede direcionada, um certo cuidado na análise é necessário, uma vez que o grau dos nós não corresponde diretamente ao número de nós conectados. Imaginando que cada nó pode ter uma ou duas conexões com o mesmo nó vizinho, o grau $k_i$, varia em relação ao número de vizinhos entre $k_i = v_i$ (uma conexão por vizinho) e $k_i = 2v_i$ (cada vizinho possui uma conexão de entrada e saída com $k$), onde $v$ é o número de nós conectados ao nó $i$ por uma conexão de entrada ou saída.
 
-A contribuição de cada nó para a conectividade da rede pode ser observada utilizando-se ego-grafos. Um ego-grafo é um subgrafo por um nó, todos os seus vizinhos e as conexões entre eles~\cite{Newman2010-od}. Como o número de conexões em uma rede direcionada não representa necessariamente o número de nós conectados, o uso do ego-grafo permite identificar \textit{hubs} que possuem maior conectividade sem que necessariamente possuam o maior número de conexões. Considerar o nó central junto aos seus vizinhos permite medir o quanto os subgrafos se sobrepõem sem a necessidade de ajustes quanto ao nó central.
+A contribuição de cada nó para a conectividade da rede pode ser observada utilizando-se ego-grafos. Um ego-grafo é um subgrafo formado por um nó, todos os seus vizinhos e as conexões entre eles~\cite{Newman2010-od}. Como o número de conexões em uma rede direcionada não representa necessariamente o número de nós conectados, o uso do ego-grafo permite identificar \textit{hubs} que possuem maior conectividade sem que necessariamente possuam o maior número de conexões. Considerar o nó central junto aos seus vizinhos permite medir o quanto os subgrafos se sobrepõem sem a necessidade de ajustes quanto ao nó central.
 
 No gráfico de Pareto da Figura~\ref{fig:pareto-egografo} as ocupações estão ordenadas pelo tamanho do ego-grafo. Exatamente 25\% dos maiores ego-grafos são suficientes para conectar 98,31\% da rede. O nó de maior grau, \textit{Auxiliar Administrativo}, possui um ego-grafo com 3.369 ocupações das 7.267, ou seja, 46,36\% das ocupações de alguma forma possui fluxo de profissionais saindo ou entrando dessa ocupação.
 
@@ -603,7 +604,7 @@ O \enquote{Paradoxo da Amizade}~\cite{Barabasi2016-rn} parece valer para pessoas
 
 % Ronie: Esses dois parágrafos abaixo estão meio estranhos no texto. Mas os pontos são:
 % 1 - Em uma rede direcionada, o ego-grafo é melhor de se analisar do que o grau. Isso pq, diferente de uma rede não-direcionada, o grau _não_ significa o número de vizinhos.
-% 2 - Eu poderia ter usado um histograma (distribuição de frequência) para fazer uma análise similar. Na literatura de ciência de redes é praticamente o único gráfico que se vê. Mas, apesar das propriedades estatísticas interessantes, o histograma é bem menos informativo. O Pareto mostra claramente a contribuição dos hubs para a conectividade da rede, enquanto que o histograma relega eles a uma cauda fina e ruidosa (parece mais uma 'sujeira' do que a característica mais importante da rede). É um ponto que pode ser um pouco controverso (embora seja um detalhe), mas eu gostaria de tentar sustentá-lo melhor nesses parágrafos. Acha que vale o esforço ou é melhor 'passar reto' e nem mencionar?
+% 2 - Eu poderia ter usado um histograma (distribuição de frequência) para fazer uma análise similar. Na literatura de ciência de redes é praticamente o único gráfico que se vê. Mas, apesar das propriedades estatísticas interessantes, o histograma é bem menos informativo (IMHO). O Pareto mostra claramente a contribuição dos hubs para a conectividade da rede, enquanto que o histograma relega eles a uma cauda fina e ruidosa (parece mais uma 'sujeira' do que a característica mais importante da rede). É um ponto que pode ser um pouco controverso (embora seja um detalhe), mas eu gostaria de tentar sustentá-lo eventualmente :)
 
 A Figura~\ref{fig:pareto-egografo} ilustra a diferença entre o grau e a conectividade da rede que é importante do ponto de vista dessa pesquisa. Enquanto o grau identifica corretamente os \textit{hubs}, o gráfico de Pareto dos ego-grafos mostra que a rede é mais conectada do que seu número de conexões. Comparando os dois gráficos, percebe-se que, enquanto a distribuição de grau e do tamanho do ego-grafo são similares, o acumulado do primeiro cresce mais suavemente que o do segundo, indicando que os \textit{hubs} possuem proporcionalmente mais conexões unidirecionais, ou seja, menos conexões conectam mais nós.
 
@@ -682,7 +683,7 @@ Existem duas explicações possíveis. A primeira é que essas ocupações são 
         \includegraphics[width=0.49\linewidth]{ex-coordenador-de-projetos-software2.pdf}
         \label{fig:homonimo-software}
     }  
-    \caption{Duas ilhas ocupacionais compartilhando a ocupação \enquote{Coordenador de Projetos} (em destaque). Apesar de possuírem o mesmo nome são ocupações diferentes, a movimentação entre as ilhas é pouco representativa se comparada a movimentação intra-ilha. Apenas uma fração das ocupações de cada ilha está exibida nessa figura. O tamanho do nó indica o fluxo de profissionais que passa pela ocupação enquanto a espessura da conexão indica o tamanho do fluxo entre elas.}
+    \caption{Duas ilhas ocupacionais compartilhando a ocupação \enquote{Coordenador de Projetos} (em destaque). Apesar de possuírem o mesmo nome são ocupações diferentes, a movimentação entre as ilhas é pouco representativa se comparada a movimentação intra-ilha. Apenas uma fração das ocupações de cada ilha está exibida nessa figura. O tamanho do nó indica o fluxo de profissionais que passa pela ocupação enquanto a espessura da conexão indica o volume do fluxo entre elas.}
     \label{fig:homonimos}
 \end{figure}
 
@@ -757,13 +758,13 @@ No último exemplo na Figura~\ref{fig:ex-sobreposicao-analista-ambiental} gira e
 
 Ao lado esquerdo da Figura~\ref{fig:ex-sobreposicao-analista-ambiental} é possível observar ocupações de ensino e pesquisa, como \textit{Professora}, \textit{Docente} e \textit{Pesquisador}. Sua presença na ilha sugere que são especializadas na área Ambiental, ainda que os profissionais não tenham deixado explícito em seus currículos.
 
-A presença de ocupações que se relacionam com \textit{Segurança do Trabalho} e \textit{SMS} (Segurança, Meio Ambiente e Saúde) indicam um certo compartilhamento dessa área e Meio Ambiente, ainda que não seja forte o suficiente para juntar as ilhas. São ocupações que, apesar de compartilhar o título, parecem ser executadas em contextos diferentes, de modo que um \textit{Engenheiro de Segurança do Trabalho} possui pessoas que vão e vêm da área ambiental, sem haver uma troca com outras áreas.
+A presença de ocupações que se relacionam com \textit{Segurança do Trabalho} e \textit{SMS} (Segurança, Meio Ambiente e Saúde) indicam um certo compartilhamento dessa área e Meio Ambiente, ainda que não seja forte o suficiente para juntar as ilhas. São ocupações que, apesar de compartilhar o título, parecem ser executadas em contextos diferentes, de modo que a ocupação \textit{Engenheiro de Segurança do Trabalho} possui pessoas que vão e vêm da área ambiental, sem haver uma troca com outras áreas.
 
 Essa característica condiz com o conhecimento tácito de que é mais fácil permanecer em uma certa área de atuação (Meio Ambiente), ainda que a profissão em si seja mais geral (Segurança do Trabalho).
 
 Os exemplos acima ilustram como essa pesquisa pode ser utilizada. Ela contribui fortemente para as análises feitas, mas precisam de conhecimento externo, como o significado das funções (\enquote{Gerente é uma ocupação administrativa}), para dar significado aos resultados.
 
-A pesquisa consegue delinear características essenciais da movimentação profissional, como ilhas e polos, mas é insuficiente, por si, para explicar o porquê elas ocorrem e o que exatamente significam em cada contexto.
+A pesquisa consegue delinear características essenciais da movimentação profissional, como ilhas e polos, mas é insuficiente, por si, para explicar o porque elas ocorrem e o que exatamente significam em cada contexto.
 
 \begin{figure}[ht]
     \centering
